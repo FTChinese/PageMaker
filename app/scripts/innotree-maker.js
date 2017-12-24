@@ -1,5 +1,6 @@
 
 /* jshint devel:true */
+
 (function () {
     'use strict';
     var  startTime=document.getElementById('startTime');
@@ -184,24 +185,6 @@
         return dataHTML;
     }
     function renderItem(data) {
-    //    console.log ('data result'+data);
-    //    var id = data.comp_ID;
-    //     var headline = data.comp_name;
-    //     var longName = data.comp_name || '';
-    //     var shortName = data.proj_name || '';
-    //  //   var image = data.image || '';
-    //     var type = data.type || '';
-    //     var timeStamp = data.time || '';
-    //     var timeStampType = 2;
-    //     var time = data.time || '';
-    //     var money = data.money_rawdata || '';
-
-    //     var round = data.round || '';
-    //     var firstIndustry = data.sector || '';
-    //     var secondIndustry = data.subsector || '';
-    //     var thirdIndustry = data.sub_subsector || '';
-    //     var investors =data.investor|| '';
-
         var id = data.id;
         var headline = data.headline;
         var longName = data.longName || '';
@@ -329,7 +312,6 @@
         var industries=[];
         var diffIndustries=[];
         var financesInner =[];       
-        // var financesInner3 = '';
         var financesInner1 = '';
         var financesInner2 = '';
         var checkedCateg=$('input:radio[name="category"]:checked').val();
@@ -351,8 +333,8 @@
         //    console.info (data); 
             if (entryIndex === 'list') {
                 //获取公共值
-            $.each(entry, function (financesIndex, finances) {
-                firstIndustry = finances.sector|| '';
+            $.each(entry, function (financesIndex0, finances0) {
+                firstIndustry = finances0.sector|| '';
                 industries.push(firstIndustry);//获得所有firstIndustry值，得到一数组
                 diffIndustries=unique(industries);
             });
@@ -365,7 +347,7 @@
             }//在data里面执行
                 //entry为整个数组
            // for(var i = 0,len=diffIndustries.length;i<len;i++){
-            for(var i = 0;i<len0;i++){
+            for(var i = 0; i<len0; i++){
                 financesInner[i]='';
                 financesInner1='';
                 financesInner2='';
@@ -385,7 +367,6 @@
                     thirdIndustry = finances.sub_subsector|| '';
                     investors = finances.investor || [];
                     type = 'finance';//type在id、class、data-type中显示
-             //        console.log (finances.first_industry+'\n'); 
               //控制分类下面的内容的明细是包含分类标题，这是首要控制条件
               //renderAPI为json数据中循坏渲染的内容，要控制select中选中
                     if(checkedCateg==='1'){
@@ -399,15 +380,6 @@
                             financesInner2+= renderAPI(id, headline, timeStamp, timeStampType, longName, shortName,  type, time,money, round,myFT,secondIndustry,thirdIndustry,investors);
                         }
                     }
-                    // else if(checkedCateg==='3'){
-                    //     document.getElementById('select-industry').disabled=false;
-                    //     if((finances.sector).localeCompare(diffIndustries[i])===0){
-                    //       //  console.log(sele.options);//放在此处输出entry.lengh个数
-                    //         if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
-                    //             financesInner[i]+= renderAPI(id, headline, timeStamp, timeStampType, longName, shortName,  type, time,money, round,myFT,secondIndustry,thirdIndustry,investors);
-                    //         }
-                    //    }//企业服务
-                    // }
                     else{
                          alert('请选择排序方式！');
                     }
@@ -425,26 +397,6 @@
         }else if(checkedCateg==='2'){
             financesInner2 = wrapItemHTML(financesInner2, '热度排序');
         }
-        // else if(checkedCateg==='3'){
-        //     //下拉值筛选思路：获取鼠标选中下拉框中的值，把值与diffIndustries[m]比较
-        //     var selectedText='';
-        //     $('#select-industry').change(function() {
-        //         selectedText=$(this).find('option:selected').text();
-        //         financesInner3= '';
-        //         for(var m = 0;m<diffIndustries.length;m++){
-        //             if((selectedText===diffIndustries[m])&&(selectedText!=='全部')){
-        //                 financesInner3 += wrapItemHTML(financesInner[m], diffIndustries[m]);
-        //             }else if(selectedText==='全部'){
-        //                 financesInner3 += wrapItemHTML(financesInner[m], diffIndustries[m]);
-        //             }
-        //         }
-        //         $('#stories-inner').html(financesInner3);
-        //     });
-        //     for(var m = 0;m<diffIndustries.length;m++){
-        //         financesInner3 += wrapItemHTML(financesInner[m], diffIndustries[m]);
-        //     }//financesInner3为包含分类标题的所有div字符串，不是数组
-        // }
-        // $('#stories-inner').html(financesInner3+financesInner1+financesInner2);
         $('#stories-inner').html(financesInner1+financesInner2);
     }
 
