@@ -7,10 +7,10 @@
     <title>Innotree Maker</title>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-
+    <!-- build:css styles/page-innotree.css -->
     <link rel="stylesheet" href="styles/main-page-innotree.css">
     <link rel="stylesheet" href="../bower_components/animate.css/animate.min.css">
-
+   <!-- endbuild -->
  
 
 
@@ -79,9 +79,10 @@
   </div>
 </div>
 
+<!-- build:js scripts/innotree-maker.js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
-  <script src="/scripts/innotree-maker.js"></script> 
-
+  <script src="./scripts/innotree-maker.js"></script> 
+<!-- endbuild -->
  <script>
    var  searchTime=document.getElementById("search-button");
     var  startTime=document.getElementById("startTime");
@@ -91,14 +92,9 @@
         var seperator1 = "-";
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
-      //  var strDate = date.getDate();
         if (month >= 1 && month <= 9) {
             month = "0" + month;
         }
-        // if (strDate >= 0 && strDate <= 9) {
-        //     strDate = "0" + strDate;
-        // }
-        // var currentdate = year + seperator1 + month + seperator1 + strDate;
         var currentdate = year + seperator1 + month;
         return currentdate;
     }

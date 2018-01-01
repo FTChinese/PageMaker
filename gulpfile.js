@@ -6,18 +6,12 @@ const wiredep = require('wiredep').stream;  //将bower安装的库及依赖引�
 // const runSequence = require('run-sequence'); //任务独立，解除任务间的依赖，增强task复用
 const sass = require('node-sass');
 const cssnext = require('postcss-cssnext');
+const useref = require('gulp-useref');
 const merge = require('merge-stream');
+const vinyl = require('vinyl');
+
 const $ = gulpLoadPlugins();
 
-
-//useref ：把html中零碎的引入合并，不负责代码压缩
-// gulp.task('images', () => {
-//   return gulp.src('app/images/**/*')
-//     .pipe($.cache($.imagemin()))         //使用gulp-cache只压缩修改的图片，没有修改的图片直接从缓存文件读取
-//     .pipe(gulp.dest('dist/images'));
-// });
-
-let dev = true;
 gulp.task('styles', () => {
   return gulp.src('app/styles/*.scss')
     .pipe($.plumber())
@@ -56,14 +50,12 @@ gulp.task('scripts', () => {
 gulp.task('serve', 
   gulp.parallel(
     'styles', 
-    'scripts',
+    // 'scripts',
     () => {
     browserSync.init({
-      notify: false,
-      port: 8000,
       server: {
         baseDir: ['app', '.tmp'],
-        index: 'index.html',
+        index: 'views/innotree-maker.html',
         routes: {
           '/bower_components': 'bower_components'
         }
@@ -72,9 +64,8 @@ gulp.task('serve',
     gulp.watch([
       'app/views/*.html',
     ]).on('change', browserSync.reload);
-    // gulp.watch('app/styles/**/*.scss', ['styles']);
-    // gulp.watch('app/scripts/**/*.js', ['scripts']);
-    gulp.watch(['app/views/*.html'], browserSync.reload);
+    // gulp.watch('app/styles/**/*.scss', gulp.parallel('styles'));
+    gulp.watch(['app/*.html', 'app/scripts/**/*.js', 'app/styles/**/*.scss'], browserSync.reload);
   })
 );
 
@@ -85,8 +76,8 @@ gulp.task('clean', function() {
 });
 
 gulp.task('html', gulp.series(['styles','scripts'], () => {
-  return gulp.src('app/*/*')
-    .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
+  return gulp.src('app/*/*.html')
+    .pipe(useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
       .on('error', (err) => {
       if (err instanceof GulpUglifyError) {
@@ -96,7 +87,22 @@ gulp.task('html', gulp.series(['styles','scripts'], () => {
       }
     })
     .pipe($.if(/\.css$/, $.cssnano()))
+
     .pipe($.if(/\.html$/, $.htmlmin({collapseWhitespace: true})))
+    .pipe(gulp.dest('dist'));
+}));
+
+gulp.task('useref', gulp.series(['styles','scripts'], () => {
+  // return gulp.src('app/views/*')
+  return gulp.src('app/*.html')
+  .pipe(useref())
+    // .pipe(useref({searchPath: ['app']}))
+    // .pipe(useref({searchPath: [ '.tmp/**/*','app/**/*']}))
+    .pipe($.if('*.js', $.uglify()))
+
+    // .pipe($.if('*.css', $.cssnano()))
+
+    // .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
     .pipe(gulp.dest('dist'));
 }));
 
@@ -126,4 +132,24 @@ gulp.task('wiredep', () => {
     // The following tasks did not complete: wiredep
     // Did you forget to signal async completion?
 });
+
+gulp.task('copy:scripts', () => {
+  const scripts = 'dev_cms/pagemaker/scripts';
+  return gulp.src(['dist/scripts/*'])
+    .pipe(gulp.dest(`../${scripts}`))
+    .pipe(gulp.dest(`../testing/${scripts}`));
+});
+gulp.task('copy:styles', () => {
+  const styles = 'dev_cms/pagemaker/styles';
+  return gulp.src(['dist/styles/*'])
+    .pipe(gulp.dest(`../${styles}`))
+    .pipe(gulp.dest(`../testing/${styles}`));
+});
+gulp.task('copy:data_api', () => {
+  const data_api = 'dev_cms/pagemaker/api/page';
+  return gulp.src(['dist/data_api/*'])
+    .pipe(gulp.dest(`../${data_api}`))
+    .pipe(gulp.dest(`../testing/${data_api}`));
+});
+gulp.task('copy:innotreemaker',gulp.parallel('copy:scripts', 'copy:styles','copy:data_api'));
 
