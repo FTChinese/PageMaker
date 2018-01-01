@@ -120,11 +120,13 @@ gulp.task('wiredep', () => {
       ignorePath: /^(\.\.\/)+/
     }))
   .pipe(gulp.dest('app/styles'));
-  const html = gulp.src('app/views/*.html')
+  // const html = gulp.src('app/views/*.html')
+  const html = gulp.src('app/*.html')
     .pipe(wiredep({
       ignorePath: /^(\.\.\/)*\.\./
     }))
-   .pipe(gulp.dest('app/views'));
+   .pipe(gulp.dest('app/'));
+   // .pipe(gulp.dest('app/views'));
    return merge(scss, html);  
     //必须有此返回值，不然出现错误
     // The following tasks did not complete: wiredep
