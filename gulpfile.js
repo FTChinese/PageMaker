@@ -93,12 +93,12 @@ gulp.task('html', gulp.series(['styles','scripts'], () => {
 
 gulp.task('useref', gulp.series(['styles','scripts'], () => {
   return gulp.src('app/*.html')
-  .pipe(useref())
-    // .pipe(useref({searchPath: ['app']}))
+  // .pipe(useref())
+    .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     // .pipe(useref({searchPath: [ '.tmp/**/*','app/**/*']}))
     .pipe($.if('*.js', $.uglify()))
 
-    // .pipe($.if('*.css', $.cssnano()))
+    .pipe($.if('*.css', $.cssnano()))
 
     // .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
     .pipe(gulp.dest('dist'));
@@ -145,11 +145,19 @@ gulp.task('copy:styles', () => {
     .pipe(gulp.dest(`../${styles}`))
     .pipe(gulp.dest(`../testing/${styles}`));
 });
-gulp.task('copy:data_api', () => {
-  const data_api = 'dev_cms/pagemaker/api/page';
-  return gulp.src(['dist/data_api/*'])
-    .pipe(gulp.dest(`../${data_api}`))
-    .pipe(gulp.dest(`../testing/${data_api}`));
+// gulp.task('copy:data_api', () => {
+//   const data_api = 'dev_cms/pagemaker/api/page';
+//   return gulp.src(['dist/data_api/*'])
+//     .pipe(gulp.dest(`../${data_api}`))
+//     .pipe(gulp.dest(`../testing/${data_api}`));
+// });
+// gulp.task('copy',gulp.parallel('copy:scripts', 'copy:styles','copy:data_api'));
+
+gulp.task('copy:pagemaker', () => {
+  const dest = 'dev_cms/pagemaker';
+// `api*` use make a `api*` directory under dest.
+  return gulp.src(['dist/**/*', 'app/data_api*/**/*'])
+    .pipe(gulp.dest(`../${dest}`))
+    .pipe(gulp.dest(`../testing/${dest}`));
 });
-gulp.task('copy:innotreemaker',gulp.parallel('copy:scripts', 'copy:styles','copy:data_api'));
 

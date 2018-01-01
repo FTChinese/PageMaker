@@ -3,19 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <title>Page Maker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Property Maker</title>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <!-- build:css styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="/bower_components/animate.css/animate.css" />
-    <link rel="stylesheet" href="/bower_components/swiper/dist/css/swiper.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
 
     <!-- build:css styles/page-maker.css -->
     <link rel="stylesheet" href="styles/main-page-maker.css">
+    <!--<link rel="stylesheet" href="styles/main-page-innotree.css">-->
     <link rel="stylesheet" href="../bower_components/animate.css/animate.min.css">
     <!-- endbuild -->
 
@@ -49,10 +44,13 @@
     </div>
     <div class="content-right">
       <div class="content-right-inner">
-        <div class="search-container"><div class="search-inner">
-          <input id="keywords-input" class="o-input-text r-input-text" placeholder="Input Date (YYYY-M-D) or Keywords, then return">
-          <button id="refresh-button" class="o-input-button">Refresh</button>
-        </div></div>
+        <div class="select-container">
+          <div class="select-inner">
+          </div> 
+          <!-- <div> -->
+          <button id="search-button" >search</button> 
+          <!-- </div> -->
+        </div>
         <div class="stories-container">
           <div class="stories-inner" id="stories-inner"></div>
         </div>
@@ -69,17 +67,14 @@
 </div>
 
 
-    <!-- build:js scripts/page-maker.js -->
+    <!-- build:js scripts/property-maker.js -->
     <!-- bower:js -->
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/modernizr/modernizr.js"></script>
-    <script src="/bower_components/o-grid/main.js"></script>
-    <script src="/bower_components/dom-delegate/lib/delegate.js"></script>
-    <script src="/bower_components/swiper/dist/js/swiper.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="scripts/property-maker.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js scripts/page-maker.js -->
+        <!-- build:js scripts/property-maker.js -->
         
         <!-- endbuild -->
 </body>
