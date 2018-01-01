@@ -55,16 +55,15 @@ gulp.task('serve',
     browserSync.init({
       server: {
         baseDir: ['app', '.tmp'],
-        index: 'views/innotree-maker.html',
+        // index: 'views/innotree-maker.html',
+        index: 'innotree-maker.html',
         routes: {
           '/bower_components': 'bower_components'
         }
       }
     });
-    gulp.watch([
-      'app/views/*.html',
-    ]).on('change', browserSync.reload);
-    // gulp.watch('app/styles/**/*.scss', gulp.parallel('styles'));
+    // gulp.watch([ 'app/views/*.html',]).on('change', browserSync.reload);
+    gulp.watch([ 'app/*.html',]).on('change', browserSync.reload);
     gulp.watch(['app/*.html', 'app/scripts/**/*.js', 'app/styles/**/*.scss'], browserSync.reload);
   })
 );
@@ -93,7 +92,6 @@ gulp.task('html', gulp.series(['styles','scripts'], () => {
 }));
 
 gulp.task('useref', gulp.series(['styles','scripts'], () => {
-  // return gulp.src('app/views/*')
   return gulp.src('app/*.html')
   .pipe(useref())
     // .pipe(useref({searchPath: ['app']}))
