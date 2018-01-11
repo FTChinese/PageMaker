@@ -45,7 +45,14 @@ gulp.task('scripts', () => {
     .pipe(gulp.dest('.tmp/scripts'))
     .pipe(browserSync.reload({stream: true}));
 });
-
+gulp.task('images', function () {
+  return gulp.src('app/images/**/*')
+    .pipe($.imagemin({
+      progressive: true,
+      interlaced: true
+    }))
+    .pipe(gulp.dest('dist/images'));
+});
 // Launch static server
 gulp.task('serve', 
   gulp.parallel(
@@ -55,8 +62,7 @@ gulp.task('serve',
     browserSync.init({
       server: {
         baseDir: ['app', '.tmp'],
-        // index: 'views/innotree-maker.html',
-        index: 'innotree-maker.html',
+        index: 'page-maker.html',
         routes: {
           '/bower_components': 'bower_components'
         }
@@ -75,7 +81,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task('html', gulp.series(['styles','scripts'], () => {
-  return gulp.src('app/*/*.html')
+  return gulp.src('app/*.html')
     .pipe(useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
       .on('error', (err) => {
@@ -111,7 +117,7 @@ gulp.task('jshint', function () {
     .pipe($.jshint.reporter('fail'));
 });
 
-gulp.task('build', gulp.parallel('jshint', 'html'));
+gulp.task('build', gulp.parallel('jshint', 'html','images'));
 
 // inject bower components
 gulp.task('wiredep', () => {
@@ -145,19 +151,13 @@ gulp.task('copy:styles', () => {
     .pipe(gulp.dest(`../${styles}`))
     .pipe(gulp.dest(`../testing/${styles}`));
 });
-// gulp.task('copy:data_api', () => {
-//   const data_api = 'dev_cms/pagemaker/api/page';
-//   return gulp.src(['dist/data_api/*'])
-//     .pipe(gulp.dest(`../${data_api}`))
-//     .pipe(gulp.dest(`../testing/${data_api}`));
-// });
-// gulp.task('copy',gulp.parallel('copy:scripts', 'copy:styles','copy:data_api'));
+
 
 
 gulp.task('copy:pagemaker', () => {
   const dest = 'dev_cms/pagemaker';
-// `api*` use make a `api*` directory under dest.
   return gulp.src(['dist/**/*', 'app/api*/**/*'])
+    .pipe(gulp.dest(`../${dest}`))
     .pipe(gulp.dest(`../testing/${dest}`));
 });
 
@@ -165,7 +165,6 @@ gulp.task('copy', gulp.series(
   'clean',
   'build', 
   gulp.parallel(
-
     'copy:pagemaker'
   )
 ));
