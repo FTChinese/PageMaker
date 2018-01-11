@@ -103,11 +103,11 @@
         'innotree': innotreeAPIRoot,
     };
     var gApiUrlsLocal = {
-        'home': 'data_api/home.json',
+        'home': 'api/page/home.json',
         'homePOST': 'api',
-        'blank': 'data_api/innoblank.json',
-        'stories': 'data_api/stories.json',//右边是加载stories文件，修改任何一个格式都不正确，在loadStories（）中加载
-        'innotree': 'data_api/innotree.json'
+        'blank': 'api/page/innoblank.json',
+        'stories': 'api/page/stories.json',//右边是加载stories文件，修改任何一个格式都不正确，在loadStories（）中加载
+        'innotree': 'api/page/innotree.json'
  };
 
  var ajaxType;

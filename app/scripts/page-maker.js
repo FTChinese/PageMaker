@@ -128,14 +128,14 @@
         //'home': 'api/page/home.json',
         'home': pagemakerAPIRoot + 'get/'+ getURLParameter('page') +'/' + todaydate + '?' + thenow,
         'homePOST': pagemakerAPIRoot + 'post/'+ getURLParameter('page') +'/' + todaydate,
-        'blank': 'data_api/blank.json?2',
+        'blank': 'api/page/blank.json?2',
         'stories': storyAPIRoot + todaydate + '?' + thenow
     };
     var gApiUrlsLocal = {
-        'home': 'data_api/home.json',
+        'home': 'api/page/home.json',
         'homePOST': 'api',
-        'blank': 'data_api/blank.json',
-        'stories': 'data_api/stories.json'
+        'blank': 'api/page/blank.json',
+        'stories': 'api/page/stories.json'
     };
 
     //drag and drop
@@ -228,6 +228,9 @@
         } else if (obj.type === 'premium') {
             editLink = 'https://backyard.ftchinese.com/falcon.php/story/edit/' + obj.id;
             previewLink = 'http://www7.ftchinese.com/story/' + obj.id;
+        } else if (/\/m\/corp\/preview.html\?pageid=(.*)$/.test(obj.customLink)) {
+            editLink = obj.customLink.replace(/^.*\/m\/corp\/preview.html\?pageid=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
+            previewLink = obj.customLink;
         }
         if (obj.timeStamp !== '') {
             obj.timeStamp = unixtochinese(obj.timeStamp, obj.timeStampType);
@@ -663,6 +666,23 @@
         $.each(toolkits.list, function (key, value) { // jshint ignore:line
             lists += '<div class="toolkit toolkit-list toolkit-' + key + '" draggable=true>' + key + '</div>';
         });
+
+        var thisday = new Date();
+        var todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
+
+        lists += renderAPI({
+                id: '',
+                headline: '编辑精选' + todaydate,
+                timeStamp: '',
+                timeStampType: '',
+                longlead: '',
+                shortlead: '',
+                image: 'http://i.ftimg.net/picture/4/000074984_piclink.jpg',
+                type: '',
+                tag: '',
+                customLink: 'http://www.ftchinese.com/m/corp/preview.html?pageid=EditorChoice-' + todaydate,
+                showSponsorImage: 'no'
+            });
         for (var i = 0; i < 12; i++) {
             lists += renderAPI({
                 id: '',
@@ -877,7 +897,7 @@
 
                     $.each($(this).find('>.meta-table .meta-item'), function () {
 
-//						J.sections[sectionIndex].lists[listIndex].push({});
+//                      J.sections[sectionIndex].lists[listIndex].push({});
                         var key = $(this).find('.o-input-text').eq(0).val();
                         var value = $(this).find('.o-input-text').eq(1).val();
                         J.sections[sectionIndex].lists[listIndex][key] = value;

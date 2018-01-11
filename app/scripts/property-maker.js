@@ -125,14 +125,14 @@
         //'home': 'api/page/home.json',
         'home': pagemakerAPIRoot + 'get/'+ getURLParameter('page') +'/' + todaydate + '?' + thenow,
         'homePOST': pagemakerAPIRoot + 'post/'+ getURLParameter('page') +'/' + todaydate,
-        'blank': 'data_api/propertyBlank.json?0',
+        'blank': 'api/page/propertyBlank.json?0',
         'stories': storyAPIRoot + todaydate + '?' + thenow
     };
     var gApiUrlsLocal = {
-        'home': 'data_api/home.json',
+        'home': 'api/page/home.json',
         'homePOST': 'api',
-        'blank': 'data_api/propertyBlank.json',
-        'stories': 'data_api/property.json'
+        'blank': 'api/page/propertyBlank.json',
+        'stories': 'api/page/property.json'
     };
 
     //drag and drop

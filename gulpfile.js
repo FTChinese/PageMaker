@@ -153,11 +153,19 @@ gulp.task('copy:styles', () => {
 // });
 // gulp.task('copy',gulp.parallel('copy:scripts', 'copy:styles','copy:data_api'));
 
+
 gulp.task('copy:pagemaker', () => {
   const dest = 'dev_cms/pagemaker';
 // `api*` use make a `api*` directory under dest.
-  return gulp.src(['dist/**/*', 'app/data_api*/**/*'])
-    .pipe(gulp.dest(`../${dest}`))
+  return gulp.src(['dist/**/*', 'app/api*/**/*'])
     .pipe(gulp.dest(`../testing/${dest}`));
 });
 
+gulp.task('copy', gulp.series(
+  'clean',
+  'build', 
+  gulp.parallel(
+
+    'copy:pagemaker'
+  )
+));
