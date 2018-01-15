@@ -632,6 +632,7 @@
 
                             if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
                                 premiumInner += renderAPI(obj);
+                                
                             }
                         });
                     }
