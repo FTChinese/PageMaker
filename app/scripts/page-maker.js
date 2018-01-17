@@ -666,8 +666,7 @@
         });
         $.each(toolkits.list, function (key, value) { // jshint ignore:line
             lists += '<div class="toolkit toolkit-list toolkit-' + key + '" draggable=true>' + key + '</div>';
-        });
-
+        });   
         var thisday = new Date();
         var todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
 
