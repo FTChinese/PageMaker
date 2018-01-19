@@ -78,7 +78,8 @@
             'SideNewAd':['devices','pattern','position','container']
         }
     };
-
+    // MARK: - Differentiate subscription information
+    var isPremiumStories = false;
     // MARK: - Regex for validating common input mistakes such as lack of https
     var regSecureUrl = {
         description: '网址应该采用https! ',
@@ -195,6 +196,7 @@
 
     function renderAPI(obj) {
         //id, headline, timeStamp, timeStampType, longlead, shortlead, image, type, tag, customLink, showSponsorImage, relativestory, showRelativeStoryItems
+        var premiumStoriesColor = '';
         var editLink = '';
         var previewLink = '';
         var dataHTML = '';
@@ -237,7 +239,10 @@
         } else {
             obj.timeStamp = '<div class="new-item"></div>';
         }
-
+        
+        if (isPremiumStories === true){
+            premiumStoriesColor = ' premium-stories-color';
+        }
         if (obj.image !== '') {
             hasImageClass = ' has-image';
             imageBG = obj.image.replace('/upload/', '/');
@@ -246,7 +251,6 @@
             imageBG = 'https://www.ft.com/__origami/service/image/v2/images/raw/' + imageBG + '?source=ftchinese&width=80&fit=scale-down';
             imageBG = ' style="background-image: url(' + imageBG + ')"';
         }
-
         var chineseAudioUrl = obj.caudio || '';
         var englishAudioUrl = obj.eaudio || '';
 
@@ -267,7 +271,8 @@
         }
         //console.log (relativestoryHTML);
         //relativestoryHTML = '';
-        dataHTML = '<div draggable=true data-type="' + obj.type + '" class="item ' + obj.type + hasImageClass + '"' + imageBG + ' data-id="' + obj.id + '"><div class="remove-item"></div><div class="timestamp">' + obj.timeStamp + '</div><div class="item-title">' + obj.headline + '</div><div class="item-info"><div class="item-links"><a href="http://www7.ftchinese.com/' + obj.type + '/' + obj.id + '" target=_blank>Preview</a><a href="' + editLink + '" target=_blank>Edit</a></div>'+sponsorImage+'<div class="item-info-item"><input title="headline" placeholder="headline" name="headline" class="o-input-text" value="' + obj.headline + '"></div><div class="item-info-item"><input title="image" placeholder="image" name="image" class="o-input-text" value="' + obj.image + '"></div><div class="item-info-item"><div class="item-info-title">Long Lead: </div><textarea title="image" placeholder="Long Lead" name="longlead" class="o-input-text">' + obj.longlead + '</textarea></div><div class="item-info-item"><div class="item-info-title">Short Lead: </div><textarea title="short lead" placeholder="short lead" name="shortlead" class="o-input-text">' + obj.shortlead + '</textarea></div><div class="item-info-item"><input title="tag" placeholder="tag" name="tag" class="o-input-text" value="' + obj.tag + '"></div><div class="item-info-item"><input title="custom link" placeholder="custom link" name="customLink" class="o-input-text" value="' + obj.customLink + '"></div><div class="item-info-item"><input title="Chinese Audio Url" placeholder="Chinese Audio Url" name="caudio" class="o-input-text" value="' + chineseAudioUrl + '"></div><div class="item-info-item"><input title="English Audio Url" placeholder="English Audio Url" name="eaudio" class="o-input-text" value="' + englishAudioUrl + '"></div>' + obj.showRelativeStoryItems + '<div class="item-info-item"><input name="timeStamp" type="hidden" class="o-input-text" value="' + oTimeStamp + '" readonly><input type="hidden" name="type" class="o-input-text" value="' + obj.type + '" readonly><input type="hidden" name="id" class="o-input-text" value="' + obj.id + '" readonly></div>' + relativestoryHTML + '</div></div>';
+        
+        dataHTML = '<div draggable=true data-type="' + obj.type + '" class="item ' + obj.type + hasImageClass + premiumStoriesColor+'"' + imageBG + ' data-id="' + obj.id + '"><div class="remove-item"></div><div class="timestamp">' + obj.timeStamp + '</div><div class="item-title">' + obj.headline + '</div><div class="item-info"><div class="item-links"><a href="http://www7.ftchinese.com/' + obj.type + '/' + obj.id + '" target=_blank>Preview</a><a href="' + editLink + '" target=_blank>Edit</a></div>'+sponsorImage+'<div class="item-info-item"><input title="headline" placeholder="headline" name="headline" class="o-input-text" value="' + obj.headline + '"></div><div class="item-info-item"><input title="image" placeholder="image" name="image" class="o-input-text" value="' + obj.image + '"></div><div class="item-info-item"><div class="item-info-title">Long Lead: </div><textarea title="image" placeholder="Long Lead" name="longlead" class="o-input-text">' + obj.longlead + '</textarea></div><div class="item-info-item"><div class="item-info-title">Short Lead: </div><textarea title="short lead" placeholder="short lead" name="shortlead" class="o-input-text">' + obj.shortlead + '</textarea></div><div class="item-info-item"><input title="tag" placeholder="tag" name="tag" class="o-input-text" value="' + obj.tag + '"></div><div class="item-info-item"><input title="custom link" placeholder="custom link" name="customLink" class="o-input-text" value="' + obj.customLink + '"></div><div class="item-info-item"><input title="Chinese Audio Url" placeholder="Chinese Audio Url" name="caudio" class="o-input-text" value="' + chineseAudioUrl + '"></div><div class="item-info-item"><input title="English Audio Url" placeholder="English Audio Url" name="eaudio" class="o-input-text" value="' + englishAudioUrl + '"></div>' + obj.showRelativeStoryItems + '<div class="item-info-item"><input name="timeStamp" type="hidden" class="o-input-text" value="' + oTimeStamp + '" readonly><input type="hidden" name="type" class="o-input-text" value="' + obj.type + '" readonly><input type="hidden" name="id" class="o-input-text" value="' + obj.id + '" readonly></div>' + relativestoryHTML + '</div></div>';
         return dataHTML;
     }
 
@@ -403,6 +408,7 @@
     }
 
     function loadStories() {
+        isPremiumStories = false;
         $.ajax({
             type: 'get',
             url: gApiUrls.stories,
@@ -591,6 +597,7 @@
                             }
                         });
                     } else if (entryIndex === 'premium') {
+                        isPremiumStories = true;
                         $.each(entry, function (premiumIndex, premium) {
                             timeStamp = premium.fileupdatetime || '';
                             if (premium.publish_status === 'draft') {
