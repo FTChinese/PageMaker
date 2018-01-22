@@ -229,17 +229,22 @@
             previewLink = 'http://www7.ftchinese.com/video/' + obj.id;
         } else if (obj.type === 'premium') {
             editLink = 'https://backyard.ftchinese.com/falcon.php/story/edit/' + obj.id;
-            previewLink = 'http://www7.ftchinese.com/story/' + obj.id;
+            previewLink = 'http://www7.ftchinese.com/story/' + obj.id;  
         } else if (/\/m\/corp\/preview.html\?pageid=(.*)$/.test(obj.customLink)) {
             editLink = obj.customLink.replace(/^.*\/m\/corp\/preview.html\?pageid=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
             previewLink = obj.customLink;
+            
         }
         if (obj.timeStamp !== '') {
             obj.timeStamp = unixtochinese(obj.timeStamp, obj.timeStampType);
         } else {
             obj.timeStamp = '<div class="new-item"></div>';
         }
-        
+        if(obj.type === 'premium'){
+            isPremiumStories = true;
+        }else{
+            isPremiumStories = false;
+        }
         if (isPremiumStories === true){
             premiumStoriesColor = ' premium-stories-color';
         }
@@ -408,7 +413,6 @@
     }
 
     function loadStories() {
-        isPremiumStories = false;
         $.ajax({
             type: 'get',
             url: gApiUrls.stories,
@@ -597,7 +601,6 @@
                             }
                         });
                     } else if (entryIndex === 'premium') {
-                        isPremiumStories = true;
                         $.each(entry, function (premiumIndex, premium) {
                             timeStamp = premium.fileupdatetime || '';
                             if (premium.publish_status === 'draft') {
