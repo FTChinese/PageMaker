@@ -60,7 +60,7 @@
     };
     var toolkits = {
         'section': {
-            'block': ['title', 'name', 'side', 'sideAlign'],
+            'block': ['title', 'name', 'side', 'sideAlign', 'description'],
             'include': ['from', 'side', 'sideAlign'],
             'header': [],
             'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
