@@ -656,7 +656,7 @@
                 interactivesInner = wrapItemHTML(interactivesInner, 'Interactive Features');
                 photosInner = wrapItemHTML(photosInner, 'Photo Slides');
                 premiumInner = wrapItemHTML(premiumInner, 'Premium Stories');
-                $('#stories-inner').html(storiesInner + videosInner + interactivesInner + photosInner + premiumInner);
+                $('#stories-inner').html(premiumInner + storiesInner + videosInner + interactivesInner + photosInner);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('errorThrown - [' + errorThrown + ']');
