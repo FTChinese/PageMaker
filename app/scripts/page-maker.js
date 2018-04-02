@@ -690,7 +690,8 @@
                 image: 'http://i.ftimg.net/picture/4/000074984_piclink.jpg',
                 type: '',
                 tag: '',
-                customLink: 'http://www.ftchinese.com/m/corp/preview.html?pageid=EditorChoice-' + todaydate,
+                customLink: 'http://www.ftchinese.com/channel/editorchoice-issue.html?issue=EditorChoice-' + todaydate,
+                // customLink: 'http://www.ftchinese.com/m/corp/preview.html?pageid=EditorChoice-' + todaydate,
                 showSponsorImage: 'no'
             });
         for (var i = 0; i < 12; i++) {
