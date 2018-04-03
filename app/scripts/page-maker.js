@@ -229,11 +229,13 @@
             previewLink = 'http://www7.ftchinese.com/video/' + obj.id;
         } else if (obj.type === 'premium') {
             editLink = 'https://backyard.ftchinese.com/falcon.php/story/edit/' + obj.id;
-            previewLink = 'http://www7.ftchinese.com/story/' + obj.id;  
+            previewLink = 'http://www7.ftchinese.com/story/' + obj.id; 
         } else if (/\/m\/corp\/preview.html\?pageid=(.*)$/.test(obj.customLink)) {
             editLink = obj.customLink.replace(/^.*\/m\/corp\/preview.html\?pageid=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
-            previewLink = obj.customLink;
-            
+            previewLink = obj.customLink; 
+        }else if(/\/channel\/editorchoice-issue.html\?issue=(.*)$/.test(obj.customLink)){ 
+            editLink = obj.customLink.replace(/^.*\/channel\/editorchoice-issue.html\?issue=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
+            previewLink = obj.customLink; 
         }
         if (obj.timeStamp !== '') {
             obj.timeStamp = unixtochinese(obj.timeStamp, obj.timeStampType);
