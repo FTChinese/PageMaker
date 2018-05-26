@@ -11,7 +11,7 @@
         'type': 'readonly',
         'theme': ['default', 'luxury', 'myFT', 'technology', 'education', 'lifestyle', 'ebook'],
         //'type': ['block', 'banner', 'header', 'footer'],
-        'side': ['none', 'HomeRightRail','TagRightRail', 'MostPopular', 'HotVideos', 'MarketsData', 'videos', 'MostCommented'],
+        'side': ['none', 'HomeRightRail','TagRightRail', 'MostPopular', 'HotVideos', 'MarketsData', 'videos', 'MostCommented', 'Narrow'],
         'sideAlign': ['right', 'left'],
         'float': ['none', 'left', 'right', 'oneline', 'SideBySide', 'myFT', 'IconTitle', 'Card', 'eBook', 'VideoWall', 'Headshot', 'ScoreBoard', 'EqualSizeForNonFirstItems'],
         'showTag': ['no', 'yes'],
