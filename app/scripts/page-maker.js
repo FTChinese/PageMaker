@@ -22,7 +22,7 @@
         'ipad': ['no', 'yes'],
         'from': ['', 'MarketsData', 'SpecialReports', 'Columns', 'Channels', 'Events', 'MyTopics', 'Discover', 'Marketing', 'findpassword'],
         'fromSide': ['PartnerActivity'],
-        'sideOption': ['headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage'],
+        'sideOption': ['headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','leadWithImage'],
         'preferLead': ['longlead', 'shortlead', 'none'],
         'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium'],
         'feedItems': 'number',
