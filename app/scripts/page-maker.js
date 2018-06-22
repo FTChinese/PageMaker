@@ -242,9 +242,9 @@
         } else {
             obj.timeStamp = '<div class="new-item"></div>';
         }
-        if(obj.type === 'premium'){
+        if (obj.type === 'premium' || (/英语电台|速读/.test(obj.tag) && obj.type === 'interactive')) {
             isPremiumStories = true;
-        }else{
+        } else {
             isPremiumStories = false;
         }
         if (isPremiumStories === true){
@@ -533,6 +533,7 @@
                     } else if (entryIndex === 'interactive') {
                         $.each(entry, function (interactiveIndex, interactive) {
                             var mainTag = '';
+                            var interactiveItem;
                             id = interactive.id;
                             timeStamp = interactive.pubdate || '';
                             timeStampType = 3;
@@ -555,7 +556,7 @@
                             image = interactive.story_pic.other || interactive.story_pic.smallbutton || interactive.story_pic.cover || interactive.story_pic.bigbutton || '';
                             type = 'interactive';
                             if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
-                                interactivesInner += renderAPI({
+                                interactiveItem = renderAPI({
                                                         id: id,
                                                         headline: headline,
                                                         timeStamp: timeStamp,
@@ -568,6 +569,10 @@
                                                         customLink: customLink,
                                                         showSponsorImage: showSponsorImage
                                                     });
+                                interactivesInner += interactiveItem;
+                                if (/英语电台|速读/.test(tag)) {
+                                    premiumInner += interactiveItem;
+                                }
                             }
                         });
                     } else if (entryIndex === 'photonews') {
@@ -641,10 +646,8 @@
                                 relativestory: relativestory,
                                 showRelativeStoryItems: showRelativeStoryItems
                             };
-
                             if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
                                 premiumInner += renderAPI(obj);
-                                
                             }
                         });
                     }
@@ -657,7 +660,7 @@
                 videosInner = wrapItemHTML(videosInner, 'Videos');
                 interactivesInner = wrapItemHTML(interactivesInner, 'Interactive Features');
                 photosInner = wrapItemHTML(photosInner, 'Photo Slides');
-                premiumInner = wrapItemHTML(premiumInner, 'Premium Stories');
+                premiumInner = wrapItemHTML(premiumInner, 'Premium Content');
                 $('#stories-inner').html(premiumInner + storiesInner + videosInner + interactivesInner + photosInner);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
