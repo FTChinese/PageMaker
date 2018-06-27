@@ -66,10 +66,12 @@
             'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
             'footer': [],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
-            'newAd':['devices','pattern','position','container']
+            'newAd':['devices','pattern','position','container'],
+            'timeline': ['title', 'name', 'style']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
+            'timelineEvent': ['title', 'url', 'description', 'image'],
             'SideMPU': ['name', 'image', 'url'],
             'SideWithItems':['name', 'title', 'url', 'sideOption', 'feedItems', 'feedTag', 'feedType'],
             'SideRanking': ['name', 'title', 'url', 'feedItems', 'feedTag', 'feedType'],
@@ -1356,12 +1358,12 @@
                     $('.lists-item').eq(dragIndex).insertBefore($('.lists-item').eq(dragOverIndex)).addClass('animated zoomIn');
                 }
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
-                // console.log (this.classList);
-                if ($(this).parentsUntil($('.sections'), '.section-container').hasClass('type-block')) {
+                console.log ($(this).parentsUntil($('.sections'), '.section-container'));
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
                     $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block section! ');
+                    alert('A list can only be dropped to a block or timtline section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
@@ -1383,11 +1385,12 @@
                 $(this).parentsUntil($('.sections'), '.lists-item').after(newListObject);
                 newListObject.addClass('animated zoomIn');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
-                if ($(this).parentsUntil($('.sections'), '.section-container').hasClass('type-block')) {
+                console.log($(this).parentsUntil($('.sections'), '.section-container'));
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
                     newListObject.addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block section! ');
+                    alert('A list can only be dropped to a block or timeline section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
