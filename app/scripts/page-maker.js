@@ -34,7 +34,8 @@
         'hideDownloadButton': ['no', 'yes'],
         'durationInSeconds': ['default','15','30','60','90'],
         'weight': ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'],
-        'closeButton': ['none','LeftTop','RightTop','LeftBottom','RightBottom']
+        'closeButton': ['none','LeftTop','RightTop','LeftBottom','RightBottom'],
+        'timelineStyle': ['default', 'even']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -56,7 +57,9 @@
         'feedTag': '自动抓取内容依据的标签，如果抓取条件复杂，也可以请技术帮助你输入mysql的查询语句',
         'language': '中文、英文或者中英文对照，只适用于story',
         'dates': '输入生效的日期，格式为YYYYMMDD，半角逗号分隔',
-        'weight': '创意的权重'
+        'weight': '创意的权重',
+        'imagePC': '289x48',
+        'imageMobile': '172x48'
     };
     var toolkits = {
         'section': {
@@ -66,8 +69,9 @@
             'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
             'footer': [],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
+            'promoBox': ['title', 'imagePC', 'imageMobile', 'click', 'weight', 'backgroundColor', 'note'],
             'newAd':['devices','pattern','position','container'],
-            'timeline': ['title', 'name', 'style']
+            'timeline': ['title', 'name', 'timelineStyle', 'description']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
