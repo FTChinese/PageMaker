@@ -5,6 +5,7 @@
     "theme": "default",
     "adid": "0001",
     "sponsorMobile": "",
+    "inSponsor": "no",
     "hideDownloadButton": "no",
     "fileTime": ""
   },
