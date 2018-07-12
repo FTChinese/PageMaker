@@ -36,7 +36,8 @@
         'durationInSeconds': ['default','15','30','60','90'],
         'weight': ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'],
         'closeButton': ['none','LeftTop','RightTop','LeftBottom','RightBottom'],
-        'timelineStyle': ['default', 'even']
+        'timelineStyle': ['default', 'even'],
+        'subscriptionType': ['','standard','premium']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -72,6 +73,7 @@
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
             'promoBox': ['title', 'imagePC', 'imageMobile', 'click', 'ccode', 'weight', 'backgroundColor', 'note'],
             'newAd':['devices','pattern','position','container'],
+            'subscriptionPromotion': ['text', 'ccode', 'buttonTitle', 'subscriptionType'],
             'timeline': ['title', 'name', 'timelineStyle', 'description']
         },
         'list': {
@@ -1455,7 +1457,9 @@
                 dataType: 'text',
                 success: function (msg) {
                     if (msg === 'submit') {
-                        alert('页面提交成功！');
+                        if (confirm('页面提交成功！\n\n要选一条文章发送通知推送吗？')) {
+                            window.open('http://apn.ftchinese.com/');
+                        }
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
