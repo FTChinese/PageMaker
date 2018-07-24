@@ -9,9 +9,9 @@
         'lists': 'array',
         'items': 'item',
         'type': 'readonly',
-        'theme': ['default', 'luxury', 'myFT', 'technology', 'education', 'lifestyle', 'ebook'],
+        'theme': ['default', 'luxury', 'myFT', 'technology', 'education', 'lifestyle', 'ebook', 'specialreport'],
         //'type': ['block', 'banner', 'header', 'footer'],
-        'side': ['none', 'HomeRightRail','TagRightRail', 'MostPopular', 'HotVideos', 'MarketsData', 'videos', 'MostCommented'],
+        'side': ['none', 'HomeRightRail','TagRightRail', 'MostPopular', 'HotVideos', 'MarketsData', 'videos', 'MostCommented', 'Narrow'],
         'sideAlign': ['right', 'left'],
         'float': ['none', 'left', 'right', 'oneline', 'SideBySide', 'myFT', 'IconTitle', 'Card', 'eBook', 'VideoWall', 'Headshot', 'ScoreBoard', 'EqualSizeForNonFirstItems'],
         'showTag': ['no', 'yes'],
@@ -20,9 +20,9 @@
         'iphone': ['no', 'yes'],
         'android': ['no', 'yes'],
         'ipad': ['no', 'yes'],
-        'from': ['', 'MarketsData', 'SpecialReports', 'Columns', 'Channels', 'Events', 'MyTopics', 'Discover', 'Marketing', 'findpassword'],
+        'from': ['', 'MarketsData', 'SpecialReports', 'Columns', 'Channels', 'Events', 'MyTopics', 'Discover', 'Marketing', 'findpassword', 'house-ad-subscription-promo-box'],
         'fromSide': ['PartnerActivity'],
-        'sideOption': ['headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage'],
+        'sideOption': ['headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot'],
         'preferLead': ['longlead', 'shortlead', 'none'],
         'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium'],
         'feedItems': 'number',
@@ -31,10 +31,13 @@
         'language': ['', 'en', 'ce'],
         'fit': ['', 'standard', 'highimpact', 'legacy'],
         'sponsorMobile': ['no', 'yes'],
+        'inSponsor': ['no', 'yes'],
         'hideDownloadButton': ['no', 'yes'],
         'durationInSeconds': ['default','15','30','60','90'],
         'weight': ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'],
-        'closeButton': ['none','LeftTop','RightTop','LeftBottom','RightBottom']
+        'closeButton': ['none','LeftTop','RightTop','LeftBottom','RightBottom'],
+        'timelineStyle': ['default', 'even'],
+        'subscriptionType': ['','standard','premium']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -56,7 +59,9 @@
         'feedTag': '自动抓取内容依据的标签，如果抓取条件复杂，也可以请技术帮助你输入mysql的查询语句',
         'language': '中文、英文或者中英文对照，只适用于story',
         'dates': '输入生效的日期，格式为YYYYMMDD，半角逗号分隔',
-        'weight': '创意的权重'
+        'weight': '创意的权重',
+        'imagePC': '289x48',
+        'imageMobile': '172x48'
     };
     var toolkits = {
         'section': {
@@ -66,10 +71,14 @@
             'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
             'footer': [],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
-            'newAd':['devices','pattern','position','container']
+            'promoBox': ['title', 'imagePC', 'imageMobile', 'click', 'ccode', 'weight', 'backgroundColor', 'note'],
+            'newAd':['devices','pattern','position','container'],
+            'timeline': ['title', 'name', 'timelineStyle', 'description']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
+            'timelineEvent': ['title', 'url', 'description', 'image'],
+            'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote'],
             'SideMPU': ['name', 'image', 'url'],
             'SideWithItems':['name', 'title', 'url', 'sideOption', 'feedItems', 'feedTag', 'feedType'],
             'SideRanking': ['name', 'title', 'url', 'feedItems', 'feedTag', 'feedType'],
@@ -229,20 +238,22 @@
             previewLink = 'http://www7.ftchinese.com/video/' + obj.id;
         } else if (obj.type === 'premium') {
             editLink = 'https://backyard.ftchinese.com/falcon.php/story/edit/' + obj.id;
-            previewLink = 'http://www7.ftchinese.com/story/' + obj.id;  
+            previewLink = 'http://www7.ftchinese.com/story/' + obj.id; 
         } else if (/\/m\/corp\/preview.html\?pageid=(.*)$/.test(obj.customLink)) {
             editLink = obj.customLink.replace(/^.*\/m\/corp\/preview.html\?pageid=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
-            previewLink = obj.customLink;
-            
+            previewLink = obj.customLink; 
+        }else if(/\/channel\/editorchoice-issue.html\?issue=(.*)$/.test(obj.customLink)){ 
+            editLink = obj.customLink.replace(/^.*\/channel\/editorchoice-issue.html\?issue=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
+            previewLink = obj.customLink; 
         }
         if (obj.timeStamp !== '') {
             obj.timeStamp = unixtochinese(obj.timeStamp, obj.timeStampType);
         } else {
             obj.timeStamp = '<div class="new-item"></div>';
         }
-        if(obj.type === 'premium'){
+        if (obj.type === 'premium' || (/英语电台|速读/.test(obj.tag) && obj.type === 'interactive')) {
             isPremiumStories = true;
-        }else{
+        } else {
             isPremiumStories = false;
         }
         if (isPremiumStories === true){
@@ -531,6 +542,7 @@
                     } else if (entryIndex === 'interactive') {
                         $.each(entry, function (interactiveIndex, interactive) {
                             var mainTag = '';
+                            var interactiveItem;
                             id = interactive.id;
                             timeStamp = interactive.pubdate || '';
                             timeStampType = 3;
@@ -553,7 +565,7 @@
                             image = interactive.story_pic.other || interactive.story_pic.smallbutton || interactive.story_pic.cover || interactive.story_pic.bigbutton || '';
                             type = 'interactive';
                             if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
-                                interactivesInner += renderAPI({
+                                interactiveItem = renderAPI({
                                                         id: id,
                                                         headline: headline,
                                                         timeStamp: timeStamp,
@@ -566,6 +578,10 @@
                                                         customLink: customLink,
                                                         showSponsorImage: showSponsorImage
                                                     });
+                                interactivesInner += interactiveItem;
+                                if (/英语电台|速读/.test(tag)) {
+                                    premiumInner += interactiveItem;
+                                }
                             }
                         });
                     } else if (entryIndex === 'photonews') {
@@ -639,10 +655,8 @@
                                 relativestory: relativestory,
                                 showRelativeStoryItems: showRelativeStoryItems
                             };
-
                             if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
                                 premiumInner += renderAPI(obj);
-                                
                             }
                         });
                     }
@@ -655,8 +669,8 @@
                 videosInner = wrapItemHTML(videosInner, 'Videos');
                 interactivesInner = wrapItemHTML(interactivesInner, 'Interactive Features');
                 photosInner = wrapItemHTML(photosInner, 'Photo Slides');
-                premiumInner = wrapItemHTML(premiumInner, 'Premium Stories');
-                $('#stories-inner').html(storiesInner + videosInner + interactivesInner + photosInner + premiumInner);
+                premiumInner = wrapItemHTML(premiumInner, 'Premium Content');
+                $('#stories-inner').html(premiumInner + storiesInner + videosInner + interactivesInner + photosInner);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('errorThrown - [' + errorThrown + ']');
@@ -690,7 +704,8 @@
                 image: 'http://i.ftimg.net/picture/4/000074984_piclink.jpg',
                 type: '',
                 tag: '',
-                customLink: 'http://www.ftchinese.com/m/corp/preview.html?pageid=EditorChoice-' + todaydate,
+                customLink: 'http://www.ftchinese.com/channel/editorchoice-issue.html?issue=EditorChoice-' + todaydate,
+                // customLink: 'http://www.ftchinese.com/m/corp/preview.html?pageid=EditorChoice-' + todaydate,
                 showSponsorImage: 'no'
             });
         for (var i = 0; i < 12; i++) {
@@ -1350,12 +1365,12 @@
                     $('.lists-item').eq(dragIndex).insertBefore($('.lists-item').eq(dragOverIndex)).addClass('animated zoomIn');
                 }
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
-                // console.log (this.classList);
-                if ($(this).parentsUntil($('.sections'), '.section-container').hasClass('type-block')) {
+                console.log ($(this).parentsUntil($('.sections'), '.section-container'));
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
                     $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block section! ');
+                    alert('A list can only be dropped to a block or timtline section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
@@ -1377,11 +1392,12 @@
                 $(this).parentsUntil($('.sections'), '.lists-item').after(newListObject);
                 newListObject.addClass('animated zoomIn');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
-                if ($(this).parentsUntil($('.sections'), '.section-container').hasClass('type-block')) {
+                console.log($(this).parentsUntil($('.sections'), '.section-container'));
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
                     newListObject.addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block section! ');
+                    alert('A list can only be dropped to a block or timeline section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
@@ -1441,7 +1457,9 @@
                 dataType: 'text',
                 success: function (msg) {
                     if (msg === 'submit') {
-                        alert('页面提交成功！');
+                        if (confirm('页面提交成功！\n\n要选一条文章发送通知推送吗？')) {
+                            window.open('http://apn.ftchinese.com/');
+                        }
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {

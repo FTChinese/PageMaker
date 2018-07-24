@@ -159,7 +159,7 @@ html, body {
   }
   .section-container {
     display:none;
-    &.type-block {
+    &.type-block, &.type-timeline  {
       display: block;
     }
   }
