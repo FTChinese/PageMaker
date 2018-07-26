@@ -27,6 +27,7 @@
         'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium'],
         'feedItems': 'number',
         'feedStart': 'number',
+        'text': 'textarea',
         'feedImage': ['optional','necessary','hide'],
         'language': ['', 'en', 'ce'],
         'fit': ['', 'standard', 'highimpact', 'legacy'],
@@ -37,7 +38,8 @@
         'weight': ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'],
         'closeButton': ['none','LeftTop','RightTop','LeftBottom','RightBottom'],
         'timelineStyle': ['default', 'even'],
-        'subscriptionType': ['','standard','premium']
+        'subscriptionType': ['','standard','premium'],
+        'itemNumber': 'number'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -61,7 +63,14 @@
         'dates': '输入生效的日期，格式为YYYYMMDD，半角逗号分隔',
         'weight': '创意的权重',
         'imagePC': '289x48',
-        'imageMobile': '172x48'
+        'imageMobile': '172x48',
+        'wideImage': '3x1 wide image for PC',
+        'mobileImage': '16 x 9 mobile image for phone',
+        'ccode': 'campaign code',
+        'text': 'Just paste large blocks of text here and it will break automatically',
+        'itemNumber': 'When subscriber reserve gifts or tickets, how many items do we allow them to have in one batch',
+        'titleForMore': 'Under construction. If you need this feature now, let me know. ',
+        'imageStyle': 'Under construction. If you need this feature now, let me know. '
     };
     var toolkits = {
         'section': {
@@ -77,14 +86,15 @@
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
-            'timelineEvent': ['title', 'url', 'description', 'image'],
-            'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote'],
+            'listWithText': ['name', 'title', 'url', 'text', 'wideImage', 'mobileImage', 'titleForMore', 'imageStyle'],
+            'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote', 'itemNumber', 'feedbackForSuccess', 'feedbackForFailure'],
             'SideMPU': ['name', 'image', 'url'],
             'SideWithItems':['name', 'title', 'url', 'sideOption', 'feedItems', 'feedTag', 'feedType'],
             'SideRanking': ['name', 'title', 'url', 'feedItems', 'feedTag', 'feedType'],
             'SideInclude': ['name', 'title', 'url', 'fromSide'],
             'SideIframe': ['name', 'title', 'url', 'width', 'height'],
-            'SideNewAd':['devices','pattern','position','container']
+            'SideNewAd':['devices','pattern','position','container'],
+            'timelineEvent': ['title', 'url', 'description', 'image']
         }
     };
     // MARK: - Differentiate subscription information
@@ -365,6 +375,8 @@
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>';
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>';
+            } else if (dataRules[key] === 'textarea') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td><textarea data-key="' + key + '" class="o-textarea">' + value + '</textarea></td></tr>';
             } else if (typeof dataRules[key] === 'string') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '"'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '"></td></tr>';
             } else if (typeof dataRules[key] === 'object') {
@@ -923,8 +935,8 @@
                     $.each($(this).find('>.meta-table .meta-item'), function () {
 
 //                      J.sections[sectionIndex].lists[listIndex].push({});
-                        var key = $(this).find('.o-input-text').eq(0).val();
-                        var value = $(this).find('.o-input-text').eq(1).val();
+                        var key = $(this).find('.o-input-text, .o-textarea').eq(0).val();
+                        var value = $(this).find('.o-input-text, .o-textarea').eq(1).val();
                         J.sections[sectionIndex].lists[listIndex][key] = value;
                     });
 
