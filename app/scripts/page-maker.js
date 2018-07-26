@@ -39,7 +39,7 @@
         'closeButton': ['none','LeftTop','RightTop','LeftBottom','RightBottom'],
         'timelineStyle': ['default', 'even'],
         'subscriptionType': ['','standard','premium'],
-        'itemNumber': 'number'
+        'itemNumber': 'number',
         'promoTarget': ['noneSubscriber', 'standard', 'premium'],
         'status': ['on', 'off']
     };
