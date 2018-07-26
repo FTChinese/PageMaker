@@ -40,6 +40,8 @@
         'timelineStyle': ['default', 'even'],
         'subscriptionType': ['','standard','premium'],
         'itemNumber': 'number'
+        'promoTarget': ['noneSubscriber', 'standard', 'premium'],
+        'status': ['on', 'off']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -74,13 +76,13 @@
     };
     var toolkits = {
         'section': {
-            'block': ['title', 'name', 'side', 'sideAlign'],
+            'block': ['title', 'name', 'side', 'sideAlign', 'description'],
             'include': ['from', 'side', 'sideAlign'],
             'header': [],
             'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
             'footer': [],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
-            'promoBox': ['title', 'imagePC', 'imageMobile', 'click', 'ccode', 'weight', 'backgroundColor', 'note'],
+            'promoBox': ['title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'weight', 'backgroundColor', 'note'],
             'newAd':['devices','pattern','position','container'],
             'timeline': ['title', 'name', 'timelineStyle', 'description']
         },
