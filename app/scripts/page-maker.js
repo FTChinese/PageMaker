@@ -73,7 +73,8 @@
         'text': 'Just paste large blocks of text here and it will break automatically',
         'itemNumber': 'When subscriber reserve gifts or tickets, how many items do we allow them to have in one batch',
         'titleForMore': 'Under construction. If you need this feature now, let me know. ',
-        'imageStyle': 'Under construction. If you need this feature now, let me know. '
+        'imageStyle': 'Under construction. If you need this feature now, let me know. ',
+        'subscriptionBoxTarget': 'all means the box appears regardless of the ccode parameter; allCampaigns means the box displays if the url has a ccode parameter; oneCampgin means the box displays only if the ccode in parameter matches the ccode that is input in the field. '
     };
     var toolkits = {
         'section': {
