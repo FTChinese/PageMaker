@@ -43,7 +43,8 @@
         'promoTarget': ['noneSubscriber', 'standard', 'premium'],
         'status': ['on', 'off'],
         'subscriptionBoxTarget': ['all', 'allCampaigns', 'oneCampaign'],
-        'showNavigation': ['yes', 'no']
+        'showNavigation': ['yes', 'no'],
+        'maxPageNumber': 'number'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -75,7 +76,8 @@
         'itemNumber': 'When subscriber reserve gifts or tickets, how many items do we allow them to have in one batch',
         'titleForMore': 'Under construction. If you need this feature now, let me know. ',
         'imageStyle': 'Under construction. If you need this feature now, let me know. ',
-        'subscriptionBoxTarget': 'all means the box appears regardless of the ccode parameter; allCampaigns means the box displays if the url has a ccode parameter; oneCampgin means the box displays only if the ccode in parameter matches the ccode that is input in the field. '
+        'subscriptionBoxTarget': 'all means the box appears regardless of the ccode parameter; allCampaigns means the box displays if the url has a ccode parameter; oneCampgin means the box displays only if the ccode in parameter matches the ccode that is input in the field. ',
+        'maxPageNumber': 'The maximum page number based on your estimation. '
     };
     var toolkits = {
         'section': {
@@ -84,7 +86,7 @@
             'header': ['showNavigation'],
             'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
             'footer': [],
-            'pagination': [],
+            'pagination': ['maxPageNumber'],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
