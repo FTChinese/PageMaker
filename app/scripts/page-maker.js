@@ -136,6 +136,7 @@
         'landscapeFileName': regSecureUrl,
         'dates': datesFormat,
         'backgroundColor': hexColor,
+        'buttonColor': hexColor,
         'click': clickRedirect
     };
     var devices = [
