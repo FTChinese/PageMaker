@@ -21,6 +21,7 @@
         'android': ['no', 'yes'],
         'ipad': ['no', 'yes'],
         'from': ['', 'MarketsData', 'SpecialReports', 'Columns', 'Channels', 'Events', 'MyTopics', 'Discover', 'Marketing', 'findpassword', 'house-ad-subscription-promo-box'],
+        'codeFileName': ['', 'subscription-vip-redeem'],
         'fromSide': ['PartnerActivity'],
         'sideOption': ['headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot'],
         'preferLead': ['longlead', 'shortlead', 'none'],
@@ -91,13 +92,14 @@
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
-            'promoBox': ['title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'note'],
+            'promoBox': ['title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'note'],
             'newAd':['devices','pattern','position','container'],
             'timeline': ['title', 'name', 'timelineStyle', 'description']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
             'listWithText': ['name', 'title', 'url', 'text', 'wideImage', 'mobileImage', 'titleForMore', 'imageStyle'],
+            'listWithCode': ['codeFileName'],
             'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote', 'itemNumber', 'feedbackForSuccess', 'feedbackForFailure'],
             'SideMPU': ['name', 'image', 'url'],
             'SideWithItems':['name', 'title', 'url', 'sideOption', 'feedItems', 'feedTag', 'feedType'],
@@ -138,6 +140,7 @@
         'dates': datesFormat,
         'backgroundColor': hexColor,
         'buttonColor': hexColor,
+        'buttonFontColor': hexColor,
         'click': clickRedirect
     };
     var devices = [
