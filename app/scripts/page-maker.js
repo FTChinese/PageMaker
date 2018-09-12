@@ -392,7 +392,7 @@
             } else if (dataRules[key] === 'readonly') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>';
             } else if (dataRules[key] === 'adimage') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '"></td><td><a class="action-link" href="/ads_admin/index.php?into=apple" target="_blank">Upload</a></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image" value="' + value + '"></td><td><a class="action-link" href="/ads_admin/index.php?into=apple" target="_blank">Upload</a></td></tr>';
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>';
             } else if (dataRules[key] === 'textarea') {
@@ -1537,6 +1537,10 @@
 
     $('body').on('click', '#preview-shadow', function () {
         $('#preview-overlay').empty();
+    });
+
+    $('body').on('click', '.action-link', function () {
+        window.gPendingInput = this.parentElement.parentElement.querySelector('.o-input-text.ad-image');
     });
 
     $('body').on('click', '.preview-on-device', function () {
