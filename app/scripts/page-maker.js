@@ -45,7 +45,10 @@
         'status': ['on', 'off'],
         'subscriptionBoxTarget': ['all', 'allCampaigns', 'oneCampaign'],
         'showNavigation': ['yes', 'no'],
-        'maxPageNumber': 'number'
+        'maxPageNumber': 'number',
+        'fileName': 'adimage',
+        'landscapeFileName': 'adimage',
+        'backupImage': 'adimage'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -388,6 +391,8 @@
                 });
             } else if (dataRules[key] === 'readonly') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>';
+            } else if (dataRules[key] === 'adimage') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '"></td><td><a class="action-link" href="/ads_admin/index.php?into=apple" target="_blank">Upload</a></td></tr>';
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>';
             } else if (dataRules[key] === 'textarea') {
