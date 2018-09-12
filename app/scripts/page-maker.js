@@ -48,7 +48,8 @@
         'maxPageNumber': 'number',
         'fileName': 'adimage',
         'landscapeFileName': 'adimage',
-        'backupImage': 'adimage'
+        'backupImage': 'adimage',
+        'dates': 'dates'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -392,7 +393,9 @@
             } else if (dataRules[key] === 'readonly') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>';
             } else if (dataRules[key] === 'adimage') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image" value="' + value + '"></td><td><a class="action-link" href="/ads_admin/index.php?into=apple" target="_blank">Upload</a></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image" value="' + value + '"></td><td><button class="action-link" target="_blank">Upload</button></td></tr>';
+            } else if (dataRules[key] === 'dates') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>';
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>';
             } else if (dataRules[key] === 'textarea') {
@@ -1110,6 +1113,18 @@
         loadStories();
     }
 
+    function launchDatePicker(ele) {
+        var datesInput = ele.parentElement.parentElement.querySelector('.date-value');
+        if (datesInput) {
+            var currentDatesString = datesInput.value;
+            var currentDatesArray = currentDatesString.split(',');
+            currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
+            console.log (currentDatesArray);
+        } else {
+            alert ('Can not find the dates input. You can ask Tech team about this. ');
+        }
+    }
+
     $('body').on('dragstart', '.item, .relative-item, .section-header, .lists-header, .toolkit, .group-header', function (e) {
         try {
             e.originalEvent.dataTransfer.setData('text/plain', 'anything');
@@ -1541,6 +1556,7 @@
 
     $('body').on('click', '.action-link', function () {
         window.gPendingInput = this.parentElement.parentElement.querySelector('.o-input-text.ad-image');
+        window.imageUploader = window.open('/ads_admin/index.php?into=apple', '_blank', '');
     });
 
     $('body').on('click', '.preview-on-device', function () {
@@ -1590,6 +1606,10 @@
 
     $('body').on('click', '#refresh-button', function () {
         searchAPI();
+    });
+
+    $('body').on('click', '.date-picker', function () {
+        launchDatePicker(this);
     });
 
     $('body').on('keyup', '#keywords-input', function(e){
