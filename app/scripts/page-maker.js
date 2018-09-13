@@ -1120,6 +1120,8 @@
             var currentDatesArray = currentDatesString.split(',');
             currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
             console.log (currentDatesArray);
+            // TODO: Render the Date Pick Picker
+            
         } else {
             alert ('Can not find the dates input. You can ask Tech team about this. ');
         }
