@@ -53,12 +53,37 @@ gulp.task('images', function () {
     }))
     .pipe(gulp.dest('dist/images'));
 });
+// // Launch static server
+// gulp.task('serve', 
+//   gulp.parallel(
+//     'styles', 
+//     // 'scripts',
+//     () => {
+//     browserSync.init({
+//       server: {
+//         baseDir: ['app', '.tmp'],
+//         index: 'page-maker.html',
+//         routes: {
+//           '/bower_components': 'bower_components'
+//         }
+//       }
+//     });
+//     // gulp.watch([ 'app/views/*.html',]).on('change', browserSync.reload);
+//     //gulp.watch([ 'app/*.html',]).on('change', browserSync.reload);
+//     //gulp.watch(['app/*.html', 'app/scripts/**/*.js', 'app/styles/**/*.scss'], browserSync.reload);
+
+//     gulp.watch('app/styles/**/*.scss', gulp.parallel('styles'));
+//     gulp.watch(['app/*.html', 'app/scripts/**/*.js', 'app/images/**/*'], browserSync.reload);
+
+//   })
+// );
+
+
 // Launch static server
 gulp.task('serve', 
   gulp.parallel(
     'styles', 
-    // 'scripts',
-    () => {
+    function serve() {
     browserSync.init({
       server: {
         baseDir: ['app', '.tmp'],
@@ -68,11 +93,12 @@ gulp.task('serve',
         }
       }
     });
-    // gulp.watch([ 'app/views/*.html',]).on('change', browserSync.reload);
-    gulp.watch([ 'app/*.html',]).on('change', browserSync.reload);
-    gulp.watch(['app/*.html', 'app/scripts/**/*.js', 'app/styles/**/*.scss'], browserSync.reload);
+    gulp.watch('app/styles/**/*.scss', gulp.parallel('styles'));
+    gulp.watch(['app/*.html', 'app/scripts/**/*.js', 'app/images/**/*'], browserSync.reload);
   })
 );
+
+
 
 gulp.task('clean', function() {
   return del(['.tmp/**', 'dist']).then(()=>{

@@ -1113,19 +1113,94 @@
         loadStories();
     }
 
+// MARK: - Date Picker 
+    var allDateNumbers = [];
     function launchDatePicker(ele) {
         var datesInput = ele.parentElement.parentElement.querySelector('.date-value');
         if (datesInput) {
             var currentDatesString = datesInput.value;
             var currentDatesArray = currentDatesString.split(',');
             currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
-            console.log (currentDatesArray);
-            // TODO: Render the Date Pick Picker
-            
+            currentDatesArray = currentDatesArray.filter(function(x) {
+              return isNaN(x) === false
+            });
+            currentDatesArray = currentDatesArray.sort(function(a, b){return a - b});
+            allDateNumbers = currentDatesArray.map(x => x.getFullYear()*10000 + (x.getMonth() + 1) * 100 + x.getDate());
+            var calendarContainer = document.createElement("DIV");
+            calendarContainer.innerHTML = getCalendarHTML(new Date(), currentDatesArray);
+            calendarContainer.className = 'calendar-container';
+            document.body.appendChild(calendarContainer);
         } else {
             alert ('Can not find the dates input. You can ask Tech team about this. ');
         }
     }
+
+    function getCalendarHTML(dateValue) {
+        var html = '';
+        const monthNumber = dateValue.getMonth() + 1;
+        const yearNumber = dateValue.getFullYear();
+        const yearMonthNumber = yearNumber * 100 + monthNumber;
+        const yearMonth = yearMonthNumber.toString().replace(/([0-9]{4})/g, '$1-');
+        html += '<div class="o-calendar-header" data-date="' + yearMonth + '"><div class="prev"><</div><div class="title">' + yearMonth + '</div><div class="next">></div></div>';
+        html += '<tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>';
+        var oneMonthHTML = '';
+        for (var i=1; i<=31; i++) {
+            const currentDateNumber = yearMonthNumber * 100 + i;
+            const currentDateValue = new Date(currentDateNumber.toString().replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3'));
+            if (isNaN(currentDateValue) === false && dateValue.getMonth() === currentDateValue.getMonth()) {
+                var dayNumber = currentDateValue.getDay();
+                var cellClass = (allDateNumbers.indexOf(currentDateNumber) >= 0) ? ' class="picked"' : '';
+                console.log (allDateNumbers);
+                console.log (currentDateNumber);
+                const cellValue = '<td data-date="' + currentDateNumber + '"' + cellClass + '>' + i + '</td>';
+                if (i === 1 || dayNumber === 0) {
+                    oneMonthHTML += '<tr>' + '<td></td>'.repeat(dayNumber) + cellValue;
+                } else if (dayNumber === 6) {
+                    oneMonthHTML += cellValue + '</tr>';
+                } else {
+                    oneMonthHTML += cellValue;
+                }
+            }
+        }
+        if (/<\/tr>$/.test(oneMonthHTML) === false) {
+            oneMonthHTML += '</tr>';
+        }
+        html += oneMonthHTML;
+        html = '<table class="o-calendar-table">' + html + '</table>';
+        html = '<div class="o-calendar-overlay"></div><div class="o-calendar-inner">' + html + '</div>';
+        return html; 
+    }
+
+
+    $('body').on('click', '.o-calendar-overlay', function () {
+        this.parentElement.remove();
+    });
+
+    $('body').on('click', '.o-calendar-header .prev, .o-calendar-header .next', function () {
+        const currentMonth = parseInt(this.parentElement.getAttribute('data-date').replace('-', ''), 10);
+        const direction = (this.className.indexOf('next') >= 0) ? 1 : -1;
+        const yearNumber = parseInt(currentMonth/100, 10);
+        const monthNumber = currentMonth % 100;
+        var newMonthNumber = monthNumber + direction;
+        var newYearNumber = yearNumber;
+        console.log (newYearNumber + '-' + newMonthNumber);
+        if (newMonthNumber <= 0) {
+            newYearNumber = newYearNumber - 1;
+            newMonthNumber = 12;
+        } else if (newMonthNumber >= 13) {
+            newYearNumber = newYearNumber + 1;
+            newMonthNumber = 1;
+        }
+        var newDate = new Date(newYearNumber + '-' + newMonthNumber + '-' + '1');
+        console.log (newYearNumber + '-' + newMonthNumber + '-' + '1');
+        console.log (newDate);
+        document.querySelector('.o-calendar-inner').innerHTML = getCalendarHTML(newDate);
+    });
+
+// MARK: - Date Picker End
+
+
+
 
     $('body').on('dragstart', '.item, .relative-item, .section-header, .lists-header, .toolkit, .group-header', function (e) {
         try {
