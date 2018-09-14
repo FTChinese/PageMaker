@@ -14,7 +14,10 @@ $blueLink: #2e6e9e;
 $bannerBG: #F6E9D8;
 $lightPink: $bannerBG;
 $darkGreen: #0a5e66;
-
+$darkGrey: #333333;
+$lightGrey: #505050;
+$lighterGrey: #777;
+$timeGrey: #8b572a;
 // width, height
 $headerHeight: 44px;
 $itemBottom: 5px;
@@ -89,6 +92,29 @@ $lightPink: $bannerBG;
     &.picked {
       background-color: $darkGreen;
       color: white;
+    }
+    &.old {
+      color: $lighterGrey;
+    }
+  }
+  td {
+    cursor: default;
+  }
+}
+
+.o-calendar-action {
+  text-align: center;
+  .button-left {
+    margin-right: 10px;
+  }
+  .button-right {
+    margin-left: 10px;
+  }
+  button {
+    &.o-calendar-cancel {
+      border-width: 0;
+      background-color: transparent;
+      color: $darkGrey;
     }
   }
 }

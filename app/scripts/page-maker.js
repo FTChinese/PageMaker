@@ -1115,8 +1115,10 @@
 
 // MARK: - Date Picker 
     var allDateNumbers = [];
+    var datesInput;
+
     function launchDatePicker(ele) {
-        var datesInput = ele.parentElement.parentElement.querySelector('.date-value');
+        datesInput = ele.parentElement.parentElement.querySelector('.date-value');
         if (datesInput) {
             var currentDatesString = datesInput.value;
             var currentDatesArray = currentDatesString.split(',');
@@ -1143,38 +1145,40 @@
         const yearMonth = yearMonthNumber.toString().replace(/([0-9]{4})/g, '$1-');
         html += '<div class="o-calendar-header" data-date="' + yearMonth + '"><div class="prev"><</div><div class="title">' + yearMonth + '</div><div class="next">></div></div>';
         html += '<tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>';
+        const todayDate = new Date();
+        const todayNumber = todayDate.getFullYear() * 10000 + (todayDate.getMonth() + 1) * 100 + todayDate.getDate();
         var oneMonthHTML = '';
         for (var i=1; i<=31; i++) {
             const currentDateNumber = yearMonthNumber * 100 + i;
             const currentDateValue = new Date(currentDateNumber.toString().replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3'));
             if (isNaN(currentDateValue) === false && dateValue.getMonth() === currentDateValue.getMonth()) {
-                var dayNumber = currentDateValue.getDay();
-                var cellClass = (allDateNumbers.indexOf(currentDateNumber) >= 0) ? ' class="picked"' : '';
-                console.log (allDateNumbers);
-                console.log (currentDateNumber);
-                const cellValue = '<td data-date="' + currentDateNumber + '"' + cellClass + '>' + i + '</td>';
-                if (i === 1 || dayNumber === 0) {
-                    oneMonthHTML += '<tr>' + '<td></td>'.repeat(dayNumber) + cellValue;
-                } else if (dayNumber === 6) {
-                    oneMonthHTML += cellValue + '</tr>';
-                } else {
-                    oneMonthHTML += cellValue;
+                const dayNumber = currentDateValue.getDay();
+                var cellClasses = [];
+                if (allDateNumbers.includes(currentDateNumber)) {
+                    cellClasses.push('picked');
                 }
+                if (currentDateNumber < todayNumber) {
+                    cellClasses.push('old');
+                }
+                const cellClassString = cellClasses.join(' ');
+                const cellClass = (cellClassString !== '') ? ' class="' + cellClassString + '"' : '';
+                const cellValue = '<td data-date="' + currentDateNumber + '"' + cellClass + '>' + i + '</td>';
+                const cellPrefix = (i === 1 || dayNumber === 0) ? '<tr>' + '<td></td>'.repeat(dayNumber) : '';
+                const cellSuffix = (dayNumber === 6) ? '</tr>' : '';
+                oneMonthHTML += cellPrefix + cellValue + cellSuffix;
             }
         }
-        if (/<\/tr>$/.test(oneMonthHTML) === false) {
-            oneMonthHTML += '</tr>';
-        }
-        html += oneMonthHTML;
+        oneMonthHTML += (/<\/tr>$/.test(oneMonthHTML)) ? '': '</tr>';
+        html += '<tbody>' + oneMonthHTML + '</tbody>';
         html = '<table class="o-calendar-table">' + html + '</table>';
+        html += '<div class="o-calendar-action"><button class="o-calendar-apply button-left">Apply</button><button class="o-calendar-cancel button-right">Cancel</button></div>';
         html = '<div class="o-calendar-overlay"></div><div class="o-calendar-inner">' + html + '</div>';
         return html; 
     }
 
-
-    $('body').on('click', '.o-calendar-overlay', function () {
-        this.parentElement.remove();
-    });
+    // $('body').on('click', '.o-calendar-overlay', function () {
+    //     this.parentElement.remove();
+    // });
 
     $('body').on('click', '.o-calendar-header .prev, .o-calendar-header .next', function () {
         const currentMonth = parseInt(this.parentElement.getAttribute('data-date').replace('-', ''), 10);
@@ -1183,7 +1187,6 @@
         const monthNumber = currentMonth % 100;
         var newMonthNumber = monthNumber + direction;
         var newYearNumber = yearNumber;
-        console.log (newYearNumber + '-' + newMonthNumber);
         if (newMonthNumber <= 0) {
             newYearNumber = newYearNumber - 1;
             newMonthNumber = 12;
@@ -1192,11 +1195,41 @@
             newMonthNumber = 1;
         }
         var newDate = new Date(newYearNumber + '-' + newMonthNumber + '-' + '1');
-        console.log (newYearNumber + '-' + newMonthNumber + '-' + '1');
-        console.log (newDate);
         document.querySelector('.o-calendar-inner').innerHTML = getCalendarHTML(newDate);
     });
 
+    $('body').on('click', '.o-calendar-table tbody td', function () {
+        const currentDateString = this.getAttribute('data-date');
+        if (!currentDateString && currentDateString === '') {
+            return;
+        }
+        const currentDateNumber = parseInt(currentDateString);
+        const currentDateValue = new Date(currentDateString.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3'));
+        if (isNaN(currentDateValue)) {
+            return;
+        }
+        if (allDateNumbers.includes(currentDateNumber)) {
+            this.classList.remove('picked');
+            allDateNumbers = allDateNumbers.filter(x => x != currentDateNumber);
+        } else {
+            this.classList.add('picked');
+            allDateNumbers.push(currentDateNumber);
+        }
+    });
+
+    $('body').on('click', '.o-calendar-apply', function () {
+        const allDatesString = allDateNumbers.sort(function(a, b){return a - b}).join(',');
+        if (datesInput) {
+            datesInput.value = allDatesString;
+            document.querySelector('.calendar-container').remove();
+        } else {
+            alert ('Can not find the datesInput. Please cancel and try again! ');
+        }
+    });
+
+    $('body').on('click', '.o-calendar-cancel, .o-calendar-overlay', function () {
+        document.querySelector('.calendar-container').remove();
+    });
 // MARK: - Date Picker End
 
 
