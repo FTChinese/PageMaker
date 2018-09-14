@@ -1124,11 +1124,11 @@
             var currentDatesArray = currentDatesString.split(',');
             currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
             currentDatesArray = currentDatesArray.filter(function(x) {
-              return isNaN(x) === false
+              return isNaN(x) === false;
             });
-            currentDatesArray = currentDatesArray.sort(function(a, b){return a - b});
+            currentDatesArray = currentDatesArray.sort(function(a, b){return a - b;});
             allDateNumbers = currentDatesArray.map(x => x.getFullYear()*10000 + (x.getMonth() + 1) * 100 + x.getDate());
-            var calendarContainer = document.createElement("DIV");
+            var calendarContainer = document.createElement('DIV');
             calendarContainer.innerHTML = getCalendarHTML(new Date(), currentDatesArray);
             calendarContainer.className = 'calendar-container';
             document.body.appendChild(calendarContainer);
@@ -1210,7 +1210,7 @@
         }
         if (allDateNumbers.includes(currentDateNumber)) {
             this.classList.remove('picked');
-            allDateNumbers = allDateNumbers.filter(x => x != currentDateNumber);
+            allDateNumbers = allDateNumbers.filter(x => x !== currentDateNumber);
         } else {
             this.classList.add('picked');
             allDateNumbers.push(currentDateNumber);
@@ -1218,7 +1218,7 @@
     });
 
     $('body').on('click', '.o-calendar-apply', function () {
-        const allDatesString = allDateNumbers.sort(function(a, b){return a - b}).join(',');
+        const allDatesString = allDateNumbers.sort(function(a, b){return a - b;}).join(',');
         if (datesInput) {
             datesInput.value = allDatesString;
             document.querySelector('.calendar-container').remove();
