@@ -146,6 +146,7 @@ a {
 button {
   color: #0a5e66;
   border: 1px solid #0a5e66;
+  background-color: white;
 }
 
 ::-webkit-scrollbar {
@@ -361,6 +362,7 @@ button {
   border-bottom: $itemBottom solid $defaultBG;
   td {
     padding: 0 $itemBottom;
+    position: relative;
   }
   td:first-child {
       width: 33%;
@@ -554,21 +556,16 @@ button {
   cursor: pointer;
   display: none;
 }
-
-
 .remove-section {
   margin: $itemBottom $itemBottom 0 0;
 }
-
 .remove-lists {
   margin: 3px $itemBottom 0 0;
 }
-
 .remove-relative {
   height: 20px;
   width: 20px;
 }
-
 .toolkit {
   background-color: $sectionsBorder;
 }
@@ -925,4 +922,13 @@ display: block;
 }
 .premium-stories-color{
   background-color:#98c3b7;
+}
+
+.validate-image {
+  height: 20px;
+  position: absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  margin:auto;
 }

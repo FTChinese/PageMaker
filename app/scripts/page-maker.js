@@ -49,6 +49,8 @@
         'fileName': 'adimage',
         'landscapeFileName': 'adimage',
         'backupImage': 'adimage',
+        'imagePC': 'image',
+        'imageMobile': 'image',
         'dates': 'dates'
     };
     var dataRulesTitle = {
@@ -119,7 +121,8 @@
     // MARK: - Regex for validating common input mistakes such as lack of https
     var regSecureUrl = {
         description: '网址应该采用https! ',
-        regStrInclude: /^https:/
+        regStrInclude: /^https:/,
+        load: true
     };
     var datesFormat = {
         description: '日期格式为YYYYMMDD，半角逗号分隔',
@@ -394,6 +397,8 @@
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>';
             } else if (dataRules[key] === 'adimage') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image" value="' + value + '"></td><td><button class="action-link" target="_blank">Upload</button></td></tr>';
+            } else if (dataRules[key] === 'image') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text content-image" value="' + value + '"></td><td><button class="image-link" target="_blank">Upload</button></td></tr>';
             } else if (dataRules[key] === 'dates') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>';
             } else if (dataRules[key] === 'number') {
@@ -749,19 +754,34 @@
         var todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
 
         lists += renderAPI({
+            id: '',
+            headline: '编辑精选' + todaydate,
+            timeStamp: '',
+            timeStampType: '',
+            longlead: '',
+            shortlead: '',
+            image: 'http://i.ftimg.net/picture/4/000074984_piclink.jpg',
+            type: '',
+            tag: '',
+            customLink: 'http://www.ftchinese.com/channel/editorchoice-issue.html?issue=EditorChoice-' + todaydate,
+            // customLink: 'http://www.ftchinese.com/m/corp/preview.html?pageid=EditorChoice-' + todaydate,
+            showSponsorImage: 'no'
+        });
+        for (var kkk = 0; kkk < 2; kkk++) {
+            lists += renderAPI({
                 id: '',
-                headline: '编辑精选' + todaydate,
+                headline: '直播：' + kkk,
                 timeStamp: '',
                 timeStampType: '',
                 longlead: '',
                 shortlead: '',
-                image: 'http://i.ftimg.net/picture/4/000074984_piclink.jpg',
-                type: '',
+                image: '',
+                type: 'third-party-iframe',
                 tag: '',
-                customLink: 'http://www.ftchinese.com/channel/editorchoice-issue.html?issue=EditorChoice-' + todaydate,
-                // customLink: 'http://www.ftchinese.com/m/corp/preview.html?pageid=EditorChoice-' + todaydate,
+                customLink: '',
                 showSponsorImage: 'no'
             });
+        }
         for (var i = 0; i < 12; i++) {
             lists += renderAPI({
                 id: '',
@@ -777,7 +797,6 @@
                 showSponsorImage: 'no'
             });
         }
-
         for (var j = 0; j < 12; j++) {
             lists += renderAPI({
                 id: '',
@@ -907,7 +926,7 @@
     }
 
     function jsonToDom(jsonUrl) {
-        console.log (jsonUrl);
+        //console.log (jsonUrl);
         $.ajax({
             type: 'get',
             url: jsonUrl,
@@ -1064,15 +1083,32 @@
         var valueType = ele.attr('data-key');
         if (validator[valueType] !== undefined) {
             var validateRegexInclude = validator[valueType].regStrInclude || /.*/;
-            var validateDescription = validator[valueType].description;
+            //var validateDescription = validator[valueType].description;
             var validateRegexExclude = validator[valueType].regStrExclude || /mission impossible do not do this/;
+            var validateUrl = validator[valueType].load;
             if (value !== '') {
                 if (validateRegexInclude.test(value) && !validateRegexExclude.test(value)) {
+                    // MARK: Continue to validate if the validator requires to load url to validate the url is actually accessible! 
+                    if (validateUrl === true) {
+                        //console.log ('should download the url for checking! ');
+                        var containerEle = ele.parent().parent().find('td').last();
+                        var images = containerEle.find('img.validate-image');
+                        var image;
+                        if (images.length === 0) {
+                            image = $('<img class="validate-image">');
+                            image.appendTo(containerEle);
+                        } else {
+                            image = images.eq(0);
+                        }
+                        image.attr('src', value);
+                        image.error(function(){
+                            ele.addClass('warning');
+                        });
+                    }
                     ele.removeClass('warning');
-                } else {
-                    ele.addClass('warning');
-                    alert (validateDescription);
+                    return;
                 }
+                ele.addClass('warning');
             }
         }
     }
@@ -1667,6 +1703,11 @@
     $('body').on('click', '.action-link', function () {
         window.gPendingInput = this.parentElement.parentElement.querySelector('.o-input-text.ad-image');
         window.imageUploader = window.open('/ads_admin/index.php?into=apple', '_blank', '');
+    });
+
+    $('body').on('click', '.image-link', function () {
+        window.gPendingInput = this.parentElement.parentElement.querySelector('.o-input-text.content-image');
+        window.imageUploader = window.open('/create_picture.php?nw=1', '_blank', '');
     });
 
     $('body').on('click', '.preview-on-device', function () {
