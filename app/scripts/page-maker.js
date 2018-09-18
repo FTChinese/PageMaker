@@ -1104,6 +1104,10 @@
                         image.error(function(){
                             ele.addClass('warning');
                         });
+                        image.load(function(){
+                            console.log ('loaded!');
+                            ele.removeClass('warning');
+                        });
                     }
                     ele.removeClass('warning');
                     return;
