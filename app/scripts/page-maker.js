@@ -122,7 +122,12 @@
     var regSecureUrl = {
         description: '网址应该采用https! ',
         regStrInclude: /^https:/,
-        load: true
+        loadImage: true
+    };
+    var regSecureUrlForImpression = {
+        description: '监控地址应该采用https! ',
+        regStrInclude: /^https:/,
+        loadImpression: true
     };
     var datesFormat = {
         description: '日期格式为YYYYMMDD，半角逗号分隔',
@@ -138,9 +143,9 @@
         regStrExclude: /^https.+http:/
     };
     var validator = {
-        'impression_1': regSecureUrl,
-        'impression_2': regSecureUrl,
-        'impression_3': regSecureUrl,
+        'impression_1': regSecureUrlForImpression,
+        'impression_2': regSecureUrlForImpression,
+        'impression_3': regSecureUrlForImpression,
         'fileName': regSecureUrl,
         'backupImage': regSecureUrl,
         'landscapeFileName': regSecureUrl,
@@ -1085,11 +1090,12 @@
             var validateRegexInclude = validator[valueType].regStrInclude || /.*/;
             //var validateDescription = validator[valueType].description;
             var validateRegexExclude = validator[valueType].regStrExclude || /mission impossible do not do this/;
-            var validateUrl = validator[valueType].load;
+            var validateUrlForImage = validator[valueType].loadImage;
+            var valideteUrlForImpression = validator[valueType].loadImpression;
             if (value !== '') {
                 if (validateRegexInclude.test(value) && !validateRegexExclude.test(value)) {
                     // MARK: Continue to validate if the validator requires to load url to validate the url is actually accessible! 
-                    if (validateUrl === true) {
+                    if (validateUrlForImage === true) {
                         //console.log ('should download the url for checking! ');
                         var containerEle = ele.parent().parent().find('td').last();
                         var images = containerEle.find('img.validate-image');
@@ -1104,10 +1110,10 @@
                         image.error(function(){
                             ele.addClass('warning');
                         });
-                        image.load(function(){
-                            console.log ('loaded!');
-                            ele.removeClass('warning');
-                        });
+                    }
+                    // TODO: There's no reliable way to check if an impression is really good because of redirect. Do this after we figure that out. 
+                    if (valideteUrlForImpression === true) {
+
                     }
                     ele.removeClass('warning');
                     return;
