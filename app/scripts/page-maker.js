@@ -113,6 +113,7 @@
             'listWithCode': ['codeFileName'],
             'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote', 'itemNumber', 'feedbackForSuccess', 'feedbackForFailure'],
             'SideMPU': ['name', 'image', 'url'],
+            'adCreative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'backgroundColor', 'durationInSeconds', 'closeButton'],
             'SideWithItems':['name', 'title', 'url', 'sideOption', 'feedItems', 'feedTag', 'feedType'],
             'SideRanking': ['name', 'title', 'url', 'feedItems', 'feedTag', 'feedType'],
             'SideInclude': ['name', 'title', 'url', 'fromSide'],
