@@ -52,7 +52,8 @@
         'backupImage': 'adimage',
         'imagePC': 'image',
         'imageMobile': 'image',
-        'dates': 'dates'
+        'dates': 'dates',
+        'apiNumber': 'number'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -102,7 +103,8 @@
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
             'promoBox': ['title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'note'],
             'newAd':['devices','pattern','position','container'],
-            'timeline': ['title', 'name', 'timelineStyle', 'description']
+            'timeline': ['title', 'name', 'timelineStyle', 'description'],
+            'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
