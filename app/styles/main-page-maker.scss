@@ -328,6 +328,9 @@ button {
   height: 100%;
   overflow-y: scroll;
 }
+.content-left-guideline {
+  margin: 10px;
+}
 .content-left-inner {
   padding-top: 10px;
   @for $i from 1 through 20 {

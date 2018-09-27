@@ -29,6 +29,7 @@
         'feedItems': 'number',
         'feedStart': 'number',
         'text': 'textarea',
+        'guideline': 'textarea',
         'feedImage': ['optional','necessary','hide'],
         'language': ['', 'en', 'ce'],
         'fit': ['', 'standard', 'highimpact', 'legacy'],
@@ -88,7 +89,8 @@
         'titleForMore': 'Under construction. If you need this feature now, let me know. ',
         'imageStyle': 'Under construction. If you need this feature now, let me know. ',
         'subscriptionBoxTarget': 'all means the box appears regardless of the ccode parameter; allCampaigns means the box displays if the url has a ccode parameter; oneCampgin means the box displays only if the ccode in parameter matches the ccode that is input in the field. ',
-        'maxPageNumber': 'The maximum page number based on your estimation. '
+        'maxPageNumber': 'The maximum page number based on your estimation. ',
+        'guideline': '在这里写操作指南，供别的使用者查看'
     };
     var toolkits = {
         'section': {
@@ -438,10 +440,13 @@
     }
 
     function renderJson(jsonData) {
+        // MARK: add meta properties that are necessary
+        if (jsonData.meta.guideline === undefined) {
+            jsonData.meta.guideline = '';
+        }
         //render meta data into HTML Dom
         var metaHTML = '';
         metaHTML = renderMeta(jsonData.meta);
-
         //render sections into HTML Dom
         var sectionsHTML = '';
         $.each(jsonData.sections, function (key, value) {
@@ -461,6 +466,11 @@
 
 
         $('#' + domId).html(metaHTML + sectionsHTML);
+        var guidelineEle = document.querySelector('.content-left-guideline');
+        if (guidelineEle) {
+            var guidelineHTML = jsonData.meta.guideline.replace(/[\r\n]+/g, '<br>');
+            guidelineEle.innerHTML = guidelineHTML;
+        }
     }
 
     function wrapItemHTML(htmlCode, groupTitle) {
@@ -972,8 +982,8 @@
         var fileUpdateTimeString = '';
         // render page meta data into JSON
         $.each(mainMeta, function () {
-            var key = $(this).find('.o-input-text').eq(0).val();
-            var value = $(this).find('.o-input-text').eq(1).val();
+            var key = $(this).find('.o-input-text, .o-textarea').eq(0).val();
+            var value = $(this).find('.o-input-text, .o-textarea').eq(1).val();
             J.meta[key] = value;
             if (key === 'fileTime') {
                 // use the time stamp of the current operation
@@ -984,9 +994,6 @@
                 J.meta[key] = value;
             }
         });
-
-
-
         // render section data
         $.each(sections, function (sectionIndex) {
             var lists = $(this).find('>.section-inner>.lists-container>.lists-item');
