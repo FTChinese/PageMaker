@@ -55,7 +55,11 @@
         'imageMobile': 'image',
         'dates': 'dates',
         'apiNumber': 'number',
-        'allowTop': ['no', 'yes']
+        'allowTop': ['no', 'yes'],
+        'impression_1': 'impression',
+        'impression_2': 'impression',
+        'impression_3': 'impression',
+        'hideAd': ['no', 'yes']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -414,6 +418,8 @@
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text content-image" value="' + value + '"></td><td><button class="image-link" target="_blank">Upload</button></td></tr>';
             } else if (dataRules[key] === 'dates') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>';
+            } else if (dataRules[key] === 'impression') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank">Performance</button></td></tr>';
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>';
             } else if (dataRules[key] === 'textarea') {
@@ -444,11 +450,15 @@
         if (jsonData.meta.guideline === undefined) {
             jsonData.meta.guideline = '';
         }
+        if (jsonData.meta.hideAd === undefined) {
+            jsonData.meta.hideAd = 'no';
+        }
         //render meta data into HTML Dom
         var metaHTML = '';
         metaHTML = renderMeta(jsonData.meta);
         //render sections into HTML Dom
         var sectionsHTML = '';
+        var hasItem = false;
         $.each(jsonData.sections, function (key, value) {
             var sectionMeta = renderMeta(value);
             var title = value.title || value.name || value.from || value.type || 'Section';
@@ -456,6 +466,11 @@
             var sectionLength;
             if (value.lists !== undefined && value.lists.length > 0) {
                 sectionLength = ' <span>(' + value.lists.length + ')</span>';
+                $.each(value.lists, function (listKey, list) {
+                    if (list.items && list.items.length > 0) {
+                        hasItem = true;
+                    }
+                });
             } else {
                 sectionLength = '';
             }
@@ -471,6 +486,13 @@
             var guidelineHTML = jsonData.meta.guideline.replace(/[\r\n]+/g, '<br>');
             guidelineEle.innerHTML = guidelineHTML;
         }
+
+        //MARK: If there's no item in the json data, show the layout view
+        if (hasItem === false) {
+            $('html').removeClass('show-all').removeClass('show-sections').removeClass('show-items').removeClass('show-json');
+            $('html').addClass('show-sections');
+        }
+
     }
 
     function wrapItemHTML(htmlCode, groupTitle) {
@@ -1001,7 +1023,6 @@
             $.each($(this).find('.section-inner>.meta-table .meta-item'), function () {
                 var key = $(this).find('.o-input-text').eq(0).val();
                 var value = $(this).find('.o-input-text').eq(1).val();
-                //console.log (index + ': ' + key + "/" + value);
                 J.sections[sectionIndex][key] = value;
             });
             if (lists.length > 0) {
@@ -1194,6 +1215,62 @@
         } else {
             alert ('Can not find the dates input. You can ask Tech team about this. ');
         }
+    }
+
+    function convertDate(x) {
+        const dateNumber = x.getFullYear()*10000 + (x.getMonth() + 1) * 100 + x.getDate();
+        const dateString = dateNumber.toString().replace(/^([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3');
+        return dateString;
+    }
+
+    function launchImpressionTrack(ele) {
+        var impressionEle = ele.parentElement.parentElement.querySelector('.impression-value');
+        if (impressionEle) {
+            var impressionValue = impressionEle.value;
+            var dateEle = impressionEle.parentElement.parentElement.parentElement.querySelector('.date-value');
+            if (dateEle) {
+                var currentDatesString = dateEle.value;
+                var currentDatesArray = currentDatesString.split(',');
+                currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
+                currentDatesArray = currentDatesArray.filter(function(x) {
+                  return isNaN(x) === false;
+                });
+                currentDatesArray = currentDatesArray.sort(function(a, b){return a - b;});
+                var dateLength = currentDatesArray.length;
+                if (dateLength > 0) {
+                    const startDate = currentDatesArray[0];
+                    const endDate = currentDatesArray[dateLength-1];
+                    const startDateString = convertDate(startDate);
+                    const endDateString = convertDate(endDate);
+                    const baseUrl = '/chartist/event.html?v=1';
+                    const finalUrl = baseUrl + '&startDate=' + startDateString + '&endDate=' + endDateString + '&el=' + encodeURIComponent(impressionValue) + '&ec=iPhone Launch Ad&viewId=108134561';
+                    window.open(finalUrl);
+                    // console.log (startDateString);
+                    // console.log (endDateString);
+                    // console.log (impressionValue);
+                }
+                // var dateNumbers = currentDatesArray.map(x => x.getFullYear()*10000 + (x.getMonth() + 1) * 100 + x.getDate());
+                // var dateNumbersString = dateNumbers.split(',');
+                // console.log (dateNumbersString);
+            }
+        }
+
+        // if (datesInput) {
+        //     var currentDatesString = datesInput.value;
+        //     var currentDatesArray = currentDatesString.split(',');
+        //     currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
+        //     currentDatesArray = currentDatesArray.filter(function(x) {
+        //       return isNaN(x) === false;
+        //     });
+        //     currentDatesArray = currentDatesArray.sort(function(a, b){return a - b;});
+        //     allDateNumbers = currentDatesArray.map(x => x.getFullYear()*10000 + (x.getMonth() + 1) * 100 + x.getDate());
+        //     var calendarContainer = document.createElement('DIV');
+        //     calendarContainer.innerHTML = getCalendarHTML(new Date(), currentDatesArray);
+        //     calendarContainer.className = 'calendar-container';
+        //     document.body.appendChild(calendarContainer);
+        // } else {
+        //     alert ('Can not find the dates input. You can ask Tech team about this. ');
+        // }
     }
 
     function getCalendarHTML(dateValue) {
@@ -1784,6 +1861,10 @@
 
     $('body').on('click', '.date-picker', function () {
         launchDatePicker(this);
+    });
+
+    $('body').on('click', '.impression-track', function () {
+        launchImpressionTrack(this);
     });
 
     $('body').on('keyup', '#keywords-input', function(e){
