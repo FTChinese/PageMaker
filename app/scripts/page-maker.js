@@ -193,7 +193,7 @@
     var gApiUrlsLocal = {
         'home': 'api/page/home.json',
         'homePOST': 'api',
-        'blank': 'api/page/blank.json',
+        'blank': 'api/page/promoBox.json',
         'stories': 'api/page/stories.json'
     };
 
@@ -446,6 +446,25 @@
     }
 
     function renderJson(jsonData) {
+        function getActiveClass(value, todaydate) {
+            var shouldCheckActiveStatus = ('creative,promoBox'.indexOf(value.type)>=0);
+            if (!shouldCheckActiveStatus) {return '';}
+            if (value.type === 'creative') {
+                if (!value.dates) {return '';}
+            } else if (value.type === 'promoBox') {
+                if (value.status !== 'on') {return '';}
+                if (!value.dates || value.dates === '') {return ' is-active';}
+            }
+            const dates = value.dates.split(',');
+            var oneDay;
+            for (oneDay of dates) {
+                const oneDayNumber = parseInt(oneDay);
+                if (oneDayNumber > todaydate) {
+                    return ' is-active';
+                }
+            }
+            return '';
+        }
         // MARK: add meta properties that are necessary
         if (jsonData.meta.guideline === undefined) {
             jsonData.meta.guideline = '';
@@ -453,6 +472,8 @@
         if (jsonData.meta.hideAd === undefined) {
             jsonData.meta.hideAd = 'no';
         }
+        const thisday = new Date();
+        const todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
         //render meta data into HTML Dom
         var metaHTML = '';
         metaHTML = renderMeta(jsonData.meta);
@@ -474,8 +495,9 @@
             } else {
                 sectionLength = '';
             }
+            const activeClass = getActiveClass(value, todaydate);
             sectionType = (sectionType !== '') ? 'type-' + sectionType : '';
-            sectionsHTML += '<div class="section-container ' + sectionType + '"><div class="section-inner"><div class="remove-section"></div><div class="section-header" draggable=true>' + title + sectionLength + '</div>' + sectionMeta + '</div></div>';
+            sectionsHTML += '<div class="section-container ' + sectionType + '"><div class="section-inner"><div class="remove-section"></div><div class="section-header' + activeClass + '" draggable=true>' + title + sectionLength + '</div>' + sectionMeta + '</div></div>';
         });
         sectionsHTML = '<div class="sections">' + sectionsHTML + '</div>';
         $('#' + domId).html(metaHTML + sectionsHTML);

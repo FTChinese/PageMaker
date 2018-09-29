@@ -155,6 +155,7 @@ button {
   color: #0a5e66;
   border: 1px solid #0a5e66;
   background-color: white;
+  margin-right: 5px;
 }
 
 ::-webkit-scrollbar {
@@ -402,6 +403,9 @@ button {
   font-weight: bold;
   font-size: 1.2em;
   cursor: move;
+  &.is-active {
+    color: $darkGreen;
+  }
 }
 
 .lists-item {
