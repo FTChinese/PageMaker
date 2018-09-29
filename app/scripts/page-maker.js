@@ -478,21 +478,17 @@
             sectionsHTML += '<div class="section-container ' + sectionType + '"><div class="section-inner"><div class="remove-section"></div><div class="section-header" draggable=true>' + title + sectionLength + '</div>' + sectionMeta + '</div></div>';
         });
         sectionsHTML = '<div class="sections">' + sectionsHTML + '</div>';
-
-
         $('#' + domId).html(metaHTML + sectionsHTML);
         var guidelineEle = document.querySelector('.content-left-guideline');
         if (guidelineEle) {
             var guidelineHTML = jsonData.meta.guideline.replace(/[\r\n]+/g, '<br>');
             guidelineEle.innerHTML = guidelineHTML;
         }
-
         //MARK: If there's no item in the json data, show the layout view
         if (hasItem === false) {
             $('html').removeClass('show-all').removeClass('show-sections').removeClass('show-items').removeClass('show-json');
             $('html').addClass('show-sections');
         }
-
     }
 
     function wrapItemHTML(htmlCode, groupTitle) {
@@ -1193,9 +1189,11 @@
         loadStories();
     }
 
-// MARK: - Date Picker 
+
+// MARK: - Date Picker Start
     var allDateNumbers = [];
     var datesInput;
+    var otherDateNumbers = {};
 
     function launchDatePicker(ele) {
         datesInput = ele.parentElement.parentElement.querySelector('.date-value');
@@ -1208,6 +1206,7 @@
             });
             currentDatesArray = currentDatesArray.sort(function(a, b){return a - b;});
             allDateNumbers = currentDatesArray.map(x => x.getFullYear()*10000 + (x.getMonth() + 1) * 100 + x.getDate());
+            otherDateNumbers = getOtherDateNumbers(ele);
             var calendarContainer = document.createElement('DIV');
             calendarContainer.innerHTML = getCalendarHTML(new Date(), currentDatesArray);
             calendarContainer.className = 'calendar-container';
@@ -1215,6 +1214,54 @@
         } else {
             alert ('Can not find the dates input. You can ask Tech team about this. ');
         }
+    }
+
+    function getOtherDateNumbers(ele) {
+        var otherDates = {};
+        try {
+            const containerEle = ele.parentElement.parentElement.parentElement;
+            const title = containerEle.querySelector('[data-key=title]').value;
+            const iphone = (containerEle.querySelector('[data-key=iphone]').value === 'yes');
+            const ipad = (containerEle.querySelector('[data-key=ipad]').value === 'yes');
+            const android = (containerEle.querySelector('[data-key=android]').value === 'yes');
+            var allCreatives = document.querySelectorAll('.type-creative');
+            var creative;
+            for (creative of allCreatives) {
+                const currentTitle = creative.querySelector('[data-key=title]').value;
+                const iphoneC = (creative.querySelector('[data-key=iphone]').value === 'yes');
+                const ipadC = (creative.querySelector('[data-key=ipad]').value === 'yes');
+                const androidC = (creative.querySelector('[data-key=android]').value === 'yes');
+                const priorityEle = creative.querySelector('[data-key=priority]');
+                var priority;
+                if (priorityEle) {
+                    priority = priorityEle.value;
+                } else {
+                    priority = 'standard';
+                }
+                const isDeviceOverlapped = ((iphone && iphoneC) || (ipad && ipadC) || (android && androidC));
+                const isOtherCreative = (title !== currentTitle);
+                const isHouseAd = (priority === 'house');
+                if (isOtherCreative && isDeviceOverlapped && !isHouseAd) {
+                    const currentDates = creative.querySelector('[data-key=dates]');
+                    if (currentDates) {
+                        const currentDatesNumbers = currentDates.value.split(',');
+                        var dateNumber;
+                        for (dateNumber of currentDatesNumbers) {
+                            if (dateNumber === '') {continue;}
+                            if (otherDates['day-' + dateNumber]) {
+                                otherDates['day-' + dateNumber].push(currentTitle);
+                            } else {
+                                otherDates['day-' + dateNumber] = [currentTitle];
+                            }
+                        }
+                    }
+                }
+            }
+        } catch(ignore) {
+            console.log (ignore);
+            return otherDates;
+        }
+        return otherDates;
     }
 
     function convertDate(x) {
@@ -1289,9 +1336,16 @@
                 if (currentDateNumber < todayNumber) {
                     cellClasses.push('old');
                 }
+                var otherAdvertisers = '';
+                const otherDatesArray = otherDateNumbers['day-' + currentDateNumber.toString()];
+                if (otherDatesArray && otherDatesArray.length > 0) {
+                    otherAdvertisers = otherDatesArray.join('\n');
+                    cellClasses.push('has-other');
+                }
+                const cellTitleAttribute = (otherAdvertisers === '') ? '' : ' title="' + otherAdvertisers + '"';
                 const cellClassString = cellClasses.join(' ');
                 const cellClass = (cellClassString !== '') ? ' class="' + cellClassString + '"' : '';
-                const cellValue = '<td data-date="' + currentDateNumber + '"' + cellClass + '>' + i + '</td>';
+                const cellValue = '<td data-date="' + currentDateNumber + '"' + cellClass + cellTitleAttribute + '>' + i + '</td>';
                 const cellPrefix = (i === 1 || dayNumber === 0) ? '<tr>' + '<td></td>'.repeat(dayNumber) : '';
                 const cellSuffix = (dayNumber === 6) ? '</tr>' : '';
                 oneMonthHTML += cellPrefix + cellValue + cellSuffix;
@@ -1304,10 +1358,9 @@
         html = '<div class="o-calendar-overlay"></div><div class="o-calendar-inner">' + html + '</div>';
         return html; 
     }
+// MARK: - Date Picker End
 
-    // $('body').on('click', '.o-calendar-overlay', function () {
-    //     this.parentElement.remove();
-    // });
+
 
     $('body').on('click', '.o-calendar-header .prev, .o-calendar-header .next', function () {
         const currentMonth = parseInt(this.parentElement.getAttribute('data-date').replace('-', ''), 10);

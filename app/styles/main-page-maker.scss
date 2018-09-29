@@ -14,6 +14,7 @@ $blueLink: #2e6e9e;
 $bannerBG: #F6E9D8;
 $lightPink: $bannerBG;
 $darkGreen: #0a5e66;
+$red: #cc0000;
 $darkGrey: #333333;
 $lightGrey: #505050;
 $lighterGrey: #777;
@@ -89,9 +90,16 @@ $lightPink: $bannerBG;
     text-align: center;
     font-family: Arial;
     line-height: 161.8%;
+    position: relative;
+    &.has-other {
+      background-color: $red;
+    }
     &.picked {
       background-color: $darkGreen;
       color: white;
+      &.has-other {
+        background: radial-gradient(ellipse at center, $darkGreen 0%, $darkGreen 50%, $red 50%, $red 100%);
+      }
     }
     &.old {
       color: $lighterGrey;
