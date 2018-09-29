@@ -419,7 +419,7 @@
             } else if (dataRules[key] === 'dates') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>';
             } else if (dataRules[key] === 'impression') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank">Performance</button></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>';
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>';
             } else if (dataRules[key] === 'textarea') {
@@ -1225,52 +1225,45 @@
 
     function launchImpressionTrack(ele) {
         var impressionEle = ele.parentElement.parentElement.querySelector('.impression-value');
-        if (impressionEle) {
-            var impressionValue = impressionEle.value;
-            var dateEle = impressionEle.parentElement.parentElement.parentElement.querySelector('.date-value');
-            if (dateEle) {
-                var currentDatesString = dateEle.value;
-                var currentDatesArray = currentDatesString.split(',');
-                currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
-                currentDatesArray = currentDatesArray.filter(function(x) {
-                  return isNaN(x) === false;
-                });
-                currentDatesArray = currentDatesArray.sort(function(a, b){return a - b;});
-                var dateLength = currentDatesArray.length;
-                if (dateLength > 0) {
-                    const startDate = currentDatesArray[0];
-                    const endDate = currentDatesArray[dateLength-1];
-                    const startDateString = convertDate(startDate);
-                    const endDateString = convertDate(endDate);
-                    const baseUrl = '/chartist/event.html?v=1';
-                    const finalUrl = baseUrl + '&startDate=' + startDateString + '&endDate=' + endDateString + '&el=' + encodeURIComponent(impressionValue) + '&ec=iPhone Launch Ad&viewId=108134561';
-                    window.open(finalUrl);
-                    // console.log (startDateString);
-                    // console.log (endDateString);
-                    // console.log (impressionValue);
-                }
-                // var dateNumbers = currentDatesArray.map(x => x.getFullYear()*10000 + (x.getMonth() + 1) * 100 + x.getDate());
-                // var dateNumbersString = dateNumbers.split(',');
-                // console.log (dateNumbersString);
-            }
+        if (!impressionEle) {return;}
+        var impressionValue = impressionEle.value;
+        var dateEle = impressionEle.parentElement.parentElement.parentElement.querySelector('.date-value');
+        var titleEle = impressionEle.parentElement.parentElement.parentElement.querySelector('[data-key=title]');
+        if (!dateEle) {return;}
+        var currentDatesString = dateEle.value;
+        var currentDatesArray = currentDatesString.split(',');
+        currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
+        currentDatesArray = currentDatesArray.filter(function(x) {
+          return isNaN(x) === false;
+        });
+        currentDatesArray = currentDatesArray.sort(function(a, b){return a - b;});
+        var dateLength = currentDatesArray.length;
+        if (dateLength <= 0) {return;}
+        const startDate = currentDatesArray[0];
+        const endDate = currentDatesArray[dateLength-1];
+        const startDateString = convertDate(startDate);
+        const endDateString = convertDate(endDate);
+        const baseUrl = '/chartist/event.html?v=1';
+        const realtimeBaseUrl = 'https://analytics.google.com/analytics/web/?authuser=1#/realtime/rt-event/a1608715w103966157p108134561/filter.list=40==iPhone%252520Launch%252520Ad;42=={el};&metric.type=5/';
+        const titleParameter = (titleEle) ? '&title=' + encodeURIComponent(titleEle.value) : '';
+        const dataSource = ele.getAttribute('data-source');
+        if (!dataSource) {return;}
+        var finalUrl;
+        if (dataSource === 'ftc-chart') {
+            finalUrl = baseUrl + '&startDate=' + startDateString + '&endDate=' + endDateString + '&el=' + encodeURIComponent(impressionValue) + '&ec=iPhone Launch Ad&viewId=108134561' + titleParameter;
+        } else if (dataSource === 'ga-real-time') {
+            // MARK: - replace special characters based on Google Analytics' format
+            const impressionForRealTime = impressionValue
+                .replace(/:/g, '%25253A')
+                .replace(/\//g, '~2F')
+                .replace(/\?/g, '%25253F')
+                .replace(/&/g, '%252526')
+                .replace(/=/g, '%25253D');
+            finalUrl = realtimeBaseUrl.replace('{el}', impressionForRealTime);
+        } else {
+            return;
         }
-
-        // if (datesInput) {
-        //     var currentDatesString = datesInput.value;
-        //     var currentDatesArray = currentDatesString.split(',');
-        //     currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
-        //     currentDatesArray = currentDatesArray.filter(function(x) {
-        //       return isNaN(x) === false;
-        //     });
-        //     currentDatesArray = currentDatesArray.sort(function(a, b){return a - b;});
-        //     allDateNumbers = currentDatesArray.map(x => x.getFullYear()*10000 + (x.getMonth() + 1) * 100 + x.getDate());
-        //     var calendarContainer = document.createElement('DIV');
-        //     calendarContainer.innerHTML = getCalendarHTML(new Date(), currentDatesArray);
-        //     calendarContainer.className = 'calendar-container';
-        //     document.body.appendChild(calendarContainer);
-        // } else {
-        //     alert ('Can not find the dates input. You can ask Tech team about this. ');
-        // }
+        window.open(finalUrl);
     }
 
     function getCalendarHTML(dateValue) {
