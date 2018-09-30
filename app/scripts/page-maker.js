@@ -1837,9 +1837,10 @@
                 dataType: 'text',
                 success: function (msg) {
                     if (msg === 'submit') {
-                        if (confirm('页面提交成功！\n\n要选一条文章发送通知推送吗？')) {
-                            window.open('http://apn.ftchinese.com/');
-                        }
+                        // if (confirm('页面提交成功！\n\n要选一条文章发送通知推送吗？')) {
+                        //     window.open('http://apn.ftchinese.com/');
+                        // }
+                        alert ('页面提交成功！');
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
