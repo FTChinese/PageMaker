@@ -94,7 +94,8 @@
         'imageStyle': 'Under construction. If you need this feature now, let me know. ',
         'subscriptionBoxTarget': 'all means the box appears regardless of the ccode parameter; allCampaigns means the box displays if the url has a ccode parameter; oneCampgin means the box displays only if the ccode in parameter matches the ccode that is input in the field. ',
         'maxPageNumber': 'The maximum page number based on your estimation. ',
-        'guideline': '在这里写操作指南，供别的使用者查看'
+        'guideline': '在这里写操作指南，供别的使用者查看',
+        'audiencePixelTag': '1x1的图片地址，主要用于电子邮件监控流量和广告库存'
     };
     var toolkits = {
         'section': {
