@@ -465,12 +465,15 @@
             }
             return '';
         }
+        if (jsonData.meta.hideAd === undefined) {
+            jsonData.meta.hideAd = 'no';
+        }
+        if (jsonData.meta.audiencePixelTag === undefined) {
+            jsonData.meta.audiencePixelTag = '';
+        }
         // MARK: add meta properties that are necessary
         if (jsonData.meta.guideline === undefined) {
             jsonData.meta.guideline = '';
-        }
-        if (jsonData.meta.hideAd === undefined) {
-            jsonData.meta.hideAd = 'no';
         }
         const thisday = new Date();
         const todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
