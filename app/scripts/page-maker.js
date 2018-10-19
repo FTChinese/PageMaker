@@ -59,7 +59,8 @@
         'impression_1': 'impression',
         'impression_2': 'impression',
         'impression_3': 'impression',
-        'hideAd': ['no', 'yes']
+        'hideAd': ['no', 'yes'],
+        'channel': ['manual', 'auto']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
