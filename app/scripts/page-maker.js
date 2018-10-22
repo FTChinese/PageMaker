@@ -69,7 +69,11 @@
         'storyBanner': ['show', 'hide'],
         'story590Banner': ['show', 'hide'],
         'addToNavSpecialReports': ['yes', 'no'],
-        'channel': ['auto', 'manual']
+        'channel': ['auto', 'manual'],
+        'assignee': ['sales', 'ad ops', 'designer'],
+        'WeeklyOutput': 'number', 
+        'TotalOutput': 'number',
+        'NumberOfArchive': 'number'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -118,7 +122,7 @@
             'footer': [],
             'pagination': ['maxPageNumber'],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
-            'sponsorship': ['title', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd'],
+            'sponsorship': ['title', 'assignee' , 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
@@ -523,7 +527,7 @@
             }
             const activeClass = getActiveClass(value, todaydate);
             sectionType = (sectionType !== '') ? 'type-' + sectionType : '';
-            sectionsHTML += '<div class="section-container ' + sectionType + '"><div class="section-inner"><div class="remove-section"></div><div class="section-header' + activeClass + '" draggable=true>' + title + sectionLength + '</div>' + sectionMeta + '</div></div>';
+            sectionsHTML += '<div class="section-container ' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="section-header' + activeClass + '" draggable=true>' + title + sectionLength + '</div>' + sectionMeta + '</div></div>';
         });
         sectionsHTML = '<div class="sections">' + sectionsHTML + '</div>';
         $('#' + domId).html(metaHTML + sectionsHTML);
@@ -1734,7 +1738,7 @@
             $.each(toolkits.section[sectionType], function (key, value) {
                 sectionJSON[value] = '';
             });
-            newSection = '<div class="section-container type-' + sectionType + '"><div class="section-inner"><div class="remove-section"></div><div class="section-header" draggable="true">' + sectionType + '</div>' + renderMeta(sectionJSON) + '</div></div>';
+            newSection = '<div class="section-container type-' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="section-header" draggable="true">' + sectionType + '</div>' + renderMeta(sectionJSON) + '</div></div>';
             newSectionObject = $($.parseHTML(newSection));
             // drop a new section. The drop point could be the container or its inner elements
             if ($(this).hasClass('section-container')) {
@@ -1948,6 +1952,18 @@
             $(this).remove();
             updateAllTitles();
         });
+    });
+
+    $('body').on('click', '.mail-section', function () {
+        var sectionEle = $(this).parentsUntil($('.sections'), '.section-container');
+        var subject = sectionEle.find('[data-key=title]').val();
+        var sectionType = sectionEle.find('[data-key=type]').val();
+        subject = sectionType + ': ' + subject;
+        var body = window.location.href;
+        sectionEle.find('[data-key]').each(function(){
+            body += '\r\n%0D%0A' + $(this).attr('data-key') + ': ' + $(this).val();
+        });
+        window.open('mailto:sponsorship.group@ftchinese.com?subject=' + subject + '&body=' + body);
     });
 
     $('body').on('click', '#refresh-button', function () {

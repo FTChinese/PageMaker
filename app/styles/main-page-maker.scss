@@ -534,7 +534,7 @@ button {
   }
 }
 .section-container:hover {
-  .remove-section {
+  .remove-section, .mail-section {
     display: block;
   }
 }
@@ -561,7 +561,7 @@ button {
     background-repeat: no-repeat;
   }
 }
-.remove-item, .remove-section, .remove-lists, .remove-relative {
+.remove-item, .remove-section, .remove-lists, .remove-relative, .mail-section {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="grey"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-12h-12v12zm13-15h-3.5l-1-1h-5l-1 1h-3.5v2h14v-2z"/><path d="M0 0h24v24h-24z" fill="none"/></svg>');
   float: right;
   height: 24px;
@@ -571,8 +571,11 @@ button {
   cursor: pointer;
   display: none;
 }
-.remove-section {
+.remove-section, .mail-section {
   margin: $itemBottom $itemBottom 0 0;
+}
+.mail-section {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="grey"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>')
 }
 .remove-lists {
   margin: 3px $itemBottom 0 0;
