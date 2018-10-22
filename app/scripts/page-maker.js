@@ -53,13 +53,22 @@
         'backupImage': 'adimage',
         'imagePC': 'image',
         'imageMobile': 'image',
+        'imageHighlightBox': 'image',
+        'imageTicker': 'image',
+        'imageRibbon': 'image',
         'dates': 'dates',
         'apiNumber': 'number',
         'allowTop': ['no', 'yes'],
         'impression_1': 'impression',
         'impression_2': 'impression',
         'impression_3': 'impression',
-        'hideAd': ['no', 'yes']
+        'hideAd': ['no', 'yes'],
+        'storyMPU1': ['show', 'hide'],
+        'storyMPU2': ['show', 'hide'],
+        'storyMPU3': ['show', 'hide'],
+        'storyBanner': ['show', 'hide'],
+        'story590Banner': ['show', 'hide'],
+        'addToNavSpecialReports': ['yes', 'no']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -95,7 +104,9 @@
         'subscriptionBoxTarget': 'all means the box appears regardless of the ccode parameter; allCampaigns means the box displays if the url has a ccode parameter; oneCampgin means the box displays only if the ccode in parameter matches the ccode that is input in the field. ',
         'maxPageNumber': 'The maximum page number based on your estimation. ',
         'guideline': '在这里写操作指南，供别的使用者查看',
-        'audiencePixelTag': '1x1的图片地址，主要用于电子邮件监控流量和广告库存'
+        'audiencePixelTag': '1x1的图片地址，主要用于电子邮件监控流量和广告库存',
+        'storyKeyWords': '文章中的标签，topic等等',
+        'zone': 'Identifies the ad unit in the associated ad tag. Codes can be up to 100 characters and are not case-sensitive. Only letters, numbers, underscores, hyphens, periods, asterisks, forward slashes, backslashes, exclamations, left angle brackets, colons, and parentheses are allowed.'
     };
     var toolkits = {
         'section': {
@@ -106,6 +117,7 @@
             'footer': [],
             'pagination': ['maxPageNumber'],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
+            'sponsorship': ['title', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
@@ -155,6 +167,10 @@
         regStrInclude: /^http/,
         regStrExclude: /^https.+http:/
     };
+    var fourDigits = {
+        description: '必须是四位数字',
+        regStrInclude: /^[0-9]{4}$/
+    };
     var validator = {
         'impression_1': regSecureUrlForImpression,
         'impression_2': regSecureUrlForImpression,
@@ -166,7 +182,8 @@
         'backgroundColor': hexColor,
         'buttonColor': hexColor,
         'buttonFontColor': hexColor,
-        'click': clickRedirect
+        'click': clickRedirect,
+        'adChannelId': fourDigits
     };
     var devices = [
         {'name': 'PC or Mac', 'width': '', 'height': ''},
@@ -194,7 +211,9 @@
     var gApiUrlsLocal = {
         'home': 'api/page/home.json',
         'homePOST': 'api',
-        'blank': 'api/page/promoBox.json',
+        //'blank': 'api/page/promoBox.json',
+        //'blank': 'api/page/blank.json',
+        'blank': 'api/page/sponsorshipmanagement.json',
         'stories': 'api/page/stories.json'
     };
 
@@ -448,13 +467,15 @@
 
     function renderJson(jsonData) {
         function getActiveClass(value, todaydate) {
-            var shouldCheckActiveStatus = ('creative,promoBox'.indexOf(value.type)>=0);
+            var shouldCheckActiveStatus = ('creative,promoBox,sponsorship'.indexOf(value.type)>=0);
             if (!shouldCheckActiveStatus) {return '';}
-            if (value.type === 'creative') {
+            if ('creative'.indexOf(value.type)>=0) {
                 if (!value.dates) {return '';}
             } else if (value.type === 'promoBox') {
                 if (value.status !== 'on') {return '';}
                 if (!value.dates || value.dates === '') {return ' is-active';}
+            } else if ('sponsorship'.indexOf(value.type)>=0) {
+                if (value.status !== 'on') {return '';}
             }
             const dates = value.dates.split(',');
             var oneDay;
