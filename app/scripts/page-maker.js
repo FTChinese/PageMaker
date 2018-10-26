@@ -111,7 +111,8 @@
         'guideline': '在这里写操作指南，供别的使用者查看',
         'audiencePixelTag': '1x1的图片地址，主要用于电子邮件监控流量和广告库存',
         'storyKeyWords': '文章中的标签，topic等等',
-        'zone': 'Identifies the ad unit in the associated ad tag. Codes can be up to 100 characters and are not case-sensitive. Only letters, numbers, underscores, hyphens, periods, asterisks, forward slashes, backslashes, exclamations, left angle brackets, colons, and parentheses are allowed.'
+        'zone': 'Identifies the ad unit in the associated ad tag. Codes can be up to 100 characters and are not case-sensitive. Only letters, numbers, underscores, hyphens, periods, asterisks, forward slashes, backslashes, exclamations, left angle brackets, colons, and parentheses are allowed.',
+        'emails': '需要协同工作的人的邮件，逗号分隔'
     };
     var toolkits = {
         'section': {
@@ -122,7 +123,7 @@
             'footer': [],
             'pagination': ['maxPageNumber'],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
-            'sponsorship': ['title', 'assignee' , 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive'],
+            'sponsorship': ['title', 'assignee' , 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'note'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
@@ -218,7 +219,8 @@
         'homePOST': 'api',
         //'blank': 'api/page/promoBox.json',
         //'blank': 'api/page/blank.json',
-        'blank': 'api/page/sponsorshipmanagement.json',
+        //'blank': 'api/page/sponsorshipmanagement.json',
+        'blank': 'api/page/creative.json',
         'stories': 'api/page/stories.json'
     };
 
@@ -474,6 +476,7 @@
         function getActiveClass(value, todaydate) {
             var shouldCheckActiveStatus = ('creative,promoBox,sponsorship'.indexOf(value.type)>=0);
             if (!shouldCheckActiveStatus) {return '';}
+
             if ('creative'.indexOf(value.type)>=0) {
                 if (!value.dates) {return '';}
             } else if (value.type === 'promoBox') {
@@ -486,7 +489,7 @@
             var oneDay;
             for (oneDay of dates) {
                 const oneDayNumber = parseInt(oneDay);
-                if (oneDayNumber > todaydate) {
+                if (oneDayNumber >= todaydate) {
                     return ' is-active';
                 }
             }
@@ -1963,7 +1966,10 @@
         sectionEle.find('[data-key]').each(function(){
             body += '\r\n%0D%0A' + $(this).attr('data-key') + ': ' + $(this).val();
         });
-        window.open('mailto:sponsorship.group@ftchinese.com?subject=' + subject + '&body=' + body);
+        var emails = sectionEle.find('[data-key=emails]').val() || '';
+        emails = emails.replace(/[, ]+/g, ';');
+        //console.log (emails);
+        window.open('mailto:' + emails + '?subject=' + subject + '&body=' + body);
     });
 
     $('body').on('click', '#refresh-button', function () {
@@ -1983,7 +1989,6 @@
             searchAPI();
         }
     });
-
 
     // change section meta property
     $('body').on('change', '.section-inner>.meta-table .o-input-text', function () {
