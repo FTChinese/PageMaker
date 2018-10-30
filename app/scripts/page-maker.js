@@ -1927,7 +1927,7 @@
             }
             window.open(link, '_blank', '');
         } else {
-            alert ('Zone is empty! You are not able to edit the page! ')
+            alert ('Zone is empty! You are not able to edit the page! ');
         }
     });
 
