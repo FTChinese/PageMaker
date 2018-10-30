@@ -73,7 +73,8 @@
         'assignee': ['sales', 'ad ops', 'designer'],
         'WeeklyOutput': 'number', 
         'TotalOutput': 'number',
-        'NumberOfArchive': 'number'
+        'NumberOfArchive': 'number',
+        'zone': 'zone'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -219,8 +220,8 @@
         'homePOST': 'api',
         //'blank': 'api/page/promoBox.json',
         //'blank': 'api/page/blank.json',
-        //'blank': 'api/page/sponsorshipmanagement.json',
-        'blank': 'api/page/creative.json',
+        'blank': 'api/page/sponsorshipmanagement.json',
+        //'blank': 'api/page/creative.json',
         'stories': 'api/page/stories.json'
     };
 
@@ -447,6 +448,8 @@
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>';
             } else if (dataRules[key] === 'impression') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>';
+            } else if (dataRules[key] === 'zone') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>';
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>';
             } else if (dataRules[key] === 'textarea') {
@@ -1910,6 +1913,10 @@
     $('body').on('click', '.image-link', function () {
         window.gPendingInput = this.parentElement.parentElement.querySelector('.o-input-text.content-image');
         window.imageUploader = window.open('/create_picture.php?nw=1', '_blank', '');
+    });
+
+    $('body').on('click', '.zone-link', function () {
+        var action = this.getAttribute('data-action');
     });
 
     $('body').on('click', '.preview-on-device', function () {
