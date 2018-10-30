@@ -449,7 +449,7 @@
             } else if (dataRules[key] === 'impression') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>';
             } else if (dataRules[key] === 'zone') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text zone-value" value="' + value + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>';
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>';
             } else if (dataRules[key] === 'textarea') {
@@ -1917,6 +1917,18 @@
 
     $('body').on('click', '.zone-link', function () {
         var action = this.getAttribute('data-action');
+        var zone = this.parentElement.parentElement.querySelector('.o-input-text.zone-value');
+        if (zone && zone.value !== '') {
+            var link;
+            if (action === 'edit') {
+                link = '/pagemaker/page-maker.html?page=' + zone.value;
+            } else {
+                link = 'http://www7.ftchinese.com/m/corp/preview.html?pageid=' + zone.value;
+            }
+            window.open(link, '_blank', '');
+        } else {
+            alert ('Zone is empty! You are not able to edit the page! ')
+        }
     });
 
     $('body').on('click', '.preview-on-device', function () {
