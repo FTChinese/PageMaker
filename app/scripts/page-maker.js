@@ -1986,7 +1986,7 @@
             body += '\r\n%0D%0A' + $(this).attr('data-key') + ': ' + $(this).val();
         });
         var emails = sectionEle.find('[data-key=emails]').val() || '';
-        emails = emails.replace(/[, ]+/g, ';');
+        emails = emails.replace(/[, ]+/g, ',');
         //console.log (emails);
         window.open('mailto:' + emails + '?subject=' + subject + '&body=' + body);
     });
