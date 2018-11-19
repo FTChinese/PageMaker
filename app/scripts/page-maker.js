@@ -71,10 +71,12 @@
         'addToNavSpecialReports': ['yes', 'no'],
         'channel': ['auto', 'manual'],
         'assignee': ['sales', 'ad ops', 'designer'],
-        'WeeklyOutput': 'number', 
+        'WeeklyOutput': 'number',
         'TotalOutput': 'number',
         'NumberOfArchive': 'number',
-        'zone': 'zone'
+        'zone': 'zone',
+        'StartDate': 'dates',
+        'EndDate': 'dates'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -113,7 +115,10 @@
         'audiencePixelTag': '1x1的图片地址，主要用于电子邮件监控流量和广告库存',
         'storyKeyWords': '文章中的标签，topic等等',
         'zone': 'Identifies the ad unit in the associated ad tag. Codes can be up to 100 characters and are not case-sensitive. Only letters, numbers, underscores, hyphens, periods, asterisks, forward slashes, backslashes, exclamations, left angle brackets, colons, and parentheses are allowed.',
-        'emails': '需要协同工作的人的邮件，逗号分隔'
+        'emails': '需要协同工作的人的邮件，逗号分隔',
+        'PageTitle': '订阅页顶部标题',
+        'PageDescription': '订阅页顶部描述文字',
+        'PageImage': '订阅页顶部配图链接'
     };
     var toolkits = {
         'section': {
@@ -131,7 +136,8 @@
             'promoBox': ['title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'note'],
             'newAd':['devices','pattern','position','container'],
             'timeline': ['title', 'name', 'timelineStyle', 'description'],
-            'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber']
+            'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
+            'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
@@ -178,6 +184,10 @@
         description: '必须是四位数字',
         regStrInclude: /^[0-9]{4}$/
     };
+    var checkPrice = {
+        description: '必须是整数价格',
+        regStrInclude: /^[1-9][0-9]{1,3}$/
+    };
     var validator = {
         'impression_1': regSecureUrlForImpression,
         'impression_2': regSecureUrlForImpression,
@@ -190,7 +200,10 @@
         'buttonColor': hexColor,
         'buttonFontColor': hexColor,
         'click': clickRedirect,
-        'adChannelId': fourDigits
+        'adChannelId': fourDigits,
+        'StandardPrice': checkPrice,
+        'PremiumPrice': checkPrice,
+        'MonthlyPrice': checkPrice
     };
     var devices = [
         {'name': 'PC or Mac', 'width': '', 'height': ''},
@@ -315,13 +328,13 @@
             previewLink = 'http://www7.ftchinese.com/video/' + obj.id;
         } else if (obj.type === 'premium') {
             editLink = 'https://backyard.ftchinese.com/falcon.php/story/edit/' + obj.id;
-            previewLink = 'http://www7.ftchinese.com/story/' + obj.id; 
+            previewLink = 'http://www7.ftchinese.com/story/' + obj.id;
         } else if (/\/m\/corp\/preview.html\?pageid=(.*)$/.test(obj.customLink)) {
             editLink = obj.customLink.replace(/^.*\/m\/corp\/preview.html\?pageid=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
-            previewLink = obj.customLink; 
-        }else if(/\/channel\/editorchoice-issue.html\?issue=(.*)$/.test(obj.customLink)){ 
+            previewLink = obj.customLink;
+        }else if(/\/channel\/editorchoice-issue.html\?issue=(.*)$/.test(obj.customLink)){
             editLink = obj.customLink.replace(/^.*\/channel\/editorchoice-issue.html\?issue=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
-            previewLink = obj.customLink; 
+            previewLink = obj.customLink;
         }
         if (obj.timeStamp !== '') {
             obj.timeStamp = unixtochinese(obj.timeStamp, obj.timeStampType);
@@ -364,7 +377,7 @@
         }
         //console.log (relativestoryHTML);
         //relativestoryHTML = '';
-        
+
         dataHTML = '<div draggable=true data-type="' + obj.type + '" class="item ' + obj.type + hasImageClass + premiumStoriesColor+'"' + imageBG + ' data-id="' + obj.id + '"><div class="remove-item"></div><div class="timestamp">' + obj.timeStamp + '</div><div class="item-title">' + obj.headline + '</div><div class="item-info"><div class="item-links"><a href="http://www7.ftchinese.com/' + obj.type + '/' + obj.id + '" target=_blank>Preview</a><a href="' + editLink + '" target=_blank>Edit</a></div>'+sponsorImage+'<div class="item-info-item"><input title="headline" placeholder="headline" name="headline" class="o-input-text" value="' + obj.headline + '"></div><div class="item-info-item"><input title="image" placeholder="image" name="image" class="o-input-text" value="' + obj.image + '"></div><div class="item-info-item"><div class="item-info-title">Long Lead: </div><textarea title="image" placeholder="Long Lead" name="longlead" class="o-input-text">' + obj.longlead + '</textarea></div><div class="item-info-item"><div class="item-info-title">Short Lead: </div><textarea title="short lead" placeholder="short lead" name="shortlead" class="o-input-text">' + obj.shortlead + '</textarea></div><div class="item-info-item"><input title="tag" placeholder="tag" name="tag" class="o-input-text" value="' + obj.tag + '"></div><div class="item-info-item"><input title="custom link" placeholder="custom link" name="customLink" class="o-input-text" value="' + obj.customLink + '"></div><div class="item-info-item"><input title="Chinese Audio Url" placeholder="Chinese Audio Url" name="caudio" class="o-input-text" value="' + chineseAudioUrl + '"></div><div class="item-info-item"><input title="English Audio Url" placeholder="English Audio Url" name="eaudio" class="o-input-text" value="' + englishAudioUrl + '"></div>' + obj.showRelativeStoryItems + '<div class="item-info-item"><input name="timeStamp" type="hidden" class="o-input-text" value="' + oTimeStamp + '" readonly><input type="hidden" name="type" class="o-input-text" value="' + obj.type + '" readonly><input type="hidden" name="id" class="o-input-text" value="' + obj.id + '" readonly></div>' + relativestoryHTML + '</div></div>';
         return dataHTML;
     }
@@ -444,7 +457,7 @@
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image" value="' + value + '"></td><td><button class="action-link" target="_blank">Upload</button></td></tr>';
             } else if (dataRules[key] === 'image') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text content-image" value="' + value + '"></td><td><button class="image-link" target="_blank">Upload</button></td></tr>';
-            } else if (dataRules[key] === 'dates') {
+            } else if (dataRules[key] === 'dates' || dataRules[key] === 'StartDate' || dataRules[key] === 'EndDate') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>';
             } else if (dataRules[key] === 'impression') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>';
@@ -846,7 +859,7 @@
         });
         $.each(toolkits.list, function (key, value) { // jshint ignore:line
             lists += '<div class="toolkit toolkit-list toolkit-' + key + '" draggable=true>' + key + '</div>';
-        });   
+        });
         var thisday = new Date();
         var todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
 
@@ -1182,7 +1195,7 @@
             var valideteUrlForImpression = validator[valueType].loadImpression;
             if (value !== '') {
                 if (validateRegexInclude.test(value) && !validateRegexExclude.test(value)) {
-                    // MARK: Continue to validate if the validator requires to load url to validate the url is actually accessible! 
+                    // MARK: Continue to validate if the validator requires to load url to validate the url is actually accessible!
                     if (validateUrlForImage === true) {
                         //console.log ('should download the url for checking! ');
                         var containerEle = ele.parent().parent().find('td').last();
@@ -1199,7 +1212,7 @@
                             ele.addClass('warning');
                         });
                     }
-                    // TODO: There's no reliable way to check if an impression is really good because of redirect. Do this after we figure that out. 
+                    // TODO: There's no reliable way to check if an impression is really good because of redirect. Do this after we figure that out.
                     if (valideteUrlForImpression === true) {
 
                     }
@@ -1414,7 +1427,7 @@
         html = '<table class="o-calendar-table">' + html + '</table>';
         html += '<div class="o-calendar-action"><button class="o-calendar-apply button-left">Apply</button><button class="o-calendar-cancel button-right">Cancel</button></div>';
         html = '<div class="o-calendar-overlay"></div><div class="o-calendar-inner">' + html + '</div>';
-        return html; 
+        return html;
     }
 // MARK: - Date Picker End
 
