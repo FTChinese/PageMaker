@@ -75,6 +75,7 @@
         'TotalOutput': 'number',
         'NumberOfArchive': 'number',
         'zone': 'zone',
+        'audienceCohort': ['all', 'free', 'standard', 'premium'],
         'StartDate': 'dates',
         'EndDate': 'dates'
     };
@@ -128,7 +129,7 @@
             'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
             'footer': [],
             'pagination': ['maxPageNumber'],
-            'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
+            'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
             'sponsorship': ['title', 'assignee' , 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'note'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
