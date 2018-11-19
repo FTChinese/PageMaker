@@ -76,8 +76,8 @@
         'NumberOfArchive': 'number',
         'zone': 'zone',
         'audienceCohort': ['all', 'free', 'standard', 'premium'],
-        'StartDate': 'dates',
-        'EndDate': 'dates'
+        'StartDate': 'StartDate',
+        'EndDate': 'EndDate'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
