@@ -77,7 +77,9 @@
         'zone': 'zone',
         'audienceCohort': ['all', 'free', 'standard', 'premium'],
         'StartDate': 'StartDate',
-        'EndDate': 'EndDate'
+        'EndDate': 'EndDate',
+        'sectionPageTrack': 'textarea', 
+        'paidPostTrack': 'textarea'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -130,7 +132,7 @@
             'footer': [],
             'pagination': ['maxPageNumber'],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
-            'sponsorship': ['title', 'assignee' , 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'note'],
+            'sponsorship': ['title', 'assignee' , 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'sectionPageTrack', 'paidPostKey', 'paidPostTrack', 'note'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
@@ -1091,8 +1093,9 @@
             var lists = $(this).find('>.section-inner>.lists-container>.lists-item');
             J.sections.push({});
             $.each($(this).find('.section-inner>.meta-table .meta-item'), function () {
-                var key = $(this).find('.o-input-text').eq(0).val();
-                var value = $(this).find('.o-input-text').eq(1).val();
+                var key = $(this).find('.o-input-text, .o-textarea').eq(0).val();
+                var value = $(this).find('.o-input-text, .o-textarea').eq(1).val();
+                console.log (key);
                 J.sections[sectionIndex][key] = value;
             });
             if (lists.length > 0) {
