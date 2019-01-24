@@ -79,7 +79,9 @@
         'StartDate': 'StartDate',
         'EndDate': 'EndDate',
         'sectionPageTrack': 'textarea', 
-        'paidPostTrack': 'textarea'
+        'paidPostTrack': 'textarea',
+        'blocks': 'number',
+        'maxItems': 'number'
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -121,12 +123,15 @@
         'emails': '需要协同工作的人的邮件，逗号分隔',
         'PageTitle': '订阅页顶部标题',
         'PageDescription': '订阅页顶部描述文字',
-        'PageImage': '订阅页顶部配图链接'
+        'PageImage': '订阅页顶部配图链接',
+        'blocks': '0指所有的block',
+        'maxItems': '0指展示所有的item'
     };
     var toolkits = {
         'section': {
             'block': ['title', 'name', 'side', 'sideAlign', 'description'],
             'include': ['from', 'side', 'sideAlign'],
+            'page': ['id', 'blocks', 'maxItems'],
             'header': ['showNavigation'],
             'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
             'footer': [],
