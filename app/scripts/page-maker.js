@@ -23,7 +23,7 @@
         'from': ['', 'MarketsData', 'SpecialReports', 'Columns', 'Channels', 'Events', 'MyTopics', 'Discover', 'Marketing', 'findpassword', 'house-ad-subscription-promo-box'],
         'codeFileName': ['', 'subscription-vip-redeem'],
         'fromSide': ['PartnerActivity'],
-        'sideOption': ['headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot'],
+        'sideOption': ['BigImageAndLead', 'headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot'],
         'preferLead': ['longlead', 'shortlead', 'none'],
         'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium'],
         'feedItems': 'number',
@@ -74,7 +74,8 @@
         'WeeklyOutput': 'number', 
         'TotalOutput': 'number',
         'NumberOfArchive': 'number',
-        'zone': 'zone'
+        'zone': 'zone',
+        'audienceCohort': ['all', 'free', 'standard', 'premium']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -123,8 +124,9 @@
             'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
             'footer': [],
             'pagination': ['maxPageNumber'],
-            'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
+            'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
             'sponsorship': ['title', 'assignee' , 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'note'],
+            'manualTagPage': ['tag', 'zone', 'note'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
@@ -1918,17 +1920,45 @@
     $('body').on('click', '.zone-link', function () {
         var action = this.getAttribute('data-action');
         var zone = this.parentElement.parentElement.querySelector('.o-input-text.zone-value');
-        if (zone && zone.value !== '') {
-            var link;
+        var channelEle = this.parentElement.parentElement.parentElement.querySelector('[data-key=channel]');
+        var channelType = 'auto';
+        if (channelEle && channelEle.value && channelEle.value !== '') {
+            channelType = channelEle.value;
+        } else {
+            channelType = 'unknown';
+        }
+        var link;
+        if (zone && zone.value !== '' && channelType !== 'auto') {
             if (action === 'edit') {
                 link = '/pagemaker/page-maker.html?page=' + zone.value;
             } else {
                 link = 'http://www7.ftchinese.com/m/corp/preview.html?pageid=' + zone.value;
             }
-            window.open(link, '_blank', '');
         } else {
-            alert ('Zone is empty! You are not able to edit the page! ');
+            if (action === 'edit') {
+                if (channelType === 'auto') {
+                    alert ('Channel should be set as manual before you can edit! ');
+                } else {
+                    alert ('Zone is empty! You are not able to edit the page! ');
+                }
+                return;
+            } else {
+                var linkEle = this.parentElement.parentElement.parentElement.querySelector('[data-key=link]');
+                var tagEle = this.parentElement.parentElement.parentElement.querySelector('[data-key=tag]');
+                var titleEle = this.parentElement.parentElement.parentElement.querySelector('[data-key=title]');
+                if (linkEle && linkEle.value && linkEle.value !== '') {
+                    link = linkEle.value;
+                } else if (tagEle && tagEle.value && tagEle.value !== '') {
+                    link = 'http://www7.ftchinese.com/tag/' + tagEle.value;
+                } else if (titleEle && titleEle.value && titleEle.value !== '') {
+                    link = 'http://www7.ftchinese.com/tag/' + titleEle.value;
+                } else {
+                    alert ('You have not put in link, tag, title, or zone yet! ');
+                    return;
+                }
+            }
         }
+        window.open(link, '_blank', '');
     });
 
     $('body').on('click', '.preview-on-device', function () {
