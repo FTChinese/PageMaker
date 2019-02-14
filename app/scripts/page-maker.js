@@ -75,7 +75,8 @@
         'TotalOutput': 'number',
         'NumberOfArchive': 'number',
         'zone': 'zone',
-        'audienceCohort': ['all', 'free', 'standard', 'premium']
+        'audienceCohort': ['all', 'free', 'standard', 'premium'],
+        'subType': ['', 'radio', 'speedreading']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -126,7 +127,7 @@
             'pagination': ['maxPageNumber'],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
             'sponsorship': ['title', 'assignee' , 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'note'],
-            'manualTagPage': ['tag', 'zone', 'note'],
+            'manualTagPage': ['title', 'tag', 'zone', 'link', 'subType', 'preferLead', 'note'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
