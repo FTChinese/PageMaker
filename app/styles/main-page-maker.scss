@@ -629,6 +629,12 @@ button {
       text-decoration: underline;
     }
   }
+  &.group-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    padding-top: 14px;
+    height: auto;
+  }
 }
 input.r-input-text {
   background-color: white;

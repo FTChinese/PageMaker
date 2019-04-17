@@ -25,7 +25,7 @@
         'fromSide': ['PartnerActivity'],
         'sideOption': ['BigImageAndLead', 'headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot'],
         'preferLead': ['longlead', 'shortlead', 'none'],
-        'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium'],
+        'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium', 'audiovideo'],
         'feedItems': 'number',
         'feedStart': 'number',
         'text': 'textarea',
@@ -84,7 +84,15 @@
         'blocks': 'number',
         'maxItems': 'number',
         'content': 'textarea',
-        'discountCode': ['ft_discount', '']
+        'discountCode': ['ft_discount', 'ft_renewal', ''],
+        'Email': 'group',
+        'Notification': 'group',
+        'PromoBox': 'group',
+        'SubscriptionType': ['None', 'Standard Annual', 'Standard Monthly', 'Premium'],
+        'RenewalStatus': ['', 'On', 'Off'],
+        'PaymentMethod': ['', 'AppleInApp', 'WeChat', 'AliPay'],
+        'DaysToExpiration': 'number',
+        'ProductPlatform': ['All', 'Web', 'iOS App', 'Android App']
     };
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -140,7 +148,7 @@
             'footer': [],
             'pagination': ['maxPageNumber'],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
-            'sponsorship': ['title', 'assignee', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'sectionPageTrack', 'paidPostKey', 'paidPostTrack', 'note'],
+            'sponsorship': ['title', 'assignee', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'cntopic', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'sectionPageTrack', 'paidPostKey', 'paidPostTrack', 'note'],
             'manualTagPage': ['title', 'tag', 'zone', 'link', 'description', 'subType', 'preferLead', 'topnav', 'subnav', 'thirdnav', 'note'],
             'MainMessage': ['title', 'content', 'buttonTitle', 'buttonUrl', 'ccode', 'discountCode'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
@@ -150,7 +158,8 @@
             'newAd':['devices','pattern','position','container'],
             'timeline': ['title', 'name', 'timelineStyle', 'description'],
             'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
-            'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate']
+            'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate'],
+            'LifeCycleManager': ['SubscriptionType', 'RenewalStatus', 'PaymentMethod', 'DaysToExpiration', 'ProductPlatform', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'NotificationTitle', 'NotificationAction', 'NotificationId']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
@@ -464,6 +473,8 @@
                         dataHTML += arrayMeta;
                     }
                 });
+            } else if (dataRules[key] === 'group') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text group-title" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>';
             } else if (dataRules[key] === 'readonly') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>';
             } else if (dataRules[key] === 'adimage') {
