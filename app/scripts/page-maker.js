@@ -286,7 +286,8 @@
         //'blank': 'api/page/blank.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
         //'blank': 'api/page/creative.json',
-        'blank': 'api/page/lifecycle.json',
+        //'blank': 'api/page/lifecycle.json',
+        'blank': 'api/page/posters.json',
         'stories': 'api/page/stories.json'
     };
 
@@ -476,10 +477,35 @@
     }
 
 
+
+
     function renderMeta(data) {
+        // MARK: When we change the data property, we want the new properties to be reflected. 
+        function upgradeData(data) {
+            var dataType = data.type;
+            if (dataType) {
+                var newData = {
+                    'type': dataType
+                };
+                var toolKitData = toolkits.section[dataType] || toolkits.list[dataType]
+                if (toolKitData) {
+                    $.each(toolKitData, function (key, value) {
+                        newData[value] = data[value] || '';
+                    });
+                    // console.log ('new data is: ');
+                    // console.log (newData);
+                    return newData;
+                }
+                //console.log ('not a defined type! ');
+                return data;
+            }
+            //console.log ('no type');
+            return data;                
+        }
         var metaHTML = '';
         var dataHTML = '';
-        $.each(data, function (key, value) {
+        const newData = upgradeData(data);
+        $.each(newData, function (key, value) {
             var arrayMeta = '';
             var description = dataRulesTitle[key] || '';
             if (description !== '') {
@@ -530,7 +556,12 @@
                 if (dataRules[key].type === 'select') {
                     $.each(dataRules[key].options, function (k2, v2) {
                         var selected = '';
-                        if (v2 === dataRules[key].default) {
+                        //console.log (v2 + ', ' + value + ', ' + data[key]);
+                        if (value === '') {
+                            if (v2 === dataRules[key].default) {
+                                selected = ' selected';
+                            }
+                        } else if (v2 === value) {
                             selected = ' selected';
                         }
                         options += '<option value="' + v2 + '"' + selected + '>' + v2 + '</option>';
@@ -619,7 +650,7 @@
             }
             const activeClass = getActiveClass(value, todaydate);
             sectionType = (sectionType !== '') ? 'type-' + sectionType : '';
-            sectionsHTML += '<div class="section-container ' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="export-section"></div><div class="import-section"></div><div class="section-header' + activeClass + '" draggable=true>' + title + sectionLength + '</div>' + sectionMeta + '</div></div>';
+            sectionsHTML += '<div class="section-container ' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="clone-section"></div><div class="section-header' + activeClass + '" draggable=true>' + title + sectionLength + '</div>' + sectionMeta + '</div></div>';
         });
         sectionsHTML = '<div class="sections">' + sectionsHTML + '</div>';
         $('#' + domId).html(metaHTML + sectionsHTML);
@@ -1882,7 +1913,7 @@
             $.each(toolkits.section[sectionType], function (key, value) {
                 sectionJSON[value] = '';
             });
-            newSection = '<div class="section-container type-' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="export-section"></div><div class="import-section"></div><div class="section-header" draggable="true">' + sectionType + '</div>' + renderMeta(sectionJSON) + '</div></div>';
+            newSection = '<div class="section-container type-' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="clone-section"></div><div class="section-header" draggable="true">' + sectionType + '</div>' + renderMeta(sectionJSON) + '</div></div>';
             newSectionObject = $($.parseHTML(newSection));
             // drop a new section. The drop point could be the container or its inner elements
             if ($(this).hasClass('section-container')) {
@@ -2142,16 +2173,10 @@
         });
     });
 
-    var exportedSection;
-    $('body').on('click', '.export-section', function () {
-        $(this).parentsUntil($('.sections'), '.section-container').slideDown(500, function () {
-            exportedSection = $(this);
-        });
-    });
 
-    $('body').on('click', '.import-section', function () {
+
+    $('body').on('click', '.clone-section', function () {
         $(this).parentsUntil($('.sections'), '.section-container').slideDown(500, function () {
-            console.log (exportedSection);
             console.log ($(this));
         });
     });
