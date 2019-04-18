@@ -2178,6 +2178,7 @@
     $('body').on('click', '.clone-section', function () {
         $(this).parentsUntil($('.sections'), '.section-container').slideDown(500, function () {
             console.log ($(this));
+            $(this).clone().insertBefore($(this));
         });
     });
 
