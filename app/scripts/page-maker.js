@@ -5,6 +5,55 @@
     var actionType = 'edit';
     var pageId = '';
     var domId = 'content-left-inner';
+    var toolkits = {
+        'section': {
+            'block': ['title', 'name', 'side', 'sideAlign', 'description'],
+            'include': ['from', 'side', 'sideAlign'],
+            'page': ['id', 'blocks', 'maxItems'],
+            'header': ['showNavigation'],
+            'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
+            'footer': [],
+            'pagination': ['maxPageNumber'],
+            'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
+            'sponsorship': ['title', 'assignee', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'cntopic', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'sectionPageTrack', 'paidPostKey', 'paidPostTrack', 'note'],
+            'manualTagPage': ['title', 'tag', 'zone', 'link', 'description', 'subType', 'preferLead', 'topnav', 'subnav', 'thirdnav', 'note'],
+            'MainMessage': ['title', 'content', 'buttonTitle', 'buttonUrl', 'ccode', 'discountCode'],
+            'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
+            'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
+            'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
+            'promoBox': ['title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'note'],
+            'newAd':['devices','pattern','position','container'],
+            'timeline': ['title', 'name', 'timelineStyle', 'description'],
+            'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
+            'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate'],
+            'LifeCycleManager': ['name', 'TargetAudience', 'SubscriptionType', 'RenewalStatus', 'PaymentMethod', 'DaysToExpiration', 'ProductPlatform', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
+            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'ClientLogo', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SubTitle', 'SubTitleFont', 'QRUrl', 'QRTitle', 'note']
+        },
+        'list': {
+            'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
+            'listWithText': ['name', 'title', 'url', 'text', 'wideImage', 'mobileImage', 'titleForMore', 'imageStyle'],
+            'listWithCode': ['codeFileName'],
+            'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote', 'itemNumber', 'feedbackForSuccess', 'feedbackForFailure'],
+            'SideMPU': ['name', 'image', 'url'],
+            'adCreative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'backgroundColor', 'durationInSeconds', 'closeButton'],
+            'SideWithItems':['name', 'title', 'url', 'sideOption', 'feedItems', 'feedTag', 'feedType'],
+            'SideRanking': ['name', 'title', 'url', 'feedItems', 'feedTag', 'feedType'],
+            'SideInclude': ['name', 'title', 'url', 'fromSide'],
+            'SideIframe': ['name', 'title', 'url', 'width', 'height'],
+            'SideNewAd':['devices','pattern','position','container'],
+            'timelineEvent': ['title', 'url', 'description', 'image']
+        }
+    };
+    var allSectionAndLists = ['All'];
+    for (var group in toolkits) {
+        if (toolkits.hasOwnProperty(group)) {
+            for (var item in toolkits[group]) {
+                if (toolkits[group].hasOwnProperty(item)) {
+                    allSectionAndLists.push(item);
+                }
+            }
+        }
+    }
     var dataRules = {
         'lists': 'array',
         'items': 'item',
@@ -88,12 +137,28 @@
         'Email': 'group',
         'Notification': 'group',
         'PromoBox': 'group',
+        'TargetAudience': 'group',
         'SubscriptionType': ['None', 'Standard Annual', 'Standard Monthly', 'Premium'],
         'RenewalStatus': ['', 'On', 'Off'],
         'PaymentMethod': ['', 'AppleInApp', 'WeChat', 'AliPay'],
         'DaysToExpiration': 'number',
-        'ProductPlatform': ['All', 'Web', 'iOS App', 'Android App']
+        'ProductPlatform': {type: 'multiselect', options: ['Web Site', 'iOS App', 'Android App']},
+        'PosterLayout': ['center', 'right', 'right-2', 'bottom'],
+        'PosterTheme': ['dark-blue', 'blue', 'light-blue'],
+        'PosterBGImage': 'image',
+        'PosterMainImage': 'image',
+        'ClientLogo': 'image',
+        'TitleWidth': {type: 'select', default: '360', options: ['300', '310', '320', '330', '340', '350', '360', '370', '380', '390', '400', '410', '420']},
+        'FirstTitleFont': {type: 'select', default: '34', options: ['28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
+        'SecondTitleFont': {type: 'select', default: '34', options: ['28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
+        'SubTitleFont': {type: 'select', default: '20', options: ['14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28']},
+        'FirstTitle': 'textarea',
+        'SecondTitle': 'textarea',
+        'SubTitle': 'textarea',
+        'showrighttype': {type: 'select', default: 'All', options: allSectionAndLists}
     };
+
+
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
         'side': '采用事先写好的模版',
@@ -138,44 +203,7 @@
         'blocks': '0指所有的block',
         'maxItems': '0指展示所有的item'
     };
-    var toolkits = {
-        'section': {
-            'block': ['title', 'name', 'side', 'sideAlign', 'description'],
-            'include': ['from', 'side', 'sideAlign'],
-            'page': ['id', 'blocks', 'maxItems'],
-            'header': ['showNavigation'],
-            'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
-            'footer': [],
-            'pagination': ['maxPageNumber'],
-            'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
-            'sponsorship': ['title', 'assignee', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'cntopic', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'sectionPageTrack', 'paidPostKey', 'paidPostTrack', 'note'],
-            'manualTagPage': ['title', 'tag', 'zone', 'link', 'description', 'subType', 'preferLead', 'topnav', 'subnav', 'thirdnav', 'note'],
-            'MainMessage': ['title', 'content', 'buttonTitle', 'buttonUrl', 'ccode', 'discountCode'],
-            'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
-            'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
-            'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
-            'promoBox': ['title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'note'],
-            'newAd':['devices','pattern','position','container'],
-            'timeline': ['title', 'name', 'timelineStyle', 'description'],
-            'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
-            'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate'],
-            'LifeCycleManager': ['SubscriptionType', 'RenewalStatus', 'PaymentMethod', 'DaysToExpiration', 'ProductPlatform', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'NotificationTitle', 'NotificationAction', 'NotificationId']
-        },
-        'list': {
-            'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
-            'listWithText': ['name', 'title', 'url', 'text', 'wideImage', 'mobileImage', 'titleForMore', 'imageStyle'],
-            'listWithCode': ['codeFileName'],
-            'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote', 'itemNumber', 'feedbackForSuccess', 'feedbackForFailure'],
-            'SideMPU': ['name', 'image', 'url'],
-            'adCreative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'backgroundColor', 'durationInSeconds', 'closeButton'],
-            'SideWithItems':['name', 'title', 'url', 'sideOption', 'feedItems', 'feedTag', 'feedType'],
-            'SideRanking': ['name', 'title', 'url', 'feedItems', 'feedTag', 'feedType'],
-            'SideInclude': ['name', 'title', 'url', 'fromSide'],
-            'SideIframe': ['name', 'title', 'url', 'width', 'height'],
-            'SideNewAd':['devices','pattern','position','container'],
-            'timelineEvent': ['title', 'url', 'description', 'image']
-        }
-    };
+
     // MARK: - Differentiate subscription information
     var isPremiumStories = false;
     // MARK: - Regex for validating common input mistakes such as lack of https
@@ -236,7 +264,8 @@
         {'name': 'iPad Portrait', 'width': 768, 'height': 1024},
         {'name': 'Huawei Mate 8', 'width': 540, 'height': 960},
         {'name': 'Google Nexus 7', 'width': 600, 'height': 960},
-        {'name': 'Email', 'width': '', 'height': '', 'view': 'email'}
+        {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
+        {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'}
     ];
     var thisday = new Date();
     var thenow = thisday.getHours() * 10000 + thisday.getMinutes() * 100 + thisday.getSeconds();
@@ -255,8 +284,9 @@
         'homePOST': 'api',
         //'blank': 'api/page/promoBox.json',
         //'blank': 'api/page/blank.json',
-        'blank': 'api/page/sponsorshipmanagement.json',
+        //'blank': 'api/page/sponsorshipmanagement.json',
         //'blank': 'api/page/creative.json',
+        'blank': 'api/page/lifecycle.json',
         'stories': 'api/page/stories.json'
     };
 
@@ -497,15 +527,29 @@
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '"'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '"></td></tr>';
             } else if (typeof dataRules[key] === 'object') {
                 var options = '';
-                $.each(dataRules[key], function (k1, v1) {
-                    var selected = '';
-                    if (v1 === value) {
-                        selected = ' selected';
-                    }
-                    options += '<option value="' + v1 + '"' + selected + '>' + v1 + '</option>';
-                });
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>';
-            } else {
+                if (dataRules[key].type === 'select') {
+                    $.each(dataRules[key].options, function (k2, v2) {
+                        var selected = '';
+                        if (v2 === dataRules[key].default) {
+                            selected = ' selected';
+                        }
+                        options += '<option value="' + v2 + '"' + selected + '>' + v2 + '</option>';
+                    });
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>';
+                } else if (dataRules[key].type === 'multiselect') {
+                    const options = dataRules[key].options.join(',');
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value multi-select" value="' + value + '" data-options="' + options + '"></td></tr>';
+                } else {
+                    $.each(dataRules[key], function (k1, v1) {
+                        var selected = '';
+                        if (v1 === value) {
+                            selected = ' selected';
+                        }
+                        options += '<option value="' + v1 + '"' + selected + '>' + v1 + '</option>';
+                    });
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>';
+                }
+             } else {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><input type="text" data-key="' + key + '" class="o-input-text" value="' + value + '"></td></tr>';
             }
         });
@@ -547,6 +591,9 @@
         if (jsonData.meta.guideline === undefined) {
             jsonData.meta.guideline = '';
         }
+        if (jsonData.meta.showrighttype === undefined) {
+            jsonData.meta.showrighttype = 'All';
+        }
         const thisday = new Date();
         const todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
         //render meta data into HTML Dom
@@ -572,7 +619,7 @@
             }
             const activeClass = getActiveClass(value, todaydate);
             sectionType = (sectionType !== '') ? 'type-' + sectionType : '';
-            sectionsHTML += '<div class="section-container ' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="section-header' + activeClass + '" draggable=true>' + title + sectionLength + '</div>' + sectionMeta + '</div></div>';
+            sectionsHTML += '<div class="section-container ' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="export-section"></div><div class="import-section"></div><div class="section-header' + activeClass + '" draggable=true>' + title + sectionLength + '</div>' + sectionMeta + '</div></div>';
         });
         sectionsHTML = '<div class="sections">' + sectionsHTML + '</div>';
         $('#' + domId).html(metaHTML + sectionsHTML);
@@ -877,14 +924,19 @@
         });
     }
 
-    function loadTools() {
+    function loadTools(data) {
         var sections = '';
         var lists = '';
+        var showrighttype = data.meta.showrighttype;
         $.each(toolkits.section, function (key, value) { // jshint ignore:line
-            sections += '<div class="toolkit toolkit-section toolkit-' + key + '" draggable=true>' + key + '</div>';
+            if (showrighttype === 'All' || showrighttype === key) {
+                sections += '<div class="toolkit toolkit-section toolkit-' + key + '" draggable=true>' + key + '</div>';
+            }
         });
         $.each(toolkits.list, function (key, value) { // jshint ignore:line
-            lists += '<div class="toolkit toolkit-list toolkit-' + key + '" draggable=true>' + key + '</div>';
+            if (showrighttype === 'All' || showrighttype === key) {
+                lists += '<div class="toolkit toolkit-list toolkit-' + key + '" draggable=true>' + key + '</div>';
+            }
         });
         var thisday = new Date();
         var todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
@@ -1070,7 +1122,7 @@
             success: function (data) {
                 renderJson(data);
                 loadStories();
-                loadTools();
+                loadTools(data);
                 $('#source-json').val(JSON.stringify(data));
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1456,9 +1508,6 @@
         html = '<div class="o-calendar-overlay"></div><div class="o-calendar-inner">' + html + '</div>';
         return html;
     }
-// MARK: - Date Picker End
-
-
 
     $('body').on('click', '.o-calendar-header .prev, .o-calendar-header .next', function () {
         const currentMonth = parseInt(this.parentElement.getAttribute('data-date').replace('-', ''), 10);
@@ -1513,6 +1562,55 @@
 // MARK: - Date Picker End
 
 
+
+
+
+// MARK:- Multiselect Start
+    var multiSelectInput;
+    function launchMultiSelect(ele) {
+        var container = document.createElement('DIV');
+        container.innerHTML = getMultiSelectHTML(ele);
+        container.className = 'calendar-container';
+        multiSelectInput = ele;
+        document.body.appendChild(container);
+    }
+
+
+    function getMultiSelectHTML(ele) {
+        var html = '';
+        var options = ele.getAttribute('data-options').split(',');
+        var values = ele.value.split(',');
+        var optionsHTML = '';
+        for (var option of options) {
+            const checked = (values.indexOf(option) >= 0) ? ' checked' : '';
+            optionsHTML += '<div class="multi-select-option"><label><input type="checkbox" value="'+ option +'"' + checked +'> ' + option + '</label></div>';
+        }
+        optionsHTML = '<div>' + optionsHTML + '</div>';
+        html += optionsHTML;
+        html += '<div class="multi-select-action"><button class="multi-select-apply button-left">Apply</button><button class="o-calendar-cancel button-right">Cancel</button></div>';
+        html = '<div class="o-calendar-overlay"></div><div class="o-calendar-inner">' + html + '</div>';
+        return html;
+    }
+
+
+    $('body').on('click', '.multi-select-apply', function () {
+        var eles = this.closest('.calendar-container').querySelectorAll('input[type="checkbox"]');
+        var finalInputs = [];
+        if (eles) {
+            for (var ele of eles) {
+                if (ele.checked) {
+                    finalInputs.push(ele.value);
+                }
+            }
+            if (multiSelectInput) {
+                multiSelectInput.value = finalInputs;
+            }
+        }
+        document.querySelector('.calendar-container').remove();
+    });
+
+
+// MARK:- Multiselect End
 
 
     $('body').on('dragstart', '.item, .relative-item, .section-header, .lists-header, .toolkit, .group-header', function (e) {
@@ -1784,7 +1882,7 @@
             $.each(toolkits.section[sectionType], function (key, value) {
                 sectionJSON[value] = '';
             });
-            newSection = '<div class="section-container type-' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="section-header" draggable="true">' + sectionType + '</div>' + renderMeta(sectionJSON) + '</div></div>';
+            newSection = '<div class="section-container type-' + sectionType + '"><div class="section-inner"><div class="mail-section"></div><div class="remove-section"></div><div class="export-section"></div><div class="import-section"></div><div class="section-header" draggable="true">' + sectionType + '</div>' + renderMeta(sectionJSON) + '</div></div>';
             newSectionObject = $($.parseHTML(newSection));
             // drop a new section. The drop point could be the container or its inner elements
             if ($(this).hasClass('section-container')) {
@@ -2044,6 +2142,20 @@
         });
     });
 
+    var exportedSection;
+    $('body').on('click', '.export-section', function () {
+        $(this).parentsUntil($('.sections'), '.section-container').slideDown(500, function () {
+            exportedSection = $(this);
+        });
+    });
+
+    $('body').on('click', '.import-section', function () {
+        $(this).parentsUntil($('.sections'), '.section-container').slideDown(500, function () {
+            console.log (exportedSection);
+            console.log ($(this));
+        });
+    });
+
     $('body').on('click', '.mail-section', function () {
         var sectionEle = $(this).parentsUntil($('.sections'), '.section-container');
         var subject = sectionEle.find('[data-key=title]').val();
@@ -2065,6 +2177,10 @@
 
     $('body').on('click', '.date-picker', function () {
         launchDatePicker(this);
+    });
+
+    $('body').on('click', '.multi-select', function () {
+        launchMultiSelect(this);
     });
 
     $('body').on('click', '.impression-track', function () {

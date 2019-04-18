@@ -110,7 +110,7 @@ $lightPink: $bannerBG;
   }
 }
 
-.o-calendar-action {
+.o-calendar-action, .multi-select-action {
   text-align: center;
   .button-left {
     margin-right: 10px;
@@ -127,6 +127,16 @@ $lightPink: $bannerBG;
   }
 }
 
+.multi-select-action {
+  padding-top: 10px;
+}
+.multi-select-option {
+  height: 30px;
+  line-height: 30px;
+  label {
+    display: block;
+  }
+}
 // mixins
 @mixin tabInnerOn {
     background-color: $defaultBG;
@@ -534,7 +544,7 @@ button {
   }
 }
 .section-container:hover {
-  .remove-section, .mail-section {
+  .remove-section, .mail-section, .export-section, .import-section {
     display: block;
   }
 }
@@ -561,7 +571,7 @@ button {
     background-repeat: no-repeat;
   }
 }
-.remove-item, .remove-section, .remove-lists, .remove-relative, .mail-section {
+.remove-item, .remove-section, .remove-lists, .remove-relative, .mail-section, .export-section, .import-section {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="grey"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-12h-12v12zm13-15h-3.5l-1-1h-5l-1 1h-3.5v2h14v-2z"/><path d="M0 0h24v24h-24z" fill="none"/></svg>');
   float: right;
   height: 24px;
@@ -571,11 +581,17 @@ button {
   cursor: pointer;
   display: none;
 }
-.remove-section, .mail-section {
+.remove-section, .mail-section, .export-section, .import-section {
   margin: $itemBottom $itemBottom 0 0;
 }
 .mail-section {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="grey"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>')
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="grey"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+}
+.export-section {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="grey"><path fill="none" d="M0 0h24v24H0z"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm-1 4l6 6v10c0 1.1-.9 2-2 2H7.99C6.89 23 6 22.1 6 21l.01-14c0-1.1.89-2 1.99-2h7zm-1 7h5.5L14 6.5V12z"/></svg>');
+}
+.import-section {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="grey"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
 }
 .remove-lists {
   margin: 3px $itemBottom 0 0;
