@@ -26,7 +26,7 @@
             'timeline': ['title', 'name', 'timelineStyle', 'description'],
             'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
             'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate'],
-            'LifeCycleManager': ['name', 'TargetAudience', 'SubscriptionType', 'RenewalStatus', 'PaymentMethod', 'DaysToExpiration', 'ProductPlatform', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
+            'LifeCycleManager': ['name', 'TargetAudience', 'SubscriberType', 'RenewalStatus', 'PaymentMethods', 'DaysToExpiration', 'ProductPlatform', 'EngagementLevel', 'InactiveDays', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'DelegateToFirebase', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
             'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'ClientLogo', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SubTitle', 'SubTitleFont', 'QRUrl', 'QRTitle', 'note']
         },
         'list': {
@@ -44,7 +44,7 @@
             'timelineEvent': ['title', 'url', 'description', 'image']
         }
     };
-    var allSectionAndLists = ['All'];
+    var allSectionAndLists = [];
     for (var group in toolkits) {
         if (toolkits.hasOwnProperty(group)) {
             for (var item in toolkits[group]) {
@@ -138,10 +138,10 @@
         'Notification': 'group',
         'PromoBox': 'group',
         'TargetAudience': 'group',
-        'SubscriptionType': ['None', 'Standard Annual', 'Standard Monthly', 'Premium'],
+        'SubscriberType': {type: 'multiselect', options: ['Standard Annual', 'Standard Monthly', 'Premium']},
         'RenewalStatus': ['', 'On', 'Off'],
-        'PaymentMethod': ['', 'AppleInApp', 'WeChat', 'AliPay'],
-        'DaysToExpiration': 'number',
+        'PaymentMethods': {type: 'multiselect', options: ['AppleInApp', 'WeChat', 'AliPay']},
+        'DaysToExpiration': {type: 'select', default: '', options: ['-90', '-60', '-30', '-14', '-7', '-3', '-1', '', '1', '3', '7', '14', '30', '60', '90']},
         'ProductPlatform': {type: 'multiselect', options: ['Web Site', 'iOS App', 'Android App']},
         'PosterLayout': ['center', 'right', 'right-2', 'bottom'],
         'PosterTheme': ['dark-blue', 'blue', 'light-blue'],
@@ -155,7 +155,9 @@
         'FirstTitle': 'textarea',
         'SecondTitle': 'textarea',
         'SubTitle': 'textarea',
-        'showrighttype': {type: 'select', default: 'All', options: allSectionAndLists}
+        'showrighttype': {type: 'multiselect', options: allSectionAndLists},
+        'EngagementLevel': {type: 'multiselect', options: ['Low', 'Middle', 'High']},
+        'DelegateToFirebase': ['no', 'yes']
     };
 
 
@@ -286,8 +288,9 @@
         //'blank': 'api/page/blank.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
         //'blank': 'api/page/creative.json',
-        //'blank': 'api/page/lifecycle.json',
-        'blank': 'api/page/posters.json',
+        'blank': 'api/page/lifecycle.json',
+        //'blank': 'api/page/posters.json',
+        //'blank': 'api/page/home.json',
         'stories': 'api/page/stories.json'
     };
 
@@ -484,16 +487,18 @@
         function upgradeData(data) {
             var dataType = data.type;
             if (dataType) {
-                var newData = {
-                    'type': dataType
-                };
-                var toolKitData = toolkits.section[dataType] || toolkits.list[dataType]
+                var newData = {type: dataType};
+                //var newData = data;
+                var toolKitData = toolkits.section[dataType] || toolkits.list[dataType];
                 if (toolKitData) {
+                    // MARK: Loop through toolKitData to make sure the order is correct
                     $.each(toolKitData, function (key, value) {
                         newData[value] = data[value] || '';
                     });
-                    // console.log ('new data is: ');
-                    // console.log (newData);
+                    // MARK: Add all existing key value pairs to make sure no data are lost
+                    $.each(data, function (key, value) {
+                        newData[key] = value;
+                    });
                     return newData;
                 }
                 //console.log ('not a defined type! ');
@@ -505,6 +510,11 @@
         var metaHTML = '';
         var dataHTML = '';
         const newData = upgradeData(data);
+        // console.log ('data is: ');
+        // console.log (data);
+        // console.log ('new data: ')
+        // console.log (newData);
+        //const newData = data;
         $.each(newData, function (key, value) {
             var arrayMeta = '';
             var description = dataRulesTitle[key] || '';
@@ -623,7 +633,7 @@
             jsonData.meta.guideline = '';
         }
         if (jsonData.meta.showrighttype === undefined) {
-            jsonData.meta.showrighttype = 'All';
+            jsonData.meta.showrighttype = '';
         }
         const thisday = new Date();
         const todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
@@ -958,17 +968,18 @@
     function loadTools(data) {
         var sections = '';
         var lists = '';
-        var showrighttype = data.meta.showrighttype;
+        var showrighttype = data.meta.showrighttype || '';
         $.each(toolkits.section, function (key, value) { // jshint ignore:line
-            if (showrighttype === 'All' || showrighttype === key) {
+            if (showrighttype === '' || showrighttype === 'All' || showrighttype.indexOf(key)>=0) {
                 sections += '<div class="toolkit toolkit-section toolkit-' + key + '" draggable=true>' + key + '</div>';
             }
         });
         $.each(toolkits.list, function (key, value) { // jshint ignore:line
-            if (showrighttype === 'All' || showrighttype === key) {
+            if (showrighttype === '' || showrighttype === 'All' || showrighttype.indexOf(key)>=0) {
                 lists += '<div class="toolkit toolkit-list toolkit-' + key + '" draggable=true>' + key + '</div>';
             }
         });
+
         var thisday = new Date();
         var todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
 
@@ -1581,14 +1592,14 @@
         const allDatesString = allDateNumbers.sort(function(a, b){return a - b;}).join(',');
         if (datesInput) {
             datesInput.value = allDatesString;
-            document.querySelector('.calendar-container').remove();
+            document.querySelector('.calendar-container, .multi-select-container').remove();
         } else {
             alert ('Can not find the datesInput. Please cancel and try again! ');
         }
     });
 
     $('body').on('click', '.o-calendar-cancel, .o-calendar-overlay', function () {
-        document.querySelector('.calendar-container').remove();
+        document.querySelector('.calendar-container, .multi-select-container').remove();
     });
 // MARK: - Date Picker End
 
@@ -1601,7 +1612,7 @@
     function launchMultiSelect(ele) {
         var container = document.createElement('DIV');
         container.innerHTML = getMultiSelectHTML(ele);
-        container.className = 'calendar-container';
+        container.className = 'multi-select-container';
         multiSelectInput = ele;
         document.body.appendChild(container);
     }
@@ -1619,13 +1630,13 @@
         optionsHTML = '<div>' + optionsHTML + '</div>';
         html += optionsHTML;
         html += '<div class="multi-select-action"><button class="multi-select-apply button-left">Apply</button><button class="o-calendar-cancel button-right">Cancel</button></div>';
-        html = '<div class="o-calendar-overlay"></div><div class="o-calendar-inner">' + html + '</div>';
+        html = '<div class="o-calendar-overlay"></div><div class="multi-select-inner">' + html + '</div>';
         return html;
     }
 
 
     $('body').on('click', '.multi-select-apply', function () {
-        var eles = this.closest('.calendar-container').querySelectorAll('input[type="checkbox"]');
+        var eles = this.closest('.multi-select-container').querySelectorAll('input[type="checkbox"]');
         var finalInputs = [];
         if (eles) {
             for (var ele of eles) {
@@ -1637,7 +1648,7 @@
                 multiSelectInput.value = finalInputs;
             }
         }
-        document.querySelector('.calendar-container').remove();
+        document.querySelector('.multi-select-container').remove();
     });
 
 
