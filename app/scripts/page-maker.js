@@ -27,7 +27,7 @@
             'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
             'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate'],
             'LifeCycleManager': ['name', 'TargetAudience', 'SubscriberType', 'RenewalStatus', 'PaymentMethods', 'DaysToExpiration', 'ProductPlatform', 'EngagementLevel', 'InactiveDays', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'DelegateToFirebase', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
-            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'ClientLogo', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SubTitle', 'SubTitleFont', 'QRUrl', 'QRTitle', 'note']
+            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'ClientLogo', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SubTitle', 'SubTitleFont', 'CallForActionType', 'QRUrl', 'QRTitle', 'note']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
@@ -41,7 +41,8 @@
             'SideInclude': ['name', 'title', 'url', 'fromSide'],
             'SideIframe': ['name', 'title', 'url', 'width', 'height'],
             'SideNewAd':['devices','pattern','position','container'],
-            'timelineEvent': ['title', 'url', 'description', 'image']
+            'timelineEvent': ['title', 'url', 'description', 'image'],
+            'Headshot': ['Name', 'Image', 'BackgroundImage']
         }
     };
     var allSectionAndLists = [];
@@ -144,7 +145,7 @@
         'DaysToExpiration': {type: 'select', default: '', options: ['-90', '-60', '-30', '-14', '-7', '-3', '-1', '', '1', '3', '7', '14', '30', '60', '90']},
         'ProductPlatform': {type: 'multiselect', options: ['Web Site', 'iOS App', 'Android App']},
         'PosterLayout': ['center', 'right', 'right-2', 'bottom'],
-        'PosterTheme': ['dark-blue', 'blue', 'light-blue'],
+        'PosterTheme': ['dark-blue', 'blue', 'light-blue', 'pink', 'gray', 'red', 'gold'],
         'PosterBGImage': 'image',
         'PosterMainImage': 'image',
         'ClientLogo': 'image',
@@ -157,7 +158,8 @@
         'SubTitle': 'textarea',
         'showrighttype': {type: 'multiselect', options: allSectionAndLists},
         'EngagementLevel': {type: 'multiselect', options: ['Low', 'Middle', 'High']},
-        'DelegateToFirebase': ['no', 'yes']
+        'DelegateToFirebase': ['no', 'yes'],
+        'CallForActionType': ['QR', 'Button']
     };
 
 
@@ -288,8 +290,8 @@
         //'blank': 'api/page/blank.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
         //'blank': 'api/page/creative.json',
-        'blank': 'api/page/lifecycle.json',
-        //'blank': 'api/page/posters.json',
+        //'blank': 'api/page/lifecycle.json',
+        'blank': 'api/page/posters.json',
         //'blank': 'api/page/home.json',
         'stories': 'api/page/stories.json'
     };
@@ -523,7 +525,7 @@
             }
             if (dataRules[key] === 'array' || dataRules[key] === 'item') {
                 $.each(value, function (k, v) {
-                    var title = v.title || v.name || v.type || 'List';
+                    var title = v.title || v.name || v.Name || v.type || 'List';
                     var itemLength = 0;
                     if (v.items !== undefined && v.items.length > 0) {
                         itemLength = ' <span>(' + v.items.length + ')</span>';
@@ -645,7 +647,7 @@
         var hasItem = false;
         $.each(jsonData.sections, function (key, value) {
             var sectionMeta = renderMeta(value);
-            var title = value.title || value.name || value.from || value.type || 'Section';
+            var title = value.title || value.name || value.Name || value.from || value.type || 'Section';
             var sectionType = value.type || '';
             var sectionLength;
             if (value.lists !== undefined && value.lists.length > 0) {
@@ -1277,7 +1279,7 @@
         var obj = ele.parentsUntil($('.sections'), '.section-inner>.meta-table');
         var objContainer = ele.parentsUntil($('.sections'), '.section-container');
         //console.log (obj);
-        var title = obj.find('[data-key=title]').val() || obj.find('[data-key=name]').val() || obj.find('[data-key=from]').val() || obj.find('[data-key=type]').val() || 'New List';
+        var title = obj.find('[data-key=title]').val() || obj.find('[data-key=name]').val() || obj.find('[data-key=Name]').val() || obj.find('[data-key=from]').val() || obj.find('[data-key=type]').val() || 'New List';
         var listsLength;
         //console.log (objContainer.html());
         if (objContainer.find('.lists-item') && objContainer.find('.lists-item').length > 0) {
@@ -1293,7 +1295,7 @@
         var obj = ele.parentsUntil($('.lists-container'), '.lists-item>.meta-table');
         var objContainer = ele.parentsUntil($('.lists-container'), '.lists-item');
         //console.log (obj);
-        var title = obj.find('[data-key=title]').val() || obj.find('[data-key=name]').val() || obj.find('[data-key=type]').val() || 'New List';
+        var title = obj.find('[data-key=title]').val() || obj.find('[data-key=name]').val() || obj.find('[data-key=Name]').val() || obj.find('[data-key=type]').val() || 'New List';
         //console.log (title);
         var listsLength;
         if (objContainer.find('.item') && objContainer.find('.item').length > 0) {
@@ -1962,11 +1964,11 @@
                 }
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log ($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
                     $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block or timtline section! ');
+                    alert('A list can only be dropped to a block, timtline, or Poster section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
@@ -1989,11 +1991,11 @@
                 newListObject.addClass('animated zoomIn');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
                     newListObject.addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block or timeline section! ');
+                    alert('A list can only be dropped to a block, timtline, or Poster section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
