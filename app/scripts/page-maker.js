@@ -21,7 +21,7 @@
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
-            'promoBox': ['title', 'promoTarget', 'DaysToExpiration', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'note'],
+            'promoBox': ['title', 'status', 'promoTarget', 'SubscriberSource', 'Duration', 'DaysToExpiration', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'note'],
             'newAd':['devices','pattern','position','container'],
             'timeline': ['title', 'name', 'timelineStyle', 'description'],
             'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
@@ -159,7 +159,9 @@
         'showrighttype': {type: 'multiselect', options: allSectionAndLists},
         'EngagementLevel': {type: 'multiselect', options: ['Low', 'Middle', 'High']},
         'DelegateToFirebase': ['no', 'yes'],
-        'CallForActionType': ['QR', 'Button']
+        'CallForActionType': ['QR', 'Button'],
+        'SubscriberSource': ['2C', '2B', 'All'],
+        'Duration': ['', 'Year', 'Month']
     };
 
 
@@ -206,7 +208,9 @@
         'PageImage': '订阅页顶部配图链接',
         'blocks': '0指所有的block',
         'maxItems': '0指展示所有的item',
-        'DaysToExpiration': '正数是快要到期的订户，负数是已经过期的订户'
+        'DaysToExpiration': '正数是快要到期的订户，负数是已经过期的订户',
+        'SubscriberSource': '订户是B端还是C端的。大多数情况下，针对C端订户的PromoBox不想让B端订户看到',
+        'Duration': '订户最新购买的订阅的周期，如果订户购买了多个订阅，以最新的那个订阅为准'
     };
 
     // MARK: - Differentiate subscription information
