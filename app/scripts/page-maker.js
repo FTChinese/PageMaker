@@ -205,7 +205,8 @@
         'PageDescription': '订阅页顶部描述文字',
         'PageImage': '订阅页顶部配图链接',
         'blocks': '0指所有的block',
-        'maxItems': '0指展示所有的item'
+        'maxItems': '0指展示所有的item',
+        'DaysToExpiration': '正数是快要到期的订户，负数是已经过期的订户'
     };
 
     // MARK: - Differentiate subscription information
@@ -286,12 +287,12 @@
     var gApiUrlsLocal = {
         'home': 'api/page/home.json',
         'homePOST': 'api',
-        //'blank': 'api/page/promoBox.json',
+        'blank': 'api/page/promoBox.json',
         //'blank': 'api/page/blank.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
         //'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
-        'blank': 'api/page/posters.json',
+        //'blank': 'api/page/posters.json',
         //'blank': 'api/page/home.json',
         'stories': 'api/page/stories.json'
     };
@@ -519,9 +520,13 @@
         //const newData = data;
         $.each(newData, function (key, value) {
             var arrayMeta = '';
-            var description = dataRulesTitle[key] || '';
-            if (description !== '') {
-                description = ' title="' + description + '"';
+            var descriptionOriginal = dataRulesTitle[key] || '';
+            var description = '';
+            var descriptionMore = '';
+            if (descriptionOriginal !== '') {
+                description = ' title="' + descriptionOriginal + '"';
+                //descriptionMore = '<tr class="meta-item-description"><td colspan=2>' + descriptionOriginal + '</td></tr>'
+                descriptionMore = '';
             }
             if (dataRules[key] === 'array' || dataRules[key] === 'item') {
                 $.each(value, function (k, v) {
@@ -542,27 +547,27 @@
                     }
                 });
             } else if (dataRules[key] === 'group') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text group-title" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text group-title" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'readonly') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'adimage') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image" value="' + value + '"></td><td><button class="action-link" target="_blank">Upload</button></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image" value="' + value + '"></td><td><button class="action-link" target="_blank">Upload</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'image') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text content-image" value="' + value + '"></td><td><button class="image-link" target="_blank">Upload</button></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text content-image" value="' + value + '"></td><td><button class="image-link" target="_blank">Upload</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'dates') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'StartDate' || dataRules[key] === 'EndDate') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '" readonly></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '" readonly></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'impression') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'zone') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text zone-value" value="' + value + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text zone-value" value="' + value + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'number') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'textarea') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td><textarea data-key="' + key + '" class="o-textarea">' + value + '</textarea></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td><textarea data-key="' + key + '" class="o-textarea">' + value + '</textarea></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'string') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '"'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '"></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '"'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '"></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'object') {
                 var options = '';
                 if (dataRules[key].type === 'select') {
@@ -578,10 +583,10 @@
                         }
                         options += '<option value="' + v2 + '"' + selected + '>' + v2 + '</option>';
                     });
-                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>';
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
                 } else if (dataRules[key].type === 'multiselect') {
                     const options = dataRules[key].options.join(',');
-                    metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value multi-select" value="' + value + '" data-options="' + options + '"></td></tr>';
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value multi-select" value="' + value + '" data-options="' + options + '"></td></tr>' + descriptionMore;
                 } else {
                     $.each(dataRules[key], function (k1, v1) {
                         var selected = '';
@@ -590,10 +595,10 @@
                         }
                         options += '<option value="' + v1 + '"' + selected + '>' + v1 + '</option>';
                     });
-                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>';
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
                 }
              } else {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><input type="text" data-key="' + key + '" class="o-input-text" value="' + value + '"></td></tr>';
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><input type="text" data-key="' + key + '" class="o-input-text" value="' + value + '"></td></tr>' + descriptionMore;
             }
         });
         dataHTML = '<div class="lists-container">' + dataHTML + '</div>';
@@ -1212,7 +1217,7 @@
             $.each($(this).find('.section-inner>.meta-table .meta-item'), function () {
                 var key = $(this).find('.o-input-text, .o-textarea').eq(0).val();
                 var value = $(this).find('.o-input-text, .o-textarea').eq(1).val();
-                console.log (key);
+                //console.log (key);
                 J.sections[sectionIndex][key] = value;
             });
             if (lists.length > 0) {
