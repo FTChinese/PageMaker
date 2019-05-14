@@ -21,13 +21,13 @@
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
-            'promoBox': ['title', 'status', 'promoTarget', 'SubscriberSource', 'Duration', 'DaysToExpiration', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'note'],
+            'promoBox': ['status', 'note', 'TargetAudience', 'promoTarget', 'SubscriberSource', 'Duration', 'DaysToExpiration', 'ProductPlatform', 'RenewalStatus', 'dates', 'Action', 'title', 'imagePC', 'imageMobile', 'click', 'ccode', 'backgroundColor', 'buttonColor', 'buttonFontColor'],
             'newAd':['devices','pattern','position','container'],
             'timeline': ['title', 'name', 'timelineStyle', 'description'],
             'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
             'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate'],
             'LifeCycleManager': ['name', 'TargetAudience', 'SubscriberType', 'RenewalStatus', 'PaymentMethods', 'DaysToExpiration', 'ProductPlatform', 'EngagementLevel', 'InactiveDays', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'DelegateToFirebase', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
-            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'ClientLogo', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SubTitle', 'SubTitleFont', 'CallForActionType', 'QRUrl', 'QRTitle', 'note']
+            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'ClientLogo', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SubTitle', 'SubTitleFont', 'CallForActionType', 'QRUrl', 'QRTitle', 'note']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
@@ -42,7 +42,7 @@
             'SideIframe': ['name', 'title', 'url', 'width', 'height'],
             'SideNewAd':['devices','pattern','position','container'],
             'timelineEvent': ['title', 'url', 'description', 'image'],
-            'Headshot': ['Name', 'Image', 'BackgroundImage']
+            'Headshot': ['Name', 'Title', 'Image', 'BackgroundImage', 'Mask']
         }
     };
     var allSectionAndLists = [];
@@ -139,15 +139,17 @@
         'Notification': 'group',
         'PromoBox': 'group',
         'TargetAudience': 'group',
+        'Action': 'group',
         'SubscriberType': {type: 'multiselect', options: ['Standard Annual', 'Standard Monthly', 'Premium']},
         'RenewalStatus': ['', 'On', 'Off'],
         'PaymentMethods': {type: 'multiselect', options: ['AppleInApp', 'WeChat', 'AliPay']},
         'DaysToExpiration': {type: 'select', default: '', options: ['-90', '-60', '-30', '-14', '-7', '-3', '-1', '', '1', '3', '7', '14', '30', '60', '90']},
-        'ProductPlatform': {type: 'multiselect', options: ['Web Site', 'iOS App', 'Android App']},
+        'ProductPlatform': {type: 'multiselect', options: ['WebSite', 'iOSApp', 'AndroidApp']},
         'PosterLayout': ['center', 'right', 'right-2', 'bottom'],
-        'PosterTheme': ['dark-blue', 'blue', 'light-blue', 'pink', 'gray', 'red', 'gold'],
+        'PosterTheme': ['dark-blue', 'blue', 'light-blue', 'pink', 'gray', 'red', 'gold', 'black'],
         'PosterBGImage': 'image',
         'PosterMainImage': 'image',
+        'PosterCaption': 'textarea',
         'ClientLogo': 'image',
         'TitleWidth': {type: 'select', default: '360', options: ['300', '310', '320', '330', '340', '350', '360', '370', '380', '390', '400', '410', '420']},
         'FirstTitleFont': {type: 'select', default: '34', options: ['28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
@@ -161,9 +163,8 @@
         'DelegateToFirebase': ['no', 'yes'],
         'CallForActionType': ['QR', 'Button'],
         'SubscriberSource': ['2C', '2B', 'All'],
-        'Duration': ['', 'Year', 'Month']
+        'Duration': ['', 'yearly', 'monthly']
     };
-
 
     var dataRulesTitle = {
         'theme': 'Luxury是指乐尚街的配色风格，主要特点是Title和分割线为金色',
@@ -210,7 +211,9 @@
         'maxItems': '0指展示所有的item',
         'DaysToExpiration': '正数是快要到期的订户，负数是已经过期的订户',
         'SubscriberSource': '订户是B端还是C端的。大多数情况下，针对C端订户的PromoBox不想让B端订户看到',
-        'Duration': '订户最新购买的订阅的周期，如果订户购买了多个订阅，以最新的那个订阅为准'
+        'Duration': '订户最新购买的订阅的周期，如果订户购买了多个订阅，以最新的那个订阅为准',
+        'ProductPlatform': '不同的产品平台--网站、iOS应用和Android应用--的用户习惯和支持的功能是非常不一样的',
+        'RenewalStatus': '用户是否打开了自动续订，目前只有苹果内购支持自动续订'
     };
 
     // MARK: - Differentiate subscription information
