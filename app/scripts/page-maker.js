@@ -21,13 +21,13 @@
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
-            'promoBox': ['status', 'note', 'TargetAudience', 'promoTarget', 'SubscriberSource', 'Duration', 'DaysToExpiration', 'ProductPlatform', 'RenewalStatus', 'dates', 'Action', 'title', 'imagePC', 'imageMobile', 'click', 'ccode', 'backgroundColor', 'buttonColor', 'buttonFontColor'],
+            'promoBox': ['Name', 'status', 'note', 'TargetAudience', 'promoTarget', 'SubscriberSource', 'Duration', 'DaysToExpiration', 'ProductPlatform', 'RenewalStatus', 'dates'],
             'newAd':['devices','pattern','position','container'],
             'timeline': ['title', 'name', 'timelineStyle', 'description'],
             'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
             'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate'],
             'LifeCycleManager': ['name', 'TargetAudience', 'SubscriberType', 'RenewalStatus', 'PaymentMethods', 'DaysToExpiration', 'ProductPlatform', 'EngagementLevel', 'InactiveDays', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'DelegateToFirebase', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
-            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'ClientLogo', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SubTitle', 'SubTitleFont', 'CallForActionType', 'QRUrl', 'QRTitle', 'note']
+            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'HideLogo', 'ClientLogo', 'ClientLogo2', 'ClientLogo3', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SubTitle', 'SubTitleFont', 'SubTitleBG', 'CallForActionType', 'QRUrl', 'QRTitle', 'note']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
@@ -42,7 +42,8 @@
             'SideIframe': ['name', 'title', 'url', 'width', 'height'],
             'SideNewAd':['devices','pattern','position','container'],
             'timelineEvent': ['title', 'url', 'description', 'image'],
-            'Headshot': ['Name', 'Title', 'Image', 'BackgroundImage', 'Mask']
+            'Headshot': ['Name', 'Title', 'Image', 'BackgroundImage', 'Mask'],
+            'PromoBoxAction': ['Name', 'status', 'weight', 'note', 'Action', 'title', 'imagePC', 'imageMobile', 'click', 'ccode', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'ShowCountdown', 'CountdownColor']
         }
     };
     var allSectionAndLists = [];
@@ -75,7 +76,7 @@
         'fromSide': ['PartnerActivity'],
         'sideOption': ['BigImageAndLead', 'headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot'],
         'preferLead': ['longlead', 'shortlead', 'none'],
-        'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium', 'audiovideo'],
+        'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'myFTNew', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium', 'audiovideo'],
         'feedItems': 'number',
         'feedStart': 'number',
         'text': 'textarea',
@@ -145,15 +146,17 @@
         'PaymentMethods': {type: 'multiselect', options: ['AppleInApp', 'WeChat', 'AliPay']},
         'DaysToExpiration': {type: 'select', default: '', options: ['-90', '-60', '-30', '-14', '-7', '-3', '-1', '', '1', '3', '7', '14', '30', '60', '90']},
         'ProductPlatform': {type: 'multiselect', options: ['WebSite', 'iOSApp', 'AndroidApp']},
-        'PosterLayout': ['center', 'right', 'right-2', 'bottom'],
+        'PosterLayout': ['center', 'center-2', 'right', 'right-2', 'bottom'],
         'PosterTheme': ['dark-blue', 'blue', 'light-blue', 'pink', 'gray', 'red', 'gold', 'black'],
         'PosterBGImage': 'image',
         'PosterMainImage': 'image',
         'PosterCaption': 'textarea',
         'ClientLogo': 'image',
+        'ClientLogo2': 'image',
+        'ClientLogo3': 'image',
         'TitleWidth': {type: 'select', default: '360', options: ['300', '310', '320', '330', '340', '350', '360', '370', '380', '390', '400', '410', '420']},
-        'FirstTitleFont': {type: 'select', default: '34', options: ['28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
-        'SecondTitleFont': {type: 'select', default: '34', options: ['28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
+        'FirstTitleFont': {type: 'select', default: '34', options: ['20','21','22','23','24','25','26','27','28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
+        'SecondTitleFont': {type: 'select', default: '34', options: ['20','21','22','23','24','25','26','27','28', '28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
         'SubTitleFont': {type: 'select', default: '20', options: ['14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28']},
         'FirstTitle': 'textarea',
         'SecondTitle': 'textarea',
@@ -163,7 +166,9 @@
         'DelegateToFirebase': ['no', 'yes'],
         'CallForActionType': ['QR', 'Button'],
         'SubscriberSource': ['2C', '2B', 'All'],
-        'Duration': ['', 'yearly', 'monthly']
+        'Duration': ['', 'yearly', 'monthly'],
+        'ShowCountdown': ['no', 'yes'],
+        'HideLogo': ['no', 'yes']
     };
 
     var dataRulesTitle = {
@@ -537,7 +542,7 @@
             }
             if (dataRules[key] === 'array' || dataRules[key] === 'item') {
                 $.each(value, function (k, v) {
-                    var title = v.title || v.name || v.Name || v.type || 'List';
+                    var title = v.Name || v.title || v.name || v.type || 'List';
                     var itemLength = 0;
                     if (v.items !== undefined && v.items.length > 0) {
                         itemLength = ' <span>(' + v.items.length + ')</span>';
@@ -547,7 +552,7 @@
                     //console.log (v.items.length);
                     if (dataRules[key] === 'array') {
                         arrayMeta = renderMeta(v);
-                        dataHTML += '<div class="' + key + '-item"><div class="remove-' + key + '"></div><div class="' + key + '-header" draggable=true>' + title + itemLength + '</div>' + arrayMeta + '</div>';
+                        dataHTML += '<div class="' + key + '-item"><div class="remove-' + key + '"></div><div class="clone-' + key + '"></div><div class="' + key + '-header" draggable=true>' + title + itemLength + '</div>' + arrayMeta + '</div>';
                     } else {
                         arrayMeta = renderItem(v);
                         dataHTML += arrayMeta;
@@ -659,7 +664,7 @@
         var hasItem = false;
         $.each(jsonData.sections, function (key, value) {
             var sectionMeta = renderMeta(value);
-            var title = value.title || value.name || value.Name || value.from || value.type || 'Section';
+            var title = value.Name || value.title || value.name || value.from || value.type || 'Section';
             var sectionType = value.type || '';
             var sectionLength;
             if (value.lists !== undefined && value.lists.length > 0) {
@@ -1291,7 +1296,7 @@
         var obj = ele.parentsUntil($('.sections'), '.section-inner>.meta-table');
         var objContainer = ele.parentsUntil($('.sections'), '.section-container');
         //console.log (obj);
-        var title = obj.find('[data-key=title]').val() || obj.find('[data-key=name]').val() || obj.find('[data-key=Name]').val() || obj.find('[data-key=from]').val() || obj.find('[data-key=type]').val() || 'New List';
+        var title = obj.find('[data-key=Name]').val() || obj.find('[data-key=title]').val() || obj.find('[data-key=name]').val() || obj.find('[data-key=from]').val() || obj.find('[data-key=type]').val() || 'New List';
         var listsLength;
         //console.log (objContainer.html());
         if (objContainer.find('.lists-item') && objContainer.find('.lists-item').length > 0) {
@@ -1307,7 +1312,7 @@
         var obj = ele.parentsUntil($('.lists-container'), '.lists-item>.meta-table');
         var objContainer = ele.parentsUntil($('.lists-container'), '.lists-item');
         //console.log (obj);
-        var title = obj.find('[data-key=title]').val() || obj.find('[data-key=name]').val() || obj.find('[data-key=Name]').val() || obj.find('[data-key=type]').val() || 'New List';
+        var title = obj.find('[data-key=Name]').val() || obj.find('[data-key=title]').val() || obj.find('[data-key=name]').val() || obj.find('[data-key=type]').val() || 'New List';
         //console.log (title);
         var listsLength;
         if (objContainer.find('.item') && objContainer.find('.item').length > 0) {
@@ -1976,11 +1981,11 @@
                 }
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log ($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
                     $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block, timtline, or Poster section! ');
+                    alert('A list can only be dropped to a block, timtline, Poster or promoBox section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
@@ -1995,7 +2000,7 @@
                 //newListJSON.name = '';
                 newListJSON.type = listType;
             });
-            newList = '<div class="lists-item"><div class="remove-lists"></div><div class="lists-header" draggable="true">New List</div>' + renderMeta(newListJSON) + '</div>';
+            newList = '<div class="lists-item"><div class="remove-lists"></div><div class="clone-lists"></div><div class="lists-header" draggable="true">New List</div>' + renderMeta(newListJSON) + '</div>';
             newListObject = $($.parseHTML(newList));
             if ($(this).is('.item, .lists-item>.meta-table, .lists-item>.lists-header')) {
                 // drop to an item
@@ -2003,11 +2008,11 @@
                 newListObject.addClass('animated zoomIn');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
                     newListObject.addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block, timtline, or Poster section! ');
+                    alert('A list can only be dropped to a block, timtline, Poster or promoBox section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
@@ -2198,10 +2203,15 @@
         });
     });
 
-
-
     $('body').on('click', '.clone-section', function () {
         $(this).parentsUntil($('.sections'), '.section-container').slideDown(500, function () {
+            console.log ($(this));
+            $(this).clone().insertBefore($(this));
+        });
+    });
+
+    $('body').on('click', '.clone-lists', function () {
+        $(this).parentsUntil($('.lists-container'), '.lists-item').slideDown(500, function () {
             console.log ($(this));
             $(this).clone().insertBefore($(this));
         });
