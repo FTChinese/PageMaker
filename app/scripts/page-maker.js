@@ -847,7 +847,7 @@
                             tag = interactive.tag || '';
                             if (tag.indexOf('速读') >= 0) {
                                 mainTag = '速读';
-                            } else if (/一周新闻|QuizPlus|速读|音频|SurveyPlus/i.test(tag)) {
+                            } else if (/一周新闻|QuizPlus|速读|SurveyPlus/i.test(tag)) {
                                 mainTag = 'FT商学院';
                             }
                             if (mainTag !== '') {
@@ -1509,7 +1509,7 @@
         if (!dataSource) {return;}
         var finalUrl;
         if (dataSource === 'ftc-chart') {
-            finalUrl = baseUrl + '&startDate=' + startDateString + '&endDate=' + endDateString + '&el=' + encodeURIComponent(impressionValue) + '&ec=iPhone Launch Ad&viewId=108134561' + titleParameter;
+            finalUrl = baseUrl + '&startDate=' + startDateString + '&endDate=' + endDateString + '&el=' + encodeURIComponent(impressionValue) + '&ec=Launch Ad&viewId=108134561' + titleParameter;
         } else if (dataSource === 'ga-real-time') {
             // MARK: - replace special characters based on Google Analytics' format
             const impressionForRealTime = impressionValue
