@@ -44,7 +44,8 @@
             'SideNewAd':['devices','pattern','position','container'],
             'timelineEvent': ['title', 'url', 'description', 'image'],
             'Headshot': ['Name', 'Title', 'Image', 'BackgroundImage', 'Mask'],
-            'PromoBoxAction': ['Name', 'status', 'weight', 'note', 'Action', 'title', 'imagePC', 'imageMobile', 'click', 'ccode', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'ShowCountdown', 'CountdownColor']
+            'PromoBoxAction': ['Name', 'status', 'weight', 'note', 'Action', 'title', 'imagePC', 'imageMobile', 'click', 'ccode', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'ShowCountdown', 'CountdownColor'],
+            'AuthorInfo': ['Name', 'HeadImage', 'AuthorIntro']
         }
     };
     var allSectionAndLists = [];
@@ -103,6 +104,7 @@
         'fileName': 'adimage',
         'landscapeFileName': 'adimage',
         'backupImage': 'adimage',
+        'HeadImage': 'image',
         'imagePC': 'image',
         'imageMobile': 'image',
         'imageHighlightBox': 'image',
@@ -169,7 +171,8 @@
         'SubscriberSource': ['2C', '2B', 'All'],
         'Duration': ['', 'yearly', 'monthly'],
         'ShowCountdown': ['no', 'yes'],
-        'HideLogo': ['no', 'yes']
+        'HideLogo': ['no', 'yes'],
+        'AuthorIntro': 'textarea'
     };
 
     var dataRulesTitle = {
@@ -300,8 +303,8 @@
     var gApiUrlsLocal = {
         'home': 'api/page/home.json',
         'homePOST': 'api',
-        'blank': 'api/page/promoBox.json',
-        //'blank': 'api/page/blank.json',
+        //'blank': 'api/page/promoBox.json',
+        'blank': 'api/page/blank.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
         //'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
@@ -541,6 +544,8 @@
                 //descriptionMore = '<tr class="meta-item-description"><td colspan=2>' + descriptionOriginal + '</td></tr>'
                 descriptionMore = '';
             }
+            console.log ('key: ' + key);
+
             if (dataRules[key] === 'array' || dataRules[key] === 'item') {
                 $.each(value, function (k, v) {
                     var title = v.Name || v.title || v.name || v.type || 'List';
@@ -1982,7 +1987,7 @@
                 }
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log ($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
                     $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
                 } else {
@@ -2009,7 +2014,7 @@
                 newListObject.addClass('animated zoomIn');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
                     newListObject.addClass('animated zoomIn');
                 } else {
