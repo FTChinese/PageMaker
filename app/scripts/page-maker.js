@@ -22,6 +22,7 @@
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
             'promoBox': ['Name', 'status', 'note', 'TargetAudience', 'promoTarget', 'SubscriberSource', 'Duration', 'DaysToExpiration', 'ProductPlatform', 'RenewalStatus', 'dates'],
+            'EventInfoFlow': ['Name', 'status', 'note', 'TargetAudience', 'subscription', 'dates', 'Action', 'title', 'lead', 'image', 'click', 'tag', 'tagLink', 'position'],
             'newAd':['devices','pattern','position','container'],
             'timeline': ['title', 'name', 'timelineStyle', 'description'],
             'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
@@ -73,6 +74,7 @@
         'iphone': ['no', 'yes'],
         'android': ['no', 'yes'],
         'ipad': ['no', 'yes'],
+        'subscription': ['standard', 'premium'],
         'from': ['', 'MarketsData', 'SpecialReports', 'Columns', 'Channels', 'Events', 'MyTopics', 'Discover', 'Marketing', 'findpassword', 'house-ad-subscription-promo-box'],
         'codeFileName': ['', 'subscription-vip-redeem'],
         'fromSide': ['PartnerActivity'],
@@ -110,6 +112,7 @@
         'imageHighlightBox': 'image',
         'imageTicker': 'image',
         'imageRibbon': 'image',
+        'image': 'image',
         'dates': 'dates',
         'apiNumber': 'number',
         'allowTop': ['no', 'yes'],
@@ -172,7 +175,8 @@
         'Duration': ['', 'yearly', 'monthly'],
         'ShowCountdown': ['no', 'yes'],
         'HideLogo': ['no', 'yes'],
-        'AuthorIntro': 'textarea'
+        'AuthorIntro': 'textarea',
+        'position': {type: 'select', default: '7', options: ['3', '4', '5', '6', '7', '8']}
     };
 
     var dataRulesTitle = {
