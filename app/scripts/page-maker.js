@@ -46,7 +46,7 @@
             'timelineEvent': ['title', 'url', 'description', 'image'],
             'Headshot': ['Name', 'Title', 'Image', 'BackgroundImage', 'Mask'],
             'PromoBoxAction': ['Name', 'status', 'weight', 'note', 'Action', 'title', 'imagePC', 'imageMobile', 'click', 'ccode', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'ShowCountdown', 'CountdownColor'],
-            'AuthorInfo': ['Name', 'HeadImage', 'AuthorIntro']
+            'SideInfo': ['InfoType', 'title', 'link', 'HeadImage', 'Detail']
         }
     };
     var allSectionAndLists = [];
@@ -175,8 +175,9 @@
         'Duration': ['', 'yearly', 'monthly'],
         'ShowCountdown': ['no', 'yes'],
         'HideLogo': ['no', 'yes'],
-        'AuthorIntro': 'textarea',
-        'position': {type: 'select', default: '7', options: ['3', '4', '5', '6', '7', '8']}
+        'Detail': 'textarea',
+        'position': {type: 'select', default: '7', options: ['3', '4', '5', '6', '7', '8']},
+        'InfoType': ['author', 'page']
     };
 
     var dataRulesTitle = {
@@ -761,6 +762,7 @@
                         timeStampType = 2;
                         id = entry.id;
                         ftid = entry.ftid || '';
+                        // MARK: - Use FT's Experimental Amy Service
                         if (ftid !== '') {
                             eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
                         }
