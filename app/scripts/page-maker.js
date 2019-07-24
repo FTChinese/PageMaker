@@ -762,10 +762,10 @@
                         timeStampType = 2;
                         id = entry.id;
                         ftid = entry.ftid || '';
-                        // MARK: - Use FT's Experimental Amy Service
-                        if (ftid !== '') {
-                            eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
-                        }
+                        // MARK: - Use FT's Experimental Amy Service. Removed because the API is no longer valid. 
+                        // if (ftid !== '') {
+                        //     eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
+                        // }
                         headline = entry.cheadline;
                         longlead = entry.clongleadbody || '';
                         shortlead = entry.cshortleadbody || '';
