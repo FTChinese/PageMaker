@@ -28,7 +28,7 @@
             'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
             'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate'],
             'LifeCycleManager': ['name', 'TargetAudience', 'SubscriberType', 'RenewalStatus', 'PaymentMethods', 'DaysToExpiration', 'ProductPlatform', 'EngagementLevel', 'InactiveDays', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'DelegateToFirebase', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
-            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'HideLogo', 'ClientLogo', 'ClientLogo2', 'ClientLogo3', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SubTitle', 'SubTitleFont', 'SubTitleBG', 'CallForActionType', 'QRUrl', 'QRTitle', 'note'],
+            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'HideLogo', 'ClientLogo', 'ClientLogo2', 'ClientLogo3', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SecondTitleMore', 'SecondTitleMoreFont', 'SubTitle', 'SubTitleFont', 'SubTitleBG', 'CallForActionType', 'QRUrl', 'QRTitle', 'note'],
             'Tags': ['ImportantTags', 'ReservedTags']
         },
         'list': {
@@ -163,9 +163,11 @@
         'TitleWidth': {type: 'select', default: '360', options: ['300', '310', '320', '330', '340', '350', '360', '370', '380', '390', '400', '410', '420']},
         'FirstTitleFont': {type: 'select', default: '34', options: ['20','21','22','23','24','25','26','27','28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
         'SecondTitleFont': {type: 'select', default: '34', options: ['20','21','22','23','24','25','26','27','28', '28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
+        'SecondTitleMoreFont': {type: 'select', default: '28', options: ['20','21','22','23','24','25','26','27','28', '28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
         'SubTitleFont': {type: 'select', default: '20', options: ['14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28']},
         'FirstTitle': 'textarea',
         'SecondTitle': 'textarea',
+        'SecondTitleMore': 'textarea',
         'SubTitle': 'textarea',
         'showrighttype': {type: 'multiselect', options: allSectionAndLists},
         'EngagementLevel': {type: 'multiselect', options: ['Low', 'Middle', 'High']},
