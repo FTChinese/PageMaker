@@ -28,7 +28,7 @@
             'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
             'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate'],
             'LifeCycleManager': ['name', 'TargetAudience', 'SubscriberType', 'RenewalStatus', 'PaymentMethods', 'DaysToExpiration', 'ProductPlatform', 'EngagementLevel', 'InactiveDays', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'DelegateToFirebase', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
-            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'HideLogo', 'ClientLogo', 'ClientLogo2', 'ClientLogo3', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SecondTitleMore', 'SecondTitleMoreFont', 'SubTitle', 'SubTitleFont', 'SubTitleBG', 'CallForActionType', 'QRUrl', 'QRTitle', 'note'],
+            'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'LogoType', 'HideLogo', 'ClientLogo', 'ClientLogo2', 'ClientLogo3', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SecondTitleMore', 'SecondTitleMoreFont', 'SubTitle', 'SubTitleFont', 'SubTitleBG', 'CallForActionType', 'QRUrl', 'QRTitle', 'note'],
             'Tags': ['ImportantTags', 'ReservedTags']
         },
         'list': {
@@ -167,7 +167,7 @@
         'SubTitleFont': {type: 'select', default: '20', options: ['14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28']},
         'FirstTitle': 'textarea',
         'SecondTitle': 'textarea',
-        'SecondTitleMore': 'textarea',
+        'SecondTitleMoreq': 'textarea',
         'SubTitle': 'textarea',
         'showrighttype': {type: 'multiselect', options: allSectionAndLists},
         'EngagementLevel': {type: 'multiselect', options: ['Low', 'Middle', 'High']},
@@ -179,7 +179,8 @@
         'HideLogo': ['no', 'yes'],
         'Detail': 'textarea',
         'position': {type: 'select', default: '7', options: ['3', '4', '5', '6', '7', '8']},
-        'InfoType': ['author', 'page']
+        'InfoType': ['author', 'page'],
+        'LogoType': ['', 'FTC']
     };
 
     var dataRulesTitle = {
