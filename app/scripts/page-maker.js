@@ -762,10 +762,10 @@
                         timeStampType = 2;
                         id = entry.id;
                         ftid = entry.ftid || '';
-                        // MARK: - Use FT's Experimental Amy Service. Removed because the API is no longer valid. 
-                        // if (ftid !== '') {
-                        //     eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
-                        // }
+                        // MARK: - Use FT's Experimental Amy Service. As the API is no longer valid, need to verify it after inserting. 
+                        if (ftid !== '') {
+                            eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
+                        }
                         headline = entry.cheadline;
                         longlead = entry.clongleadbody || '';
                         shortlead = entry.cshortleadbody || '';
@@ -1376,6 +1376,28 @@
         }
     }
 
+    // MARK: - Check if all items in the jquery object is correct. 
+    function verifyAllItems(ele) {
+        // MARK: - Check if all audios are playable
+        ele.find('.o-input-text[name=caudio], .o-input-text[name=eaudio]').each(function(){
+            var audioUrl = $(this).val();
+            var audioInput = $(this);
+            console.log ('checking: ' + audioUrl);
+            if (audioUrl && audioUrl !== '') {
+                var audio = document.createElement('AUDIO');
+                audio.preload = 'metadata';
+                audio.src = audioUrl;
+                audio.addEventListener('loadedmetadata', function(){
+                    audioInput.addClass('verified');
+                }, false);
+                audio.addEventListener('error', function(){
+                    audioInput.val('');
+                    audioInput.addClass('warning');
+                }, false);
+            }
+        });
+    }
+
     function updateAllTitles() {
         $('.section-container').each(function () {
             var obj = $(this).find('.section-inner>.meta-table .o-input-text');
@@ -1849,11 +1871,15 @@
         }
         // Don't do anything if dropping the same column we're dragging.
         if (dragSrcEl.hasClass('item')) {
+            // console.log ("dragging an item: ");
+            // console.log (dragSrcEl);
             if ($(this).hasClass('item') === true && dragSrcEl !== this) {
                 dragSrcEl.insertAfter($(this)).addClass('animated zoomIn');
+                verifyAllItems(dragSrcEl);
             } else if ($(this).is('.lists-item>.meta-table, .lists-item>.lists-header')) {
                 $(this).parent().find('.lists-container').eq(0).prepend(dragSrcEl);
                 dragSrcEl.addClass('animated zoomIn');
+                verifyAllItems(dragSrcEl);
             } /*else if ($(this).is('.type-block .section-header, .type-block .section-inner>meta-table')) {
              listsContainer = $(this).parentsUntil($('.section-container'), '.section-inner').find('.lists-item .lists-container');
              if (listsContainer.length>0) {
@@ -1886,9 +1912,11 @@
             groupItems = dragSrcEl.parent().find('.item');
             if ($(this).hasClass('item') === true) {
                 groupItems.insertAfter($(this)).addClass('animated zoomIn');
+                verifyAllItems(groupItems);
             } else if ($(this).is('.lists-item>.meta-table, .lists-item>.lists-header')) {
                 $(this).parent().find('.lists-container').eq(0).prepend(groupItems);
                 groupItems.addClass('animated zoomIn');
+                verifyAllItems(groupItems);
             } /*else if ($(this).is('.type-block .section-header, .type-block .section-inner>meta-table')) {
              listsContainer = $(this).parentsUntil($('.section-container'), '.section-inner').find('.lists-item .lists-container');
              if (listsContainer.length>0) {

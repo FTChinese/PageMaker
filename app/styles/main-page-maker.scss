@@ -14,6 +14,7 @@ $blueLink: #2e6e9e;
 $bannerBG: #F6E9D8;
 $lightPink: $bannerBG;
 $darkGreen: #0a5e66;
+$lightGreen: #98c3b7;
 $red: #cc0000;
 $darkGrey: #333333;
 $lightGrey: #505050;
@@ -639,6 +640,9 @@ button {
   &.warning {
     background-color: $defaultRed;
   }
+  &.verified {
+    color: $darkGreen;
+  }
   &[title][readonly] {
     cursor: pointer;
     &:hover, &:active {
@@ -961,7 +965,7 @@ display: block;
   padding: 2px 0px;
 }
 .premium-stories-color{
-  background-color:#98c3b7;
+  background-color: $lightGreen;
 }
 
 .validate-image {
