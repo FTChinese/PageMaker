@@ -294,6 +294,7 @@
         {'name': 'Huawei Mate 8', 'width': 540, 'height': 960},
         {'name': 'Google Nexus 7', 'width': 600, 'height': 960},
         {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
+        {'name': 'Email New', 'width': '', 'height': '', 'view': 'email', 'host': 'https://cn.ft.com'},
         {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'}
     ];
     var thisday = new Date();
@@ -312,9 +313,9 @@
         'home': 'api/page/home.json',
         'homePOST': 'api',
         //'blank': 'api/page/promoBox.json',
-        'blank': 'api/page/blank.json',
+        //'blank': 'api/page/blank.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
-        //'blank': 'api/page/creative.json',
+        'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
         //'blank': 'api/page/posters.json',
         //'blank': 'api/page/home.json',
@@ -577,7 +578,7 @@
             } else if (dataRules[key] === 'readonly') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'adimage') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image" value="' + value + '"></td><td><button class="action-link" target="_blank">Upload</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image impression-value" value="' + value + '"></td><td><button class="action-link" target="_blank">Upload</button><button class="impression-track" target="_blank" data-source="ftc-chart" data-event-action="Show">Track</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'image') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text content-image" value="' + value + '"></td><td><button class="image-link" target="_blank">Upload</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'dates') {
@@ -1520,11 +1521,14 @@
 
     function launchImpressionTrack(ele) {
         var impressionEle = ele.parentElement.parentElement.querySelector('.impression-value');
+        console.log ('yes 0');
         if (!impressionEle) {return;}
         var impressionValue = impressionEle.value;
         var dateEle = impressionEle.parentElement.parentElement.parentElement.querySelector('.date-value');
         var titleEle = impressionEle.parentElement.parentElement.parentElement.querySelector('[data-key=title]');
+        console.log ('yes 1');
         if (!dateEle) {return;}
+        console.log ('yes 2');
         var currentDatesString = dateEle.value;
         var currentDatesArray = currentDatesString.split(',');
         currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
@@ -1542,10 +1546,12 @@
         const realtimeBaseUrl = 'https://analytics.google.com/analytics/web/?authuser=1#/realtime/rt-event/a1608715w103966157p108134561/filter.list=40==iPhone%252520Launch%252520Ad;42=={el};&metric.type=5/';
         const titleParameter = (titleEle) ? '&title=' + encodeURIComponent(titleEle.value) : '';
         const dataSource = ele.getAttribute('data-source');
+        const eventAction = ele.getAttribute('data-event-action');
         if (!dataSource) {return;}
         var finalUrl;
         if (dataSource === 'ftc-chart') {
-            finalUrl = baseUrl + '&startDate=' + startDateString + '&endDate=' + endDateString + '&el=' + encodeURIComponent(impressionValue) + '&ec=Launch Ad&viewId=108134561' + titleParameter;
+            const eventActionParameter = (eventAction !== null) ? '&ea=' + eventAction : '';
+            finalUrl = baseUrl + '&startDate=' + startDateString + '&endDate=' + endDateString + '&el=' + encodeURIComponent(impressionValue) + '&ec=Launch Ad&viewId=108134561' + eventActionParameter + titleParameter;
         } else if (dataSource === 'ga-real-time') {
             // MARK: - replace special characters based on Google Analytics' format
             const impressionForRealTime = impressionValue
@@ -2136,7 +2142,8 @@
         var devicesHTML = '';
         $.each(devices, function (key, value) {
             var viewValue = value.view || '';
-            devicesHTML += '<div class="preview-on-device" data-width="' + value.width + '" data-height="' + value.height + '" data-view="' + viewValue + '">' + value.name + '</div>';
+            var hostValue = value.host || 'http://www7.ftchinese.com';
+            devicesHTML += '<div class="preview-on-device" data-width="' + value.width + '" data-height="' + value.height + '" data-view="' + viewValue + '" data-host="' + hostValue + '">' + value.name + '</div>';
         });
         var previewHTML = '<div id="preview-shadow" class="o-overlay-shadow animated fadeIn"></div><div id="preview-box" class="rightanswer show o-overlay__arrow-top animated fadeInRight"><div class="preview-header">Simulate on the following devices: </div><div class="explain-body"><div class="explain-answer">' + devicesHTML + '</div></div>';
         $('#preview-overlay').html(previewHTML);
@@ -2202,7 +2209,8 @@
     });
 
     $('body').on('click', '.preview-on-device', function () {
-        var url = 'http://www7.ftchinese.com/m/corp/preview.html?pageid=' + getURLParameter('page');
+        var hostValue = $(this).attr('data-host');
+        var url = hostValue + '/m/corp/preview.html?pageid=' + getURLParameter('page');
         var w = $(this).attr('data-width') || $(window).width();
         var h = $(this).attr('data-height') || $(window).height();
         var viewValue = $(this).attr('data-view') || '';
