@@ -22,6 +22,7 @@
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
             'promoBox': ['Name', 'status', 'note', 'TargetAudience', 'promoTarget', 'SubscriberSource', 'Duration', 'DaysToExpiration', 'ProductPlatform', 'RenewalStatus', 'dates'],
+            'RemoteConfigParameter': ['Name', 'status', 'note'],
             'EventInfoFlow': ['Name', 'status', 'note', 'TargetAudience', 'subscription', 'dates', 'Action', 'title', 'lead', 'image', 'click', 'tag', 'tagLink', 'position'],
             'newAd':['devices','pattern','position','container'],
             'timeline': ['title', 'name', 'timelineStyle', 'description'],
@@ -46,6 +47,9 @@
             'timelineEvent': ['title', 'url', 'description', 'image'],
             'Headshot': ['Name', 'Title', 'Image', 'BackgroundImage', 'Mask'],
             'PromoBoxAction': ['Name', 'status', 'weight', 'note', 'Action', 'title', 'imagePC', 'imageMobile', 'click', 'ccode', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'ShowCountdown', 'CountdownColor'],
+            'RemoteConfigBool': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'BoolValue'],
+            'RemoteConfigText': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'TextValue'],
+            'RemoteConfigDomains': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'SimplifiedDomain', 'TraditionalDomain'],
             'SideInfo': ['InfoType', 'title', 'link', 'HeadImage', 'Detail']
         }
     };
@@ -146,6 +150,8 @@
         'Notification': 'group',
         'PromoBox': 'group',
         'TargetAudience': 'group',
+        'Conditions': 'group',
+        'Settings': 'group',
         'Action': 'group',
         'SubscriberType': {type: 'multiselect', options: ['Standard Annual', 'Standard Monthly', 'Premium']},
         'RenewalStatus': ['', 'On', 'Off'],
@@ -180,7 +186,9 @@
         'Detail': 'textarea',
         'position': {type: 'select', default: '7', options: ['3', '4', '5', '6', '7', '8']},
         'InfoType': ['author', 'page'],
-        'LogoType': ['', 'FTC']
+        'LogoType': ['', 'FTC'],
+        'BoolValue': ['yes', 'no'],
+        'PurchaseType': ['All', 'Apple', 'FTC']
     };
 
     var dataRulesTitle = {
@@ -246,6 +254,11 @@
         regStrInclude: /^https:/,
         loadImpression: true
     };
+    var regSecureUrlForDomain = {
+        description: '域名应该采用https! 并以/结尾',
+        regStrInclude: /^https:.+\/$/,
+        loadImpression: false
+    };
     var datesFormat = {
         description: '日期格式为YYYYMMDD，半角逗号分隔',
         regStrInclude: /^[0-9]{8}$|^[0-9]{8},[0-9,]*[0-9]{8}$/
@@ -274,6 +287,8 @@
         'fileName': regSecureUrl,
         'backupImage': regSecureUrl,
         'landscapeFileName': regSecureUrl,
+        'SimplifiedDomain': regSecureUrlForDomain,
+        'TraditionalDomain': regSecureUrlForDomain,
         'dates': datesFormat,
         'backgroundColor': hexColor,
         'buttonColor': hexColor,
@@ -313,9 +328,9 @@
         'home': 'api/page/home.json',
         'homePOST': 'api',
         //'blank': 'api/page/promoBox.json',
-        //'blank': 'api/page/blank.json',
+        'blank': 'api/page/blank.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
-        'blank': 'api/page/creative.json',
+        //'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
         //'blank': 'api/page/posters.json',
         //'blank': 'api/page/home.json',
@@ -553,7 +568,7 @@
                 //descriptionMore = '<tr class="meta-item-description"><td colspan=2>' + descriptionOriginal + '</td></tr>'
                 descriptionMore = '';
             }
-            console.log ('key: ' + key);
+            //console.log ('key: ' + key);
 
             if (dataRules[key] === 'array' || dataRules[key] === 'item') {
                 $.each(value, function (k, v) {
@@ -661,6 +676,15 @@
         }
         if (jsonData.meta.audiencePixelTag === undefined) {
             jsonData.meta.audiencePixelTag = '';
+        }
+        if (jsonData.meta.topnav === undefined) {
+            jsonData.meta.topnav = '';
+        }
+        if (jsonData.meta.subnav === undefined) {
+            jsonData.meta.subnav = '';
+        }
+        if (jsonData.meta.thirdnav === undefined) {
+            jsonData.meta.thirdnav = '';
         }
         // MARK: add meta properties that are necessary
         if (jsonData.meta.guideline === undefined) {
@@ -2029,8 +2053,9 @@
                     $('.lists-item').eq(dragIndex).insertBefore($('.lists-item').eq(dragOverIndex)).addClass('animated zoomIn');
                 }
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
+                console.log ('drag has class of lists-header');
                 console.log ($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
                     $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
                 } else {
@@ -2057,7 +2082,7 @@
                 newListObject.addClass('animated zoomIn');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
                     newListObject.addClass('animated zoomIn');
                 } else {
