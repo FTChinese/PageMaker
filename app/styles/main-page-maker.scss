@@ -306,7 +306,7 @@ button {
   background-color: $defaultBG;
   font-size: 16px;
 }
-.link-json-editor {
+.link-json-editor, .button-json {
   display: none;
 }
 .show-json {
@@ -316,7 +316,7 @@ button {
   .content-left, .content-right {
     display: none;
   }
-  .source-json, .link-json-editor {
+  .source-json, .link-json-editor, .button-json {
     display: block;
   }
 }

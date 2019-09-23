@@ -1001,6 +1001,10 @@
         }
     });
 
+
+
+
+
     $('body').on('click', '#button-preview-main', function () {
         //console.log ('open');
         var devicesHTML = '';

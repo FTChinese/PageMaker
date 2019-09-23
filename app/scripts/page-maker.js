@@ -15,7 +15,7 @@
             'footer': [],
             'pagination': ['maxPageNumber'],
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'ccode', 'note'],
-            'sponsorship': ['title', 'assignee', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'cntopic', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'sectionPageTrack', 'paidPostKey', 'paidPostTrack', 'note'],
+            'sponsorship': ['title', 'assignee', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'cntopic', 'dates', 'placeholder', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'sectionPageTrack', 'paidPostKey', 'paidPostTrack', 'note'],
             'manualTagPage': ['title', 'tag', 'zone', 'link', 'description', 'subType', 'preferLead', 'topnav', 'subnav', 'thirdnav', 'note'],
             'MainMessage': ['title', 'content', 'buttonTitle', 'buttonUrl', 'ccode', 'discountCode'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
@@ -188,7 +188,8 @@
         'InfoType': ['author', 'page'],
         'LogoType': ['', 'FTC'],
         'BoolValue': ['yes', 'no'],
-        'PurchaseType': ['All', 'Apple', 'FTC']
+        'PurchaseType': ['All', 'Apple', 'FTC'],
+        'placeholder': ['no', 'yes']
     };
 
     var dataRulesTitle = {
@@ -238,7 +239,8 @@
         'SubscriberSource': '订户是B端还是C端的。大多数情况下，针对C端订户的PromoBox不想让B端订户看到',
         'Duration': '订户最新购买的订阅的周期，如果订户购买了多个订阅，以最新的那个订阅为准',
         'ProductPlatform': '不同的产品平台--网站、iOS应用和Android应用--的用户习惯和支持的功能是非常不一样的',
-        'RenewalStatus': '用户是否打开了自动续订，目前只有苹果内购支持自动续订'
+        'RenewalStatus': '用户是否打开了自动续订，目前只有苹果内购支持自动续订',
+        'placeholder': '用在赞助管理中，如果日期为空，而这个值为yes，则显示在首页'
     };
 
     // MARK: - Differentiate subscription information
@@ -660,6 +662,7 @@
                 if (!value.dates || value.dates === '') {return ' is-active';}
             } else if ('sponsorship'.indexOf(value.type)>=0) {
                 if (value.status !== 'on') {return '';}
+                if (value.dates === '' && value.placeholder === 'yes') {return ' is-active';}
             }
             const dates = value.dates.split(',');
             var oneDay;
@@ -2146,9 +2149,6 @@
                 dataType: 'text',
                 success: function (msg) {
                     if (msg === 'submit') {
-                        // if (confirm('页面提交成功！\n\n要选一条文章发送通知推送吗？')) {
-                        //     window.open('http://apn.ftchinese.com/');
-                        // }
                         alert ('页面提交成功！');
                     }
                 },
@@ -2162,6 +2162,7 @@
         }
     });
 
+
     $('body').on('click', '#button-preview-main', function () {
         //console.log ('open');
         var devicesHTML = '';
@@ -2173,6 +2174,31 @@
         var previewHTML = '<div id="preview-shadow" class="o-overlay-shadow animated fadeIn"></div><div id="preview-box" class="rightanswer show o-overlay__arrow-top animated fadeInRight"><div class="preview-header">Simulate on the following devices: </div><div class="explain-body"><div class="explain-answer">' + devicesHTML + '</div></div>';
         $('#preview-overlay').html(previewHTML);
         tidyup();
+    });
+
+
+    $('body').on('click', '#button-submit-json', function () {
+        const jsonString = document.getElementById('source-json').value;
+        console.log (jsonString);
+        if (confirm('这是高级操作！\n\n保存后页面中原来的数据会被下面的JSON代码替代。您确定要这样做吗？')) {
+            $.ajax({
+                type: 'POST',
+                url: gApiUrls.homePOST,
+                data: {action: 'save', publish_type: getURLParameter('page'), publish_html: jsonString},
+                dataType: 'text',
+                success: function (msg) {
+                    if (msg === 'submit') {
+                        alert ('JSON代码提交成功！');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log('url - [' + gApiUrls.homePOST + ']');
+                    console.log('XMLHttpRequest - [' + XMLHttpRequest + ']');
+                    console.log('textStatus - [' + textStatus + ']');
+                    console.log('errorThrown - [' + errorThrown + ']');
+                }
+            });
+        }
     });
 
     $('body').on('click', '#preview-shadow', function () {
