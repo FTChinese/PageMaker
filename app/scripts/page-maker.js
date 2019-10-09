@@ -51,7 +51,7 @@
             'RemoteConfigText': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'TextValue'],
             'RemoteConfigDomains': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'SimplifiedDomain', 'TraditionalDomain'],
             'SideInfo': ['InfoType', 'title', 'link', 'HeadImage', 'Detail'],
-            'EventApplication': ['EventId', 'title', 'description', 'subscriptionType', 'SuccessNote']
+            'EventApplication': ['EventId', 'title', 'subscriptionType', 'description', 'HideFormInfo', 'SuccessNote']
         }
     };
     var allSectionAndLists = [];
