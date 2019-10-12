@@ -17,6 +17,7 @@
             'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'ccode', 'note'],
             'sponsorship': ['title', 'assignee', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'cntopic', 'dates', 'placeholder', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'sectionPageTrack', 'paidPostKey', 'paidPostTrack', 'note'],
             'manualTagPage': ['title', 'tag', 'zone', 'link', 'description', 'subType', 'preferLead', 'topnav', 'subnav', 'thirdnav', 'note'],
+            'InternalPromo': ['title', 'link', 'dates', 'placeholder', 'status', 'imageHighlightBox', 'PromoId', 'note'],
             'MainMessage': ['title', 'content', 'buttonTitle', 'buttonUrl', 'ccode', 'discountCode'],
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
@@ -51,7 +52,7 @@
             'RemoteConfigText': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'TextValue'],
             'RemoteConfigDomains': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'SimplifiedDomain', 'TraditionalDomain'],
             'SideInfo': ['InfoType', 'title', 'link', 'HeadImage', 'Detail'],
-            'EventApplication': ['EventId', 'title', 'subscriptionType', 'description', 'HideFormInfo', 'SuccessNote']
+            'EventApplication': ['EventId', 'title', 'subscriptionType', 'description', 'HideFormInfo', 'SuccessNote', 'Tickets']
         }
     };
     var allSectionAndLists = [];
@@ -98,6 +99,7 @@
         'hideDownloadButton': ['no', 'yes'],
         'durationInSeconds': ['default','6','15','30','60','90'],
         'weight': ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'],
+        'Tickets': ['1','2','3','4','5'],
         'priority': ['', 'sponsorship', 'standard', 'house'],
         'closeButton': ['none','LeftTop','RightTop','LeftBottom','RightBottom'],
         'timelineStyle': ['default', 'even'],
