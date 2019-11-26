@@ -73,7 +73,7 @@
         //'type': ['block', 'banner', 'header', 'footer'],
         'side': ['none', 'HomeRightRail','TagRightRail', 'MostPopular', 'HotVideos', 'MarketsData', 'videos', 'MostCommented', 'Narrow'],
         'sideAlign': ['right', 'left'],
-        'float': ['none', 'left', 'right', 'oneline', 'SideBySide', 'myFT', 'IconTitle', 'Card', 'eBook', 'VideoWall', 'Headshot', 'ScoreBoard', 'EqualSizeForNonFirstItems', 'ItemsWithSameImage'],
+        'float': ['none', 'left', 'right', 'oneline', 'SideBySide', 'myFT', 'IconTitle', 'Card', 'eBook', 'VideoWall', 'Headshot', 'ScoreBoard', 'EqualSizeForNonFirstItems', 'ItemsWithSameImage', 'SplitList'],
         'showTag': ['no', 'yes'],
         'showTimeStamp': ['no', 'new stories', 'all'],
         'showSoundButton': ['no', 'yes'],
@@ -157,7 +157,7 @@
         'Settings': 'group',
         'Action': 'group',
         'SubscriberType': {type: 'multiselect', options: ['Standard Annual', 'Standard Monthly', 'Premium']},
-        'RenewalStatus': ['', 'On', 'Off'],
+        'RenewalStatus': ['All', 'On', 'Off', ''],
         'PaymentMethods': {type: 'multiselect', options: ['AppleInApp', 'WeChat', 'AliPay']},
         'DaysToExpiration': {type: 'select', default: '', options: ['-90', '-60', '-30', '-14', '-7', '-3', '-1', '', '1', '3', '7', '14', '30', '60', '90']},
         'ProductPlatform': {type: 'multiselect', options: ['WebSite', 'iOSApp', 'AndroidApp']},
@@ -242,7 +242,7 @@
         'SubscriberSource': '订户是B端还是C端的。大多数情况下，针对C端订户的PromoBox不想让B端订户看到',
         'Duration': '订户最新购买的订阅的周期，如果订户购买了多个订阅，以最新的那个订阅为准',
         'ProductPlatform': '不同的产品平台--网站、iOS应用和Android应用--的用户习惯和支持的功能是非常不一样的',
-        'RenewalStatus': '用户是否打开了自动续订，目前只有苹果内购支持自动续订',
+        'RenewalStatus': '目前只有苹果内购支持自动续订，对于苹果平台来说，All代表所有情况，On代表苹果内购自动续订打开，Off代表苹果内购自动续订关闭，空代表非苹果内购的订户',
         'placeholder': '用在赞助管理中，如果日期为空，而这个值为yes，则显示在首页'
     };
 
