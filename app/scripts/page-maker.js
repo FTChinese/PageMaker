@@ -796,10 +796,10 @@
                         timeStampType = 2;
                         id = entry.id;
                         ftid = entry.ftid || '';
-                        // MARK: - Use FT's Experimental Amy Service. As the API is no longer valid, need to verify it after inserting. 
-                        if (ftid !== '') {
-                            eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
-                        }
+                        // MARK: - FT's Experimental Amy Service is no longer stable, use Apple instead. 
+                        // if (ftid !== '') {
+                        //     eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
+                        // }
                         headline = entry.cheadline;
                         longlead = entry.clongleadbody || '';
                         shortlead = entry.cshortleadbody || '';
@@ -965,9 +965,9 @@
                             timeStampType = 2;
                             id = premium.id;
                             ftid = premium.ftid || '';
-                            if (ftid !== '') {
-                                eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
-                            }
+                            // if (ftid !== '') {
+                            //     eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
+                            // }
                             headline = premium.cheadline;
                             longlead = premium.clongleadbody || '';
                             shortlead = premium.cshortleadbody || '';
@@ -1058,8 +1058,7 @@
             image: 'http://i.ftimg.net/picture/4/000074984_piclink.jpg',
             type: '',
             tag: '',
-            customLink: 'http://www.ftchinese.com/channel/editorchoice-issue.html?issue=EditorChoice-' + todaydate,
-            // customLink: 'http://www.ftchinese.com/m/corp/preview.html?pageid=EditorChoice-' + todaydate,
+            customLink: '/channel/editorchoice-issue.html?issue=EditorChoice-' + todaydate,
             showSponsorImage: 'no'
         });
         for (var kkk = 0; kkk < 2; kkk++) {
