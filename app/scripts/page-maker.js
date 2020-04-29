@@ -314,7 +314,7 @@
         {'name': 'Huawei Mate 8', 'width': 540, 'height': 960},
         {'name': 'Google Nexus 7', 'width': 600, 'height': 960},
         {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
-        {'name': 'Email New', 'width': '', 'height': '', 'view': 'email', 'host': 'https://cn.ft.com'},
+        {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', 'host': 'https://cn.ft.com', 'to': 'vip'},
         {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'}
     ];
     var thisday = new Date();
@@ -2171,7 +2171,8 @@
         $.each(devices, function (key, value) {
             var viewValue = value.view || '';
             var hostValue = value.host || 'http://www7.ftchinese.com';
-            devicesHTML += '<div class="preview-on-device" data-width="' + value.width + '" data-height="' + value.height + '" data-view="' + viewValue + '" data-host="' + hostValue + '">' + value.name + '</div>';
+            var to = value.to || 'all';
+            devicesHTML += '<div class="preview-on-device" data-width="' + value.width + '" data-height="' + value.height + '" data-view="' + viewValue + '" data-host="' + hostValue + '" data-to="' + to + '">' + value.name + '</div>';
         });
         var previewHTML = '<div id="preview-shadow" class="o-overlay-shadow animated fadeIn"></div><div id="preview-box" class="rightanswer show o-overlay__arrow-top animated fadeInRight"><div class="preview-header">Simulate on the following devices: </div><div class="explain-body"><div class="explain-answer">' + devicesHTML + '</div></div>';
         $('#preview-overlay').html(previewHTML);
@@ -2263,12 +2264,16 @@
 
     $('body').on('click', '.preview-on-device', function () {
         var hostValue = $(this).attr('data-host');
+        var to = $(this).attr('data-to') || '';
         var url = hostValue + '/m/corp/preview.html?pageid=' + getURLParameter('page');
         var w = $(this).attr('data-width') || $(window).width();
         var h = $(this).attr('data-height') || $(window).height();
         var viewValue = $(this).attr('data-view') || '';
         if (viewValue !== '') {
             url += '&view=' + viewValue;
+        }
+        if (to !== '') {
+            url += '&to=' + to;
         }
         window.open(url, 'newwindow', 'height=' + h + ',width=' + w + ',top=0,left=0,toolbar=no,menubar=no,resizable=no,scrollbars=yes,location=no, status=no');
     });
