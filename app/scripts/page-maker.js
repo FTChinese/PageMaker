@@ -7,7 +7,8 @@
     var domId = 'content-left-inner';
     var toolkits = {
         'section': {
-            'block': ['title', 'name', 'side', 'sideAlign', 'description'],
+            'block': ['title', 'name', 'side', 'sideAlign', 'description', 'boxBackground'],
+            'cover': ['title', 'lead', 'tag', 'image', 'link', 'boxBackground', 'liveStatus'],
             'include': ['from', 'side', 'sideAlign'],
             'page': ['id', 'blocks', 'maxItems'],
             'header': ['showNavigation'],
@@ -69,11 +70,13 @@
         'lists': 'array',
         'items': 'item',
         'type': 'readonly',
+        'boxBackground': ['dark-green', 'crimson'],
+        'liveStatus': ['off', 'on'],
         'theme': ['default', 'luxury', 'myFT', 'technology', 'education', 'lifestyle', 'ebook', 'specialreport'],
         //'type': ['block', 'banner', 'header', 'footer'],
         'side': ['none', 'HomeRightRail','TagRightRail', 'MostPopular', 'HotVideos', 'MarketsData', 'videos', 'MostCommented', 'Narrow'],
         'sideAlign': ['right', 'left'],
-        'float': ['none', 'left', 'right', 'oneline', 'SideBySide', 'myFT', 'IconTitle', 'Card', 'eBook', 'VideoWall', 'Headshot', 'ScoreBoard', 'EqualSizeForNonFirstItems', 'ItemsWithSameImage', 'SplitList', 'BiligualFullText'],
+        'float': ['none', 'left', 'right', 'oneline', 'SideBySide', 'myFT', 'IconTitle', 'Card', 'eBook', 'VideoWall', 'Headshot', 'ScoreBoard', 'EqualSizeForNonFirstItems', 'ItemsWithSameImage', 'SplitList', 'BiligualFullText', 'Cover'],
         'showTag': ['no', 'yes'],
         'showTimeStamp': ['no', 'new stories', 'all'],
         'showSoundButton': ['no', 'yes'],
