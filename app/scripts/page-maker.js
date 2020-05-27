@@ -8,7 +8,7 @@
     var toolkits = {
         'section': {
             'block': ['title', 'name', 'side', 'sideAlign', 'description', 'boxBackground'],
-            'cover': ['title', 'lead', 'tag', 'image', 'link', 'boxBackground', 'liveStatus'],
+            'cover': ['title', 'lead', 'tag', 'image', 'link', 'boxBackground', 'VisibleOnlyTo', 'liveStatus', 'status'],
             'include': ['from', 'side', 'sideAlign'],
             'page': ['id', 'blocks', 'maxItems'],
             'header': ['showNavigation'],
@@ -84,7 +84,7 @@
         'android': ['no', 'yes'],
         'ipad': ['no', 'yes'],
         'subscription': ['standard', 'premium'],
-        'from': ['', 'MarketsData', 'SpecialReports', 'Columns', 'Channels', 'Events', 'MyTopics', 'Discover', 'Marketing', 'findpassword', 'house-ad-subscription-promo-box'],
+        'from': ['', 'MarketsData', 'SpecialReports', 'Columns', 'Channels', 'Events', 'MyTopics', 'Discover', 'Marketing', 'findpassword', 'house-ad-subscription-promo-box', 'Premium-Cover'],
         'codeFileName': ['', 'subscription-vip-redeem'],
         'fromSide': ['PartnerActivity'],
         'sideOption': ['BigImageAndLead', 'headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot'],
@@ -109,6 +109,7 @@
         'subscriptionType': ['','standard','premium'],
         'itemNumber': 'number',
         'promoTarget': ['noneSubscriber', 'standard', 'premium'],
+        'VisibleOnlyTo': ['all', 'subscriber', 'premium'],
         'status': ['on', 'off'],
         'subscriptionBoxTarget': ['all', 'allCampaigns', 'oneCampaign'],
         'showNavigation': ['yes', 'no'],
