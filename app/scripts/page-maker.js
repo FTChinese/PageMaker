@@ -7,8 +7,8 @@
     var domId = 'content-left-inner';
     var toolkits = {
         'section': {
-            'block': ['title', 'name', 'side', 'sideAlign', 'description', 'boxBackground'],
-            'cover': ['title', 'lead', 'tag', 'image', 'link', 'boxBackground', 'VisibleOnlyTo', 'liveStatus', 'status'],
+            'block': ['title', 'name', 'side', 'sideAlign', 'description', 'boxBackground', 'VisibleOnlyTo'],
+            'cover': ['tag', 'title', 'lead', 'image', 'link', 'boxBackground', 'VisibleOnlyTo', 'liveStatus', 'status'],
             'include': ['from', 'side', 'sideAlign'],
             'page': ['id', 'blocks', 'maxItems'],
             'header': ['showNavigation'],
