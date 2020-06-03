@@ -319,6 +319,7 @@
         {'name': 'Google Nexus 7', 'width': 600, 'height': 960},
         {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
         {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', 'host': 'https://cn.ft.com', 'to': 'vip'},
+        {'name': 'Page For iOS App', 'width': '', 'height': '', 'view': 'email', 'host': 'https://cn.ft.com', 'to': 'iosapp'},
         {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'}
     ];
     var thisday = new Date();
