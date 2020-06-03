@@ -152,7 +152,7 @@
         'blocks': 'number',
         'maxItems': 'number',
         'content': 'textarea',
-        'discountCode': ['ft_discount', 'ft_renewal', ''],
+        'discountCode': ['ft_discount', 'ft_renewal', 'ft_win_back', ''],
         'Email': 'group',
         'Notification': 'group',
         'PromoBox': 'group',
