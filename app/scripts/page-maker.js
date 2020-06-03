@@ -225,7 +225,7 @@
         'imageMobile': '172x48',
         'wideImage': '3x1 wide image for PC',
         'mobileImage': '16 x 9 mobile image for phone',
-        'ccode': 'campaign code',
+        'ccode': 'campaign code. if you want to get the value from url parameter ccode, leave the field blank. ',
         'text': 'Just paste large blocks of text here and it will break automatically',
         'itemNumber': 'When subscriber reserve gifts or tickets, how many items do we allow them to have in one batch',
         'titleForMore': 'Under construction. If you need this feature now, let me know. ',
