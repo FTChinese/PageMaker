@@ -111,7 +111,7 @@
         'promoTarget': ['noneSubscriber', 'standard', 'premium'],
         'VisibleOnlyTo': ['all', 'subscriber', 'premium'],
         'status': ['on', 'off'],
-        'subscriptionBoxTarget': ['all', 'allCampaigns', 'oneCampaign'],
+        'subscriptionBoxTarget': ['all', 'allCampaigns', 'oneCampaign', 'iosapp'],
         'showNavigation': ['yes', 'no'],
         'maxPageNumber': 'number',
         'fileName': 'adimage',
@@ -230,7 +230,7 @@
         'itemNumber': 'When subscriber reserve gifts or tickets, how many items do we allow them to have in one batch',
         'titleForMore': 'Under construction. If you need this feature now, let me know. ',
         'imageStyle': 'Under construction. If you need this feature now, let me know. ',
-        'subscriptionBoxTarget': 'all means the box appears regardless of the ccode parameter; allCampaigns means the box displays if the url has a ccode parameter; oneCampgin means the box displays only if the ccode in parameter matches the ccode that is input in the field. ',
+        'subscriptionBoxTarget': 'all means the box appears regardless of the ccode parameter; allCampaigns means the box displays if the url has a ccode parameter; oneCampgin means the box displays only if the ccode in parameter matches the ccode that is input in the field; iosapp means only target ios native app. ',
         'maxPageNumber': 'The maximum page number based on your estimation. ',
         'guideline': '在这里写操作指南，供别的使用者查看',
         'audiencePixelTag': '1x1的图片地址，主要用于电子邮件监控流量和广告库存',
@@ -318,8 +318,8 @@
         {'name': 'Huawei Mate 8', 'width': 540, 'height': 960},
         {'name': 'Google Nexus 7', 'width': 600, 'height': 960},
         {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
-        {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', 'host': 'https://cn.ft.com', 'to': 'vip'},
-        {'name': 'Page For iOS App', 'width': '', 'height': '', 'view': 'email', 'host': 'https://cn.ft.com', 'to': 'iosapp'},
+        {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip'},
+        {'name': 'Page For iOS App', 'width': '', 'height': '', 'view': 'email', 'to': 'iosapp'},
         {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'}
     ];
     var thisday = new Date();
@@ -1577,7 +1577,7 @@
         const startDateString = convertDate(startDate);
         const endDateString = convertDate(endDate);
         const baseUrl = '/chartist/event.html?v=1';
-        const realtimeBaseUrl = 'https://analytics.google.com/analytics/web/?authuser=1#/realtime/rt-event/a1608715w103966157p108134561/filter.list=40==iPhone%252520Launch%252520Ad;42=={el};&metric.type=5/';
+        const realtimeBaseUrl = 'https://analytics.google.com/analytics/web/?authuser=1#/realtime/rt-event/a1608715w103966157p10995661/filter.list=40==iPhone%252520Launch%252520Ad;42=={el};&metric.type=5/';
         const titleParameter = (titleEle) ? '&title=' + encodeURIComponent(titleEle.value) : '';
         const dataSource = ele.getAttribute('data-source');
         const eventAction = ele.getAttribute('data-event-action');
@@ -1585,7 +1585,7 @@
         var finalUrl;
         if (dataSource === 'ftc-chart') {
             const eventActionParameter = (eventAction !== null) ? '&ea=' + eventAction : '';
-            finalUrl = baseUrl + '&startDate=' + startDateString + '&endDate=' + endDateString + '&el=' + encodeURIComponent(impressionValue) + '&ec=Launch Ad&viewId=108134561' + eventActionParameter + titleParameter;
+            finalUrl = baseUrl + '&startDate=' + startDateString + '&endDate=' + endDateString + '&el=' + encodeURIComponent(impressionValue) + '&ec=Launch Ad&viewId=10995661' + eventActionParameter + titleParameter;
         } else if (dataSource === 'ga-real-time') {
             // MARK: - replace special characters based on Google Analytics' format
             const impressionForRealTime = impressionValue
