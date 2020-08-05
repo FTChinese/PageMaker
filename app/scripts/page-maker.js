@@ -163,7 +163,7 @@
         'SubscriberType': {type: 'multiselect', options: ['Standard Annual', 'Standard Monthly', 'Premium']},
         'RenewalStatus': ['All', 'On', 'Off', ''],
         'PaymentMethods': {type: 'multiselect', options: ['AppleInApp', 'WeChat', 'AliPay']},
-        'DaysToExpiration': {type: 'select', default: '', options: ['<-90', '-90', '-60', '-30', '-14', '-7', '-3', '-1', '', '1', '3', '7', '14', '30', '60', '90', '>90']},
+        'DaysToExpiration': {type: 'select', default: '', options: ['<-90', '-90', '-60', '-30', '-14', '-7', '-3', '-1', '', '1', '3', '7', '14', '30', '60', '90', '300', '>90']},
         'ProductPlatform': {type: 'multiselect', options: ['WebSite', 'iOSApp', 'AndroidApp']},
         'PosterLayout': ['center', 'center-2', 'right', 'right-2', 'bottom'],
         'PosterTheme': ['dark-blue', 'blue', 'light-blue', 'pink', 'gray', 'red', 'gold', 'black'],
