@@ -39,6 +39,7 @@
             'listWithText': ['name', 'title', 'url', 'text', 'wideImage', 'mobileImage', 'titleForMore', 'imageStyle'],
             'listWithCode': ['codeFileName'],
             'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote', 'itemNumber', 'feedbackForSuccess', 'feedbackForFailure'],
+            'SubscriptionInfoConfirm': ['name', 'title', 'description', 'dates', 'InfoCollection'],
             'SideMPU': ['name', 'image', 'url'],
             'adCreative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'backgroundColor', 'durationInSeconds', 'closeButton'],
             'SideWithItems':['name', 'title', 'url', 'sideOption', 'feedItems', 'feedTag', 'feedType'],
@@ -98,8 +99,10 @@
         'language': ['', 'en', 'ce'],
         'fit': ['', 'standard', 'highimpact', 'legacy'],
         'sponsorMobile': ['no', 'yes'],
+        'hidePromoBox': ['no', 'yes'],
         'inSponsor': ['no', 'yes'],
         'hideDownloadButton': ['no', 'yes'],
+        'InfoCollection': ['basic', 'detail'],
         'durationInSeconds': ['default','6','15','30','60','90'],
         'weight': ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'],
         'Tickets': ['1','2','3','4','5'],
@@ -243,12 +246,13 @@
         'PageImage': '订阅页顶部配图链接',
         'blocks': '0指所有的block',
         'maxItems': '0指展示所有的item',
-        'DaysToExpiration': '正数是快要到期的订户，负数是已经过期的订户。90：在90天之内即将到期的订户，-90: 到期时间没有超过90天的订户，<-90: 过期时间超过90天的订户，>90：在90天之内都不会到期的订户',
+        'DaysToExpiration': '正数是快要到期的订户，负数是已经过期的前订户。90：在90天之内即将到期的订户，-90: 到期时间没有超过90天的前订户，<-90: 过期时间超过90天的前订户，>90：在90天之内都不会到期的订户',
         'SubscriberSource': '订户是B端还是C端的。大多数情况下，针对C端订户的PromoBox不想让B端订户看到',
         'Duration': '订户最新购买的订阅的周期，如果订户购买了多个订阅，以最新的那个订阅为准',
         'ProductPlatform': '不同的产品平台--网站、iOS应用和Android应用--的用户习惯和支持的功能是非常不一样的',
         'RenewalStatus': '目前只有苹果内购支持自动续订，对于苹果平台来说，All代表所有情况，On代表苹果内购自动续订打开，Off代表苹果内购自动续订关闭，空代表非苹果内购的订户',
-        'placeholder': '用在赞助管理中，如果日期为空，而这个值为yes，则显示在首页'
+        'placeholder': '用在赞助管理中，如果日期为空，而这个值为yes，则显示在首页',
+        'InfoCollection': 'basic表示只收集邮件和手机号码，detail表示还要收集更多信息'
     };
 
     // MARK: - Differentiate subscription information
