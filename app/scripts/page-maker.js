@@ -23,7 +23,7 @@
             'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
             'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
             'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
-            'promoBox': ['Name', 'status', 'note', 'TargetAudience', 'promoTarget', 'SubscriberSource', 'Duration', 'DaysToExpiration', 'ProductPlatform', 'RenewalStatus', 'dates'],
+            'promoBox': ['Name', 'status', 'note', 'TargetAudience', 'promoTarget', 'SubscriberSource', 'Duration', 'DaysToExpiration', 'ProductPlatform', 'RenewalStatus', 'PendingOffer', 'dates'],
             'RemoteConfigParameter': ['Name', 'status', 'note'],
             'EventInfoFlow': ['Name', 'status', 'note', 'TargetAudience', 'subscription', 'dates', 'Action', 'title', 'lead', 'image', 'click', 'tag', 'tagLink', 'position'],
             'newAd':['devices','pattern','position','container'],
@@ -33,14 +33,13 @@
             'LifeCycleManager': ['name', 'TargetAudience', 'SubscriberType', 'RenewalStatus', 'PaymentMethods', 'DaysToExpiration', 'ProductPlatform', 'EngagementLevel', 'InactiveDays', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'DelegateToFirebase', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
             'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'LogoType', 'HideLogo', 'ClientLogo', 'ClientLogo2', 'ClientLogo3', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SecondTitleMore', 'SecondTitleMoreFont', 'SubTitle', 'SubTitleFont', 'SubTitleBG', 'CallForActionType', 'QRUrl', 'QRTitle', 'note'],
             'Tags': ['ImportantTags', 'ReservedTags'],
-            'FixedButtons': ['name', 'backgroundColor']
+            'FixedButtons': ['name', 'ccode', 'discountCode']
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
             'listWithText': ['name', 'title', 'url', 'text', 'wideImage', 'mobileImage', 'titleForMore', 'imageStyle'],
             'listWithCode': ['codeFileName'],
             'listForImage': ['name', 'image', 'url'],
-            'FixedButton': ['name', 'image', 'url'],
             'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote', 'itemNumber', 'feedbackForSuccess', 'feedbackForFailure'],
             'SubscriptionInfoConfirm': ['name', 'title', 'description', 'dates', 'InfoCollection'],
             'SideMPU': ['name', 'image', 'url'],
@@ -168,6 +167,7 @@
         'Action': 'group',
         'SubscriberType': {type: 'multiselect', options: ['Standard Annual', 'Standard Monthly', 'Premium']},
         'RenewalStatus': ['All', 'On', 'Off', ''],
+        'PendingOffer': ['All', 'Yes', 'No'],
         'PaymentMethods': {type: 'multiselect', options: ['AppleInApp', 'WeChat', 'AliPay']},
         'DaysToExpiration': {type: 'select', default: '', options: ['<-90', '-90', '-60', '-30', '-14', '-7', '-3', '-1', '', '1', '3', '7', '14', '30', '60', '90', '300', '>90']},
         'ProductPlatform': {type: 'multiselect', options: ['WebSite', 'iOSApp', 'AndroidApp']},
@@ -256,7 +256,8 @@
         'RenewalStatus': '目前只有苹果内购支持自动续订，对于苹果平台来说，All代表所有情况，On代表苹果内购自动续订打开，Off代表苹果内购自动续订关闭，空代表非苹果内购的订户',
         'placeholder': '用在赞助管理中，如果日期为空，而这个值为yes，则显示在首页',
         'InfoCollection': 'basic表示只收集邮件和手机号码，detail表示还要收集更多信息',
-        'listForImage': '让HTML自动排列很多图片'
+        'listForImage': '让HTML自动排列很多图片',
+        'PendingOffer': 'iOS用户已经redeem了Subscription Offer，但是还没有付款'
     };
 
     // MARK: - Differentiate subscription information
@@ -2074,11 +2075,11 @@
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log ('drag has class of lists-header');
                 console.log ($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-FixedButtons')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
                     $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block, timtline, Poster, FixedButtons or promoBox section! ');
+                    alert('A list can only be dropped to a block, timtline, Poster or promoBox section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
@@ -2101,11 +2102,11 @@
                 newListObject.addClass('animated zoomIn');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-FixedButtons')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
                     newListObject.addClass('animated zoomIn');
                 } else {
-                    alert('A list can only be dropped to a block, timtline, Poster, FixedButtons or promoBox section! ');
+                    alert('A list can only be dropped to a block, timtline, Poster or promoBox section! ');
                 }
             } else {
                 console.log('drag list header: other situation...');
