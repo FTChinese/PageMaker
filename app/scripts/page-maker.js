@@ -33,7 +33,8 @@
             'LifeCycleManager': ['name', 'TargetAudience', 'SubscriberType', 'RenewalStatus', 'PaymentMethods', 'DaysToExpiration', 'ProductPlatform', 'EngagementLevel', 'InactiveDays', 'PromoBox', 'title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'Email', 'EmailTitle', 'EmailUrl', 'Notification', 'DelegateToFirebase', 'NotificationTitle', 'NotificationAction', 'NotificationId', 'note'],
             'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'LogoType', 'HideLogo', 'ClientLogo', 'ClientLogo2', 'ClientLogo3', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SecondTitleMore', 'SecondTitleMoreFont', 'SubTitle', 'SubTitleFont', 'SubTitleBG', 'CallForActionType', 'QRUrl', 'QRTitle', 'note'],
             'Tags': ['ImportantTags', 'ReservedTags'],
-            'FixedButtons': ['name', 'ccode', 'discountCode']
+            'FixedButtons': ['name', 'ccode', 'discountCode'],
+            'ProductPricing': ['title', 'lead', 'image', 'ContentType', 'KeyWord', 'status', 'Pricing', 'Full', 'ForStandard', 'ForPremium'],
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
@@ -56,7 +57,8 @@
             'RemoteConfigText': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'TextValue'],
             'RemoteConfigDomains': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'SimplifiedDomain', 'TraditionalDomain'],
             'SideInfo': ['InfoType', 'title', 'link', 'HeadImage', 'Detail'],
-            'EventApplication': ['EventId', 'title', 'subscriptionType', 'description', 'HideFormInfo', 'SuccessNote', 'Tickets']
+            'EventApplication': ['EventId', 'title', 'subscriptionType', 'description', 'HideFormInfo', 'SuccessNote', 'Tickets'],
+            'ProductPromotion': ['title', 'DiscountPrice', 'dates', 'status']
         }
     };
     var allSectionAndLists = [];
@@ -90,7 +92,7 @@
         'from': ['', 'MarketsData', 'SpecialReports', 'Columns', 'Channels', 'Events', 'MyTopics', 'Discover', 'Marketing', 'findpassword', 'house-ad-subscription-promo-box', 'Premium-Cover'],
         'codeFileName': ['', 'subscription-vip-redeem'],
         'fromSide': ['PartnerActivity'],
-        'sideOption': ['BigImageAndLead', 'headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot'],
+        'sideOption': ['BigImageAndLead', 'headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot', 'MachineTranslation'],
         'preferLead': ['longlead', 'shortlead', 'none'],
         'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'myFTNew', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium', 'audiovideo'],
         'feedItems': 'number',
@@ -203,7 +205,13 @@
         'LogoType': ['', 'FTC'],
         'BoolValue': ['yes', 'no'],
         'PurchaseType': ['All', 'Apple', 'FTC'],
-        'placeholder': ['no', 'yes']
+        'placeholder': ['no', 'yes'],
+        'ContentType': ['interactive', 'story', 'video'],
+        'Full': 'number',
+        'ForStandard': 'number',
+        'ForPremium': 'number',
+        'DiscountPrice': 'number',
+        'Pricing': 'group'
     };
 
     var dataRulesTitle = {
@@ -217,7 +225,7 @@
         'showTag': '程序会抓取tag字段中第一个tag做为primary tag来显示',
         'showTimeStamp': 'new stories代表只在文章发布的一个小时内显示时间，all代表在所有情况下都显示时间',
         'from': '选取事先写好的模版',
-        'sideOption': 'headlineOnly表示只显示标题；leadOnly表示只显示lead，这个功能可以用来展示联系方式一类的文字信息；imageAndText显示方式类似微信公众号的图文信息，第一条出大图',
+        'sideOption': 'headlineOnly表示只显示标题；leadOnly表示只显示lead，这个功能可以用来展示联系方式一类的文字信息；imageAndText显示方式类似微信公众号的图文信息，第一条出大图; Machines Translation是指机器翻译的文章，突出英文标题，以机器翻译的标题为辅助',
         'preferLead': '优先显示的lead类型',
         'feedType': '自动抓取的内容类型，如果选择all则四种类型都抓取，最新的先显示',
         'feedImage': 'Optional代表不要求抓出来的内容必须有配图，Necessary则要求内容必须有配图',
@@ -2075,7 +2083,7 @@
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log ('drag has class of lists-header');
                 console.log ($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-ProductPricing')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
                     $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
                 } else {
@@ -2102,7 +2110,7 @@
                 newListObject.addClass('animated zoomIn');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-ProductPricing')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
                     newListObject.addClass('animated zoomIn');
                 } else {
