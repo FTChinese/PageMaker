@@ -34,7 +34,7 @@
             'Poster': ['name', 'PosterLayout', 'PosterTheme', 'PosterBGImage', 'PosterMainImage', 'PosterCaption', 'LogoType', 'HideLogo', 'ClientLogo', 'ClientLogo2', 'ClientLogo3', 'EventDate', 'EventDatePrefix', 'TitleWidth', 'FirstTitle', 'FirstTitleFont', 'SecondTitle', 'SecondTitleFont', 'SecondTitleMore', 'SecondTitleMoreFont', 'SubTitle', 'SubTitleFont', 'SubTitleBG', 'CallForActionType', 'QRUrl', 'QRTitle', 'note'],
             'Tags': ['ImportantTags', 'ReservedTags'],
             'FixedButtons': ['name', 'ccode', 'discountCode'],
-            'ProductPricing': ['title', 'lead', 'image', 'ContentType', 'KeyWord', 'status', 'Pricing', 'Full', 'ForStandard', 'ForPremium'],
+            'ProductPricing': ['title', 'etitle', 'subtitle', 'esubtitle', 'Detail', 'image', 'PrivilegeType', 'KeyWord', 'status', 'Pricing', 'Full', 'ForStandard', 'ForPremium', 'NextAction', 'DataCollection', 'link'],
         },
         'list': {
             'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
@@ -58,7 +58,7 @@
             'RemoteConfigDomains': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'SimplifiedDomain', 'TraditionalDomain'],
             'SideInfo': ['InfoType', 'title', 'link', 'HeadImage', 'Detail'],
             'EventApplication': ['EventId', 'title', 'subscriptionType', 'description', 'HideFormInfo', 'SuccessNote', 'Tickets'],
-            'ProductPromotion': ['title', 'DiscountPrice', 'dates', 'status']
+            'ProductPromotion': ['title', 'Detail', 'dates', 'ccode', 'upgrade', 'status', 'Pricing', 'Full', 'ForStandard', 'ForPremium', 'NextAction', 'DataCollection', 'link']
         }
     };
     var allSectionAndLists = [];
@@ -81,7 +81,7 @@
         //'type': ['block', 'banner', 'header', 'footer'],
         'side': ['none', 'HomeRightRail','TagRightRail', 'MostPopular', 'HotVideos', 'MarketsData', 'videos', 'MostCommented', 'Narrow'],
         'sideAlign': ['right', 'left'],
-        'float': ['none', 'left', 'right', 'oneline', 'SideBySide', 'myFT', 'IconTitle', 'Card', 'eBook', 'VideoWall', 'Headshot', 'ScoreBoard', 'EqualSizeForNonFirstItems', 'ItemsWithSameImage', 'SplitList', 'BiligualFullText', 'Cover'],
+        'float': ['none', 'left', 'right', 'oneline', 'SideBySide', 'myFT', 'IconTitle', 'Card', 'eBook', 'VideoWall', 'Headshot', 'HeadshotSquare', 'ScoreBoard', 'EqualSizeForNonFirstItems', 'ItemsWithSameImage', 'SplitList', 'BiligualFullText', 'Cover'],
         'showTag': ['no', 'yes'],
         'showTimeStamp': ['no', 'new stories', 'all'],
         'showSoundButton': ['no', 'yes'],
@@ -206,12 +206,15 @@
         'BoolValue': ['yes', 'no'],
         'PurchaseType': ['All', 'Apple', 'FTC'],
         'placeholder': ['no', 'yes'],
-        'ContentType': ['interactive', 'story', 'video'],
+        'PrivilegeType': ['tag', 'interactive', 'story', 'video'],
         'Full': 'number',
         'ForStandard': 'number',
         'ForPremium': 'number',
         'DiscountPrice': 'number',
-        'Pricing': 'group'
+        'Pricing': 'group',
+        'NextAction': 'group',
+        'DataCollection': ['None', 'Basic', 'Detail'],
+        'upgrade': ['no', 'yes']
     };
 
     var dataRulesTitle = {
@@ -265,7 +268,8 @@
         'placeholder': '用在赞助管理中，如果日期为空，而这个值为yes，则显示在首页',
         'InfoCollection': 'basic表示只收集邮件和手机号码，detail表示还要收集更多信息',
         'listForImage': '让HTML自动排列很多图片',
-        'PendingOffer': 'iOS用户已经redeem了Subscription Offer，但是还没有付款'
+        'PendingOffer': 'iOS用户已经redeem了Subscription Offer，但是还没有付款',
+        'DataCollection': '这几种形式具体收集哪些字段，请需求部门想好了告诉Oliver即可'
     };
 
     // MARK: - Differentiate subscription information
@@ -327,17 +331,18 @@
         'MonthlyPrice': checkPrice
     };
     var devices = [
-        {'name': 'PC or Mac', 'width': '', 'height': ''},
-        {'name': 'iPhone 5', 'width': 320, 'height': 580},
-        {'name': 'iPhone 6', 'width': 375, 'height': 627},
-        {'name': 'iPhone 6 Plus', 'width': 414, 'height': 736},
-        {'name': 'iPad LandScape', 'width': 1024, 'height': 748},
-        {'name': 'iPad Portrait', 'width': 768, 'height': 1024},
-        {'name': 'Huawei Mate 8', 'width': 540, 'height': 960},
-        {'name': 'Google Nexus 7', 'width': 600, 'height': 960},
+        {'name': 'Web Page', 'width': '', 'height': ''},
+        // {'name': 'iPhone 5', 'width': 320, 'height': 580},
+        // {'name': 'iPhone 6', 'width': 375, 'height': 627},
+        // {'name': 'iPhone 6 Plus', 'width': 414, 'height': 736},
+        // {'name': 'iPad LandScape', 'width': 1024, 'height': 748},
+        // {'name': 'iPad Portrait', 'width': 768, 'height': 1024},
+        // {'name': 'Huawei Mate 8', 'width': 540, 'height': 960},
+        // {'name': 'Google Nexus 7', 'width': 600, 'height': 960},
         {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
         {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip'},
         {'name': 'Page For iOS App', 'width': '', 'height': '', 'view': 'email', 'to': 'iosapp'},
+        {'name': 'Page For none-ios App', 'width': '', 'height': '', 'view': 'email', 'to': 'noneiosapp'},
         {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'}
     ];
     var thisday = new Date();
