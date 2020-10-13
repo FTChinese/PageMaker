@@ -207,43 +207,6 @@
         'blocks': '0指所有的block',
         'maxItems': '0指展示所有的item'
     };
-    var toolkits = {
-        'section': {
-            'block': ['title', 'name', 'side', 'sideAlign', 'description'],
-            'include': ['from', 'side', 'sideAlign'],
-            'page': ['id', 'blocks', 'maxItems'],
-            'header': ['showNavigation'],
-            'banner': ['position', 'image', 'highImpactImage', 'url', 'fit'],
-            'footer': [],
-            'pagination': ['maxPageNumber'],
-            'creative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'audienceCohort', 'dates', 'priority', 'weight', 'showSoundButton', 'landscapeFileName', 'backupImage', 'backgroundColor', 'durationInSeconds', 'closeButton', 'note'],
-            'sponsorship': ['title', 'assignee', 'description', 'tag', 'link', 'channel', 'storyKeyWords', 'adChannelId', 'zone', 'dates', 'status', 'imageHighlightBox', 'imageTicker', 'imageRibbon', 'storyMPU1', 'storyMPU2', 'storyMPU3', 'storyBanner', 'story590Banner', 'addToNavSpecialReports', 'hideAd', 'WeeklyOutput', 'TotalOutput', 'NumberOfArchive', 'emails', 'sectionPageTrack', 'paidPostKey', 'paidPostTrack', 'note'],
-            'manualTagPage': ['title', 'tag', 'zone', 'link', 'description', 'subType', 'preferLead', 'topnav', 'subnav', 'thirdnav', 'note'],
-            'MainMessage': ['title', 'content', 'buttonTitle', 'buttonUrl', 'ccode', 'discountCode'],
-            'subscriptionLead': ['title', 'lead',  'subscriptionBoxTarget'],
-            'subscriptionBox': ['title', 'ccode', 'subscriptionBoxTarget'],
-            'SubscriptionQa': ['title', 'subscriptionBoxTarget'],
-            'promoBox': ['title', 'promoTarget', 'status', 'imagePC', 'imageMobile', 'click', 'ccode', 'dates', 'weight', 'backgroundColor', 'buttonColor', 'buttonFontColor', 'note'],
-            'newAd':['devices','pattern','position','container'],
-            'timeline': ['title', 'name', 'timelineStyle', 'description'],
-            'apiBlock': ['title', 'link', 'description', 'allowTop', 'apiNumber', 'itemNumber'],
-            'DiscountSchedule': ['PageTitle', 'PageDescription', 'PageImage', 'StandardPrice', 'PremiumPrice', 'MonthlyPrice', 'StartDate', 'EndDate']
-        },
-        'list': {
-            'list': ['name', 'title', 'url', 'language', 'description', 'style', 'float', 'showTag', 'showTimeStamp', 'preferLead', 'sponsorAdId', 'sponsorLogoUrl', 'sponsorLink', 'sponsorNote', 'feedStart', 'feedItems', 'feedTag', 'feedType', 'feedImage', 'moreLink'],
-            'listWithText': ['name', 'title', 'url', 'text', 'wideImage', 'mobileImage', 'titleForMore', 'imageStyle'],
-            'listWithCode': ['codeFileName'],
-            'subscriptionPromotion': ['name', 'title', 'description', 'url', 'ccode', 'buttonTitle', 'subscriptionType', 'successNote', 'itemNumber', 'feedbackForSuccess', 'feedbackForFailure'],
-            'SideMPU': ['name', 'image', 'url'],
-            'adCreative': ['title', 'fileName', 'click', 'impression_1', 'impression_2', 'impression_3', 'iphone', 'android', 'ipad', 'dates', 'priority', 'weight', 'showSoundButton', 'backgroundColor', 'durationInSeconds', 'closeButton'],
-            'SideWithItems':['name', 'title', 'url', 'sideOption', 'feedItems', 'feedTag', 'feedType'],
-            'SideRanking': ['name', 'title', 'url', 'feedItems', 'feedTag', 'feedType'],
-            'SideInclude': ['name', 'title', 'url', 'fromSide'],
-            'SideIframe': ['name', 'title', 'url', 'width', 'height'],
-            'SideNewAd':['devices','pattern','position','container'],
-            'timelineEvent': ['title', 'url', 'description', 'image']
-        }
-    };
 
     // MARK: - Differentiate subscription information
     var isPremiumStories = false;
