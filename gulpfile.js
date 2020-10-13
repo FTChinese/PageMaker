@@ -183,8 +183,8 @@ gulp.task('copy:styles', () => {
 gulp.task('copy:pagemaker', () => {
   const dest = 'dev_cms/pagemaker';
   return gulp.src(['dist/**/*', 'app/api*/**/*'])
-    .pipe(gulp.dest(`../${dest}`))
-    .pipe(gulp.dest(`../testing/${dest}`));
+    .pipe(gulp.dest(`../${dest}`));
+    //.pipe(gulp.dest(`../testing/${dest}`));
 });
 
 gulp.task('copy', gulp.series(
