@@ -7,8 +7,8 @@
     "sponsorMobile": "",
     "inSponsor": "no",
     "hideDownloadButton": "no",
-    "hidePromoBox": "no",
-    "fileTime": ""
+    "fileTime": "",
+    "requirelogin": "yes"
   },
   "sections": [
   ]
