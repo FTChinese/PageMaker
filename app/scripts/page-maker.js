@@ -94,7 +94,7 @@
         'fromSide': ['PartnerActivity'],
         'sideOption': ['BigImageAndLead', 'headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot', 'MachineTranslation'],
         'preferLead': ['longlead', 'shortlead', 'none'],
-        'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'myFTNew', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium', 'audiovideo'],
+        'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'myFTNew', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium', 'audiovideo', 'MyProducts'],
         'feedItems': 'number',
         'feedStart': 'number',
         'text': 'textarea',
