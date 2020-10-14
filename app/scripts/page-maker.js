@@ -58,6 +58,7 @@
             'RemoteConfigDomains': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'SimplifiedDomain', 'TraditionalDomain'],
             'SideInfo': ['InfoType', 'title', 'link', 'HeadImage', 'Detail'],
             'EventApplication': ['EventId', 'title', 'subscriptionType', 'description', 'HideFormInfo', 'SuccessNote', 'Tickets'],
+            'MyProducts': ['title', 'description'],
             'ProductPromotion': ['title', 'Detail', 'dates', 'ccode', 'upgrade', 'status', 'Pricing', 'Full', 'ForStandard', 'ForPremium', 'NextAction', 'DataCollection', 'link']
         }
     };
@@ -94,7 +95,7 @@
         'fromSide': ['PartnerActivity'],
         'sideOption': ['BigImageAndLead', 'headlineOnly', 'leadOnly', 'imageAndText', 'imageAndLead', 'textOverImage', 'barcode', 'originalImage','headShot', 'MachineTranslation'],
         'preferLead': ['longlead', 'shortlead', 'none'],
-        'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'myFTNew', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium', 'audiovideo', 'MyProducts'],
+        'feedType': ['all','story','video','interactive','photo','job', 'myFT', 'myFTNew', 'fav', 'ftc_columns', 'ft_columns', 'hot', 'premium', 'audiovideo'],
         'feedItems': 'number',
         'feedStart': 'number',
         'text': 'textarea',
