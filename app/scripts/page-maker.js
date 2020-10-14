@@ -58,7 +58,7 @@
             'RemoteConfigDomains': ['Name', 'status', 'Conditions', 'subscriptionType', 'SubscriberSource', 'Duration', 'ProductPlatform', 'PurchaseType', 'dates', 'Settings', 'SimplifiedDomain', 'TraditionalDomain'],
             'SideInfo': ['InfoType', 'title', 'link', 'HeadImage', 'Detail'],
             'EventApplication': ['EventId', 'title', 'subscriptionType', 'description', 'HideFormInfo', 'SuccessNote', 'Tickets'],
-            'MyProducts': ['title', 'description'],
+            'MyProducts': ['title', 'description', 'fallback'],
             'ProductPromotion': ['title', 'Detail', 'dates', 'ccode', 'upgrade', 'status', 'Pricing', 'Full', 'ForStandard', 'ForPremium', 'NextAction', 'DataCollection', 'link']
         }
     };
