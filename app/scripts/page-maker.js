@@ -160,6 +160,63 @@
         'content': 'textarea',
         'blocks': 'number',
         'maxItems': 'number',
+        'content': 'textarea',
+        'discountCode': ['ft_discount', 'ft_renewal', 'ft_win_back', ''],
+        'Email': 'group',
+        'Notification': 'group',
+        'PromoBox': 'group',
+        'TargetAudience': 'group',
+        'Conditions': 'group',
+        'Settings': 'group',
+        'Action': 'group',
+        'SubscriberType': {type: 'multiselect', options: ['Standard Annual', 'Standard Monthly', 'Premium']},
+        'RenewalStatus': ['All', 'On', 'Off', ''],
+        'PendingOffer': ['All', 'Yes', 'No'],
+        'PaymentMethods': {type: 'multiselect', options: ['AppleInApp', 'WeChat', 'AliPay']},
+        'DaysToExpiration': {type: 'select', default: '', options: ['<-90', '-90', '-60', '-30', '-14', '-7', '-3', '-1', '', '1', '3', '7', '14', '30', '60', '90', '300', '>90']},
+        'ProductPlatform': {type: 'multiselect', options: ['WebSite', 'iOSApp', 'AndroidApp']},
+        'PosterLayout': ['center', 'center-2', 'right', 'right-2', 'bottom'],
+        'PosterTheme': ['dark-blue', 'blue', 'light-blue', 'pink', 'gray', 'red', 'gold', 'black'],
+        'PosterBGImage': 'image',
+        'PosterMainImage': 'image',
+        'PosterCaption': 'textarea',
+        'ClientLogo': 'image',
+        'ClientLogo2': 'image',
+        'ClientLogo3': 'image',
+        'TitleWidth': {type: 'select', default: '360', options: ['300', '310', '320', '330', '340', '350', '360', '370', '380', '390', '400', '410', '420']},
+        'FirstTitleFont': {type: 'select', default: '34', options: ['20','21','22','23','24','25','26','27','28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
+        'SecondTitleFont': {type: 'select', default: '34', options: ['20','21','22','23','24','25','26','27','28', '28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
+        'SecondTitleMoreFont': {type: 'select', default: '28', options: ['20','21','22','23','24','25','26','27','28', '28', '29', '30', '31', '32', '34', '35', '36', '37', '38', '39', '40', '41', '42']},
+        'SubTitleFont': {type: 'select', default: '20', options: ['14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28']},
+        'FirstTitle': 'textarea',
+        'SecondTitle': 'textarea',
+        'SecondTitleMoreq': 'textarea',
+        'SubTitle': 'textarea',
+        'showrighttype': {type: 'multiselect', options: allSectionAndLists},
+        'EngagementLevel': {type: 'multiselect', options: ['Low', 'Middle', 'High']},
+        'DelegateToFirebase': ['no', 'yes'],
+        'CallForActionType': ['QR', 'Button'],
+        'SubscriberSource': ['2C', '2B', 'All'],
+        'Duration': ['', 'yearly', 'monthly'],
+        'ShowCountdown': ['no', 'yes'],
+        'offer': ['', 'standard_win_back_offer_2020', 'premium_win_back_offer_2020', 'standard_retention_offer_2020', 'premium_retention_offer_2020', 'standard_discount_offer_2020', 'premium_discount_offer_2020'],
+        'HideLogo': ['no', 'yes'],
+        'Detail': 'textarea',
+        'position': {type: 'select', default: '7', options: ['3', '4', '5', '6', '7', '8']},
+        'InfoType': ['author', 'page'],
+        'LogoType': ['', 'FTC'],
+        'BoolValue': ['yes', 'no'],
+        'PurchaseType': ['All', 'Apple', 'FTC'],
+        'placeholder': ['no', 'yes'],
+        'PrivilegeType': ['tag', 'interactive', 'story', 'video'],
+        'Full': 'number',
+        'ForStandard': 'number',
+        'ForPremium': 'number',
+        'DiscountPrice': 'number',
+        'Pricing': 'group',
+        'NextAction': 'group',
+        'DataCollection': ['None', 'Basic', 'Detail'],
+        'upgrade': ['no', 'yes'],
         'discountCode': ['ft_discount', ''],
         'requirelogin': ['yes', 'no']
     };
@@ -206,7 +263,17 @@
         'PageDescription': '订阅页顶部描述文字',
         'PageImage': '订阅页顶部配图链接',
         'blocks': '0指所有的block',
-        'maxItems': '0指展示所有的item'
+        'maxItems': '0指展示所有的item',
+        'DaysToExpiration': '正数是快要到期的订户，负数是已经过期的前订户。90：在90天之内即将到期的订户，-90: 到期时间没有超过90天的前订户，<-90: 过期时间超过90天的前订户，>90：在90天之内都不会到期的订户',
+        'SubscriberSource': '订户是B端还是C端的。大多数情况下，针对C端订户的PromoBox不想让B端订户看到',
+        'Duration': '订户最新购买的订阅的周期，如果订户购买了多个订阅，以最新的那个订阅为准',
+        'ProductPlatform': '不同的产品平台--网站、iOS应用和Android应用--的用户习惯和支持的功能是非常不一样的',
+        'RenewalStatus': '目前只有苹果内购支持自动续订，对于苹果平台来说，All代表所有情况，On代表苹果内购自动续订打开，Off代表苹果内购自动续订关闭，空代表非苹果内购的订户',
+        'placeholder': '用在赞助管理中，如果日期为空，而这个值为yes，则显示在首页',
+        'InfoCollection': 'basic表示只收集邮件和手机号码，detail表示还要收集更多信息',
+        'listForImage': '让HTML自动排列很多图片',
+        'PendingOffer': 'iOS用户已经redeem了Subscription Offer，但是还没有付款',
+        'DataCollection': '这几种形式具体收集哪些字段，请需求部门想好了告诉Oliver即可'
     };
 
     // MARK: - Differentiate subscription information
@@ -1000,6 +1067,9 @@
         var lists = '';
         var showrighttype = data.meta.showrighttype || '';
         $.each(toolkits.section, function (key, value) { // jshint ignore:line
+            if (showrighttype === '' || showrighttype === 'All' || showrighttype.indexOf(key)>=0) {
+                sections += '<div class="toolkit toolkit-section toolkit-' + key + '" draggable=true>' + key + '</div>';
+            }
             console.log (key);
             sections += '<div class="toolkit toolkit-section toolkit-' + key + '" draggable=true>' + key + '</div>';
         });
