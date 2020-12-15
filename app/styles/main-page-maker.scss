@@ -246,6 +246,11 @@ button {
 .tab.on .tab-inner {
 
 }
+.tool-sec-container {
+  padding-bottom: 15px;
+  border-bottom: 8px solid $sectionsBorder;
+  margin-bottom: 15px;
+}
 .show-all {
   .tab.all .tab-inner {
     @include tabInnerOn;

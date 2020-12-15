@@ -2116,9 +2116,9 @@
             if (showrighttype === '' || showrighttype === 'All' || showrighttype.indexOf(key)>=0) {
                 sections += '<div class="toolkit toolkit-section toolkit-' + key + '" draggable=true>' + key + '</div>';
             }
-            console.log (key);
-            sections += '<div class="toolkit toolkit-section toolkit-' + key + '" draggable=true>' + key + '</div>';
+            // sections += '<div class="toolkit toolkit-section toolkit-' + key + '" draggable=true>' + key + '</div>';
         });
+
         $.each(toolkits.list, function (key, value) { // jshint ignore:line
             if (showrighttype === '' || showrighttype === 'All' || showrighttype.indexOf(key)>=0) {
                 lists += '<div class="toolkit toolkit-list toolkit-' + key + '" draggable=true>' + key + '</div>';
