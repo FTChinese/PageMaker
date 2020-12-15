@@ -368,6 +368,11 @@
             "NextAction",
             "DataCollection",
             "link"
+          ],
+          "MailTracking": [
+              "domain",
+              "path",
+              "title"
           ]
         },
         "list": {
@@ -391,6 +396,8 @@
             "feedTag",
             "feedType",
             "feedImage",
+            "ShowBodyMail",
+            "ShowParagraphs",
             "moreLink"
           ],
           "listWithText": [
@@ -1456,7 +1463,9 @@
         "requirelogin": [
           "yes",
           "no"
-        ]
+        ],
+        "ShowBodyMail": ["no", "yes"],
+        "ShowParagraphs": "number"
       };
 
     // var dataRulesTitle = {
@@ -1566,7 +1575,9 @@
         "listForImage": "让HTML自动排列很多图片",
         "PendingOffer": "iOS用户已经redeem了Subscription Offer，但是还没有付款",
         "InfoCollection": "basic表示只收集邮件和手机号码，detail表示还要收集更多信息, china_only：验证的时候只接受中国大陆的手机号码，13位数字，如果地址填写的不是中国大陆，允许提交，但是会弹出反馈。",
-        "discountCode": "目前的约定如下：ft_discount为85折, ft_renewal为75折, ft_win_back为5折"
+        "discountCode": "目前的约定如下：ft_discount为85折, ft_renewal为75折, ft_win_back为5折",
+        "ShowBodyMail": "在邮件中显示文章全文",
+        "ShowParagraphs": "邮件中显示文章的段落"
       };
 
     // MARK: - Differentiate subscription information
