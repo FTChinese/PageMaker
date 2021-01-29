@@ -1995,7 +1995,7 @@
                                                         showSponsorImage: showSponsorImage
                                                     });
                                 interactivesInner += interactiveItem;
-                                if (/英语电台|速读/.test(tag)) {
+                                if (/专享/.test(tag)) {
                                     premiumInner += interactiveItem;
                                 }
                             }
