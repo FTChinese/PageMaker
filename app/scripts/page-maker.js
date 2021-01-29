@@ -1994,9 +1994,11 @@
                                                         customLink: customLink,
                                                         showSponsorImage: showSponsorImage
                                                     });
-                                interactivesInner += interactiveItem;
+                                
                                 if (/专享/.test(tag)) {
                                     premiumInner += interactiveItem;
+                                } else {
+                                    interactivesInner += interactiveItem;
                                 }
                             }
                         });
