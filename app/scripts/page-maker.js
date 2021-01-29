@@ -906,7 +906,8 @@
           'all',
           'free',
           'standard',
-          'premium'
+          'premium',
+          'internal'
         ],
         subType: [
           '',
