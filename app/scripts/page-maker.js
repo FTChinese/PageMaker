@@ -613,6 +613,7 @@
           'myFT',
           'IconTitle',
           'Card',
+          'LargeCard',
           'eBook',
           'VideoWall',
           'Headshot',
@@ -840,6 +841,10 @@
         showNavigation: [
           'yes',
           'no'
+        ],
+        showLogin: [
+            'yes',
+            'no'
         ],
         maxPageNumber: 'number',
         fileName: 'adimage',
