@@ -39,7 +39,8 @@
             'maxItems'
           ],
           header: [
-            'showNavigation'
+            'showNavigation',
+            'showLogin'
           ],
           banner: [
             'position',
