@@ -1966,7 +1966,7 @@
                             var mainTag = '';
                             var interactiveItem;
                             id = interactive.id;
-                            timeStamp = interactive.pubdate || '';
+                            timeStamp = interactive.fileupdatetime || interactive.pubdate || '';
                             timeStampType = 3;
                             headline = interactive.cheadline;
                             longlead = interactive.clongleadbody || '';
