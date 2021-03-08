@@ -588,7 +588,8 @@
           'education',
           'lifestyle',
           'ebook',
-          'specialreport'
+          'specialreport',
+          'partner_content'
         ],
         side: [
           'none',
