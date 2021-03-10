@@ -17,6 +17,8 @@
             'boxBackground',
             'VisibleOnlyTo'
           ],
+          hero: ['title', 'vid', 'image'],
+          partnerBanner: ['title', 'sponsor', 'disclaimer'],
           cover: [
             'tag',
             'title',
@@ -317,7 +319,8 @@
             'domain',
             'path',
             'title'
-          ]
+          ],
+          SeamlessFrame: ['url', 'height']
         },
         list: {
           list: [
@@ -330,6 +333,7 @@
             'float',
             'showTag',
             'showTimeStamp',
+            'readMore',
             'preferLead',
             'sponsorAdId',
             'sponsorLogoUrl',
@@ -616,6 +620,7 @@
           'IconTitle',
           'Card',
           'LargeCard',
+          'GridCard',
           'eBook',
           'VideoWall',
           'Headshot',
@@ -1281,6 +1286,7 @@
         float: '如果某个list有文章没有配图，可以采用float到左边的方式来展示这个List，同时其余的list自动float到右边；如果想要某个list，如cover占据全部宽度，则设定其为oneline；如果想要像myFT那样一行一条内容，则选择myFT；想要强制设定这个List所有内容都采用同样的展现形式，则选择Card',
         showTag: '程序会抓取tag字段中第一个tag做为primary tag来显示',
         showTimeStamp: 'new stories代表只在文章发布的一个小时内显示时间，all代表在所有情况下都显示时间',
+        readMore: '在每条内容的底部显示一个用于查看详情的按钮，显示什么字你自己决定',
         from: '选取事先写好的模版',
         sideOption: 'headlineOnly表示只显示标题；leadOnly表示只显示lead，这个功能可以用来展示联系方式一类的文字信息；imageAndText显示方式类似微信公众号的图文信息，第一条出大图; Machines Translation是指机器翻译的文章，突出英文标题，以机器翻译的标题为辅助',
         preferLead: '优先显示的lead类型',
@@ -3091,6 +3097,7 @@
                         'float': 'none',
                         'showTag': 'no',
                         'showTimeStamp': 'no',
+                        'readMore': '',
                         'preferLead': 'longlead',
                         'sponsorAdId': '',
                         'sponsorLogoUrl': '',
