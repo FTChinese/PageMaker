@@ -674,7 +674,8 @@
           'findpassword',
           'house-ad-subscription-promo-box',
           'Premium-Cover',
-          'US-Election-Realtime'
+          'US-Election-Realtime',
+          'cytiva-social-block'
         ],
         codeFileName: [
           '',
