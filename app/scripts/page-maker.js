@@ -76,7 +76,8 @@
             'durationInSeconds',
             'closeButton',
             'ccode',
-            'note'
+            'note',
+            'fileNames'
           ],
           sponsorship: [
             'title',
@@ -1273,7 +1274,8 @@
           'yes',
           'no'
         ],
-        ShowBodyMail: ['no', 'yes']
+        ShowBodyMail: ['no', 'yes'],
+        fileNames: 'textarea'
     };
 
 
@@ -1331,7 +1333,8 @@
         PendingOffer: 'iOS用户已经redeem了Subscription Offer，但是还没有付款',
         InfoCollection: 'basic表示只收集邮件和手机号码，detail表示还要收集更多信息, china_only：验证的时候只接受中国大陆的手机号码，13位数字，如果地址填写的不是中国大陆，允许提交，但是会弹出反馈。',
         discountCode: '目前的约定如下：ft_discount为85折, ft_renewal为75折, ft_win_back为5折',
-        ShowBodyMail: '在邮件中显示文章全文'
+        ShowBodyMail: '在邮件中显示文章全文',
+        fileNames: '这个开机广告创意之前使用过的文件名'
       };
 
     // MARK: - Differentiate subscription information
@@ -2644,14 +2647,16 @@
 
     function launchImpressionTrack(ele) {
         var impressionEle = ele.parentElement.parentElement.querySelector('.impression-value');
-        console.log ('yes 0');
         if (!impressionEle) {return;}
         var impressionValue = impressionEle.value;
         var dateEle = impressionEle.parentElement.parentElement.parentElement.querySelector('.date-value');
         var titleEle = impressionEle.parentElement.parentElement.parentElement.querySelector('[data-key=title]');
-        console.log ('yes 1');
+        var historyEle = impressionEle.parentElement.parentElement.parentElement.querySelector('[data-key=fileNames]');
+        var historyValues = (historyEle.value || '').split('\n');
+        historyValues.push(impressionValue);
+        historyValues = historyValues.filter(x=>x !== '').map(x=>x.replace(/^.*\.(com|net|cn)\//g, ''));
+        impressionValue = historyValues.join('|');
         if (!dateEle) {return;}
-        console.log ('yes 2');
         var currentDatesString = dateEle.value;
         var currentDatesArray = currentDatesString.split(',');
         currentDatesArray = currentDatesArray.map(x => new Date(x.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/g, '$1-$2-$3')));
