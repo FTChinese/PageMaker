@@ -1954,7 +1954,7 @@
                             shortlead = video.cshortleadbody || '';
                             tag = video.tag || '';
                             tag = '视频,' + tag;
-                            image = video.story_pic.other || video.story_pic.smallbutton || video.story_pic.cover || video.story_pic.bigbutton || '';
+                            image = video.story_pic.cover || video.story_pic.bigbutton || video.story_pic.other || video.story_pic.smallbutton || '';
                             type = 'video';
                             if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
                                 videosInner += renderAPI({
@@ -1995,7 +1995,7 @@
                             if (longlead.indexOf('|') > 0 && shortlead !== '') {
                                 longlead = shortlead;
                             }
-                            image = interactive.story_pic.other || interactive.story_pic.smallbutton || interactive.story_pic.cover || interactive.story_pic.bigbutton || '';
+                            image = interactive.story_pic.cover || interactive.story_pic.bigbutton || interactive.story_pic.other || interactive.story_pic.smallbutton || '';
                             type = 'interactive';
                             if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
                                 interactiveItem = renderAPI({
