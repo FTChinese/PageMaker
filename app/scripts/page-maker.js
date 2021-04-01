@@ -926,7 +926,8 @@
         subType: [
           '',
           'radio',
-          'speedreading'
+          'speedreading',
+          'bilingual'
         ],
         StartDate: 'StartDate',
         EndDate: 'EndDate',
