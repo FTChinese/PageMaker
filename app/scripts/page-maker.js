@@ -716,7 +716,8 @@
           'ft_columns',
           'hot',
           'premium',
-          'audiovideo'
+          'audiovideo',
+          'aiaudio'
         ],
         feedItems: 'number',
         feedStart: 'number',
@@ -937,6 +938,7 @@
         blocks: 'number',
         maxItems: 'number',
         discountCode: [
+          'ft_full_price',
           'ft_discount',
           'ft_renewal',
           'ft_win_back',
@@ -1333,7 +1335,7 @@
         listForImage: '让HTML自动排列很多图片',
         PendingOffer: 'iOS用户已经redeem了Subscription Offer，但是还没有付款',
         InfoCollection: 'basic表示只收集邮件和手机号码，detail表示还要收集更多信息, china_only：验证的时候只接受中国大陆的手机号码，13位数字，如果地址填写的不是中国大陆，允许提交，但是会弹出反馈。',
-        discountCode: '目前的约定如下：ft_discount为85折, ft_renewal为75折, ft_win_back为5折',
+        discountCode: '目前的约定如下：ft_full_price为全价, ft_discount为85折, ft_renewal为75折, ft_win_back为5折',
         ShowBodyMail: '在邮件中显示文章全文',
         fileNames: '这个开机广告创意之前使用过的文件名'
       };
