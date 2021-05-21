@@ -29,21 +29,22 @@ function render(items) {
 function expand(ele) {
     var id = ele.parentNode.id;
     if (ele.classList.contains('on')) {
-        var currenEle = document.getElementById(id).parentNode;
+        var currenEle = document.getElementById(id);
         currenEle.querySelector('.detail').innerHTML = '';
         currentId = undefined;
     } else {
         var item = itemDict[id];
         var lead = item.clongleadbody;
         var body = item.cbody;
+        if (item.type === 'interactive') {
+            body = `<p>${body.split('\n').map(x=>`<p>${x}</p>`).join('')}</p>`;
+        }
         var html = '<div class="lead">' + lead + '</div><div class="body">' + body + '</div>';
         ele.parentNode.querySelector('.detail').innerHTML = html;
         currentId = id;
     }
     ele.classList.toggle('on');
 }
-
-
 
 document.querySelector('.create-quiz').onclick = function() {
     try {
