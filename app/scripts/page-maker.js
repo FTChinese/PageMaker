@@ -171,6 +171,15 @@
             'PendingOffer',
             'dates'
           ],
+          IntroductoryOffer: [
+            'Name',
+            'status',
+            'message',
+            'months',
+            'price',
+            'dates',
+            'note'
+          ],
           RemoteConfigParameter: [
             'Name',
             'status',
@@ -1175,6 +1184,7 @@
           type: 'multiselect',
           options: allSectionAndLists
         },
+        HighlightFTAcademy: ['no', 'yes'],
         EngagementLevel: {
           type: 'multiselect',
           options: [
@@ -1278,7 +1288,9 @@
           'no'
         ],
         ShowBodyMail: ['no', 'yes'],
-        fileNames: 'textarea'
+        fileNames: 'textarea',
+        months: [1,2,3],
+        price: 'number'
     };
 
 
@@ -1318,6 +1330,7 @@
         maxPageNumber: 'The maximum page number based on your estimation. ',
         guideline: '在这里写操作指南，供别的使用者查看',
         audiencePixelTag: '1x1的图片地址，主要用于电子邮件监控流量和广告库存',
+        HighlightFTAcademy: '在本页的显著位置体现FT商学院的内容，工作日放在第二条，假日放在顶部出四条',
         storyKeyWords: '文章中的标签，topic等等',
         zone: 'Identifies the ad unit in the associated ad tag. Codes can be up to 100 characters and are not case-sensitive. Only letters, numbers, underscores, hyphens, periods, asterisks, forward slashes, backslashes, exclamations, left angle brackets, colons, and parentheses are allowed.',
         emails: '需要协同工作的人的邮件，逗号分隔',
@@ -1794,6 +1807,9 @@
         }
         if (jsonData.meta.showrighttype === undefined) {
             jsonData.meta.showrighttype = '';
+        }
+        if (jsonData.meta.HighlightFTAcademy === undefined) {
+            jsonData.meta.HighlightFTAcademy = 'no';
         }
         const thisday = new Date();
         const todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
