@@ -178,6 +178,7 @@
             'months',
             'price',
             'dates',
+            'ccode',
             'note'
           ],
           RemoteConfigParameter: [
@@ -1441,8 +1442,9 @@
     var gApiUrlsLocal = {
         'home': 'api/page/home.json',
         'homePOST': 'api',
+        'blank': 'api/page/introductoryoffer.json',
         //'blank': 'api/page/promoBox.json',
-        'blank': 'api/page/blank.json',
+        // 'blank': 'api/page/blank.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
         //'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
@@ -1764,15 +1766,14 @@
 
     function renderJson(jsonData) {
         function getActiveClass(value, todaydate) {
-            var shouldCheckActiveStatus = ('creative,promoBox,sponsorship'.indexOf(value.type)>=0);
+            var shouldCheckActiveStatus = ('creative,promoBox,sponsorship,IntroductoryOffer'.indexOf(value.type)>=0);
             if (!shouldCheckActiveStatus) {return '';}
-
             if ('creative'.indexOf(value.type)>=0) {
                 if (!value.dates) {return '';}
-            } else if (value.type === 'promoBox') {
+            } else if (['promoBox'].indexOf(value.type) >= 0) {
                 if (value.status !== 'on') {return '';}
                 if (!value.dates || value.dates === '') {return ' is-active';}
-            } else if ('sponsorship'.indexOf(value.type)>=0) {
+            } else if ('sponsorship,IntroductoryOffer'.indexOf(value.type)>=0) {
                 if (value.status !== 'on') {return '';}
                 if (value.dates === '' && value.placeholder === 'yes') {return ' is-active';}
             }
