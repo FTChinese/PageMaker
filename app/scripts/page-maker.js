@@ -816,10 +816,9 @@
           ]
         },
         priority: [
-          '',
-          'sponsorship',
-          'standard',
-          'house'
+            'standard',
+            'sponsorship',
+            'house'
         ],
         closeButton: [
           'none',
