@@ -612,6 +612,7 @@
           'TagRightRail',
           'MostPopular',
           'HotVideos',
+          'HotPaidContent',
           'MarketsData',
           'videos',
           'MostCommented',
