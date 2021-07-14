@@ -1357,7 +1357,8 @@
         InfoCollection: 'basic表示只收集邮件和手机号码，detail表示还要收集更多信息, china_only：验证的时候只接受中国大陆的手机号码，13位数字，如果地址填写的不是中国大陆，允许提交，但是会弹出反馈。',
         discountCode: '目前的约定如下：ft_full_price为全价, ft_discount为85折, ft_renewal为75折, ft_win_back为5折',
         ShowBodyMail: '在邮件中显示文章全文',
-        fileNames: '这个开机广告创意之前使用过的文件名'
+        fileNames: '这个开机广告创意之前使用过的文件名',
+        Insert: '在Grid排列的Item中插入排行榜等'
       };
 
     // MARK: - Differentiate subscription information
