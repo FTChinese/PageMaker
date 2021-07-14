@@ -356,7 +356,8 @@
             'feedType',
             'feedImage',
             'ShowBodyMail',
-            'moreLink'
+            'moreLink',
+            'Insert'
           ],
           listWithText: [
             'name',
@@ -712,6 +713,11 @@
           'longlead',
           'shortlead',
           'none'
+        ],
+        Insert: [
+            '',
+            'HotFTAcademy',
+            'HotPaidContent'
         ],
         feedType: [
           'all',
@@ -1442,9 +1448,9 @@
     var gApiUrlsLocal = {
         'home': 'api/page/home.json',
         'homePOST': 'api',
-        'blank': 'api/page/introductoryoffer.json',
+        // 'blank': 'api/page/introductoryoffer.json',
         //'blank': 'api/page/promoBox.json',
-        // 'blank': 'api/page/blank.json',
+        'blank': 'api/page/blank.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
         //'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
@@ -3134,7 +3140,8 @@
                         'feedTag': '',
                         'feedType': '',
                         'feedImage': 'optional',
-                        'moreLink': ''
+                        'moreLink': '',
+                        'Insert': ''
                     }
                 ];
             }
