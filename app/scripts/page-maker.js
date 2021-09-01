@@ -49,7 +49,9 @@
             'image',
             'highImpactImage',
             'url',
-            'fit'
+            'fit',
+            'maxWidth',
+            'sticky'
           ],
           footer: [],
           pagination: [
@@ -141,7 +143,8 @@
             'buttonTitle',
             'buttonUrl',
             'ccode',
-            'discountCode'
+            'discountCode',
+            'BackgroundImage'
           ],
           subscriptionLead: [
             'title',
@@ -400,6 +403,7 @@
             'title',
             'description',
             'InfoCollection',
+            'SkipButton',
             'status'
           ],
           SideMPU: [
@@ -437,6 +441,7 @@
           SideRanking: [
             'name',
             'title',
+            'RankingBy',
             'url',
             'feedItems',
             'feedTag',
@@ -604,6 +609,7 @@
           'education',
           'lifestyle',
           'ebook',
+          'black',
           'specialreport',
           'partner_content'
         ],
@@ -715,6 +721,11 @@
           'none'
         ],
         Insert: [
+            '',
+            'HotFTAcademy',
+            'HotPaidContent'
+        ],
+        RankingBy: [
             '',
             'HotFTAcademy',
             'HotPaidContent'
@@ -1191,6 +1202,7 @@
           type: 'multiselect',
           options: allSectionAndLists
         },
+        sticky: ['', 'all', 'mobile', 'pc'],
         HighlightFTAcademy: ['no', 'yes'],
         EngagementLevel: {
           type: 'multiselect',
@@ -1297,7 +1309,8 @@
         ShowBodyMail: ['no', 'yes'],
         fileNames: 'textarea',
         months: [1,2,3],
-        price: 'number'
+        price: 'number',
+        maxWidth: 'number'
     };
 
 
@@ -1358,7 +1371,9 @@
         discountCode: '目前的约定如下：ft_full_price为全价, ft_discount为85折, ft_renewal为75折, ft_win_back为5折',
         ShowBodyMail: '在邮件中显示文章全文',
         fileNames: '这个开机广告创意之前使用过的文件名',
-        Insert: '在Grid排列的Item中插入排行榜等'
+        Insert: '在Grid排列的Item中插入排行榜等',
+        SkipButton: '跳过按钮显示的文字，如果是空，则不显示跳过按钮',
+        maxWidth: '最大宽度，如果设置为0的话，就不起作用'
       };
 
     // MARK: - Differentiate subscription information
@@ -1884,6 +1899,7 @@
                 var otherHTML = '';
                 var videosInner = '';
                 var interactivesInner = '';
+                var aiTranslationsInner = '';
                 var photosInner = '';
                 var premiumInner = '';
                 $.each(data, function (entryIndex, entry) {
@@ -1908,7 +1924,6 @@
                     var caudio = '';
                     var eaudio = '';
                     if (entry.id) {
-                        //console.log (entry.last_publish_time);
                         timeStamp = entry.fileupdatetime || '';
                         if (entry.publish_status === 'draft') {
                             timeStamp = '';
@@ -1916,10 +1931,6 @@
                         timeStampType = 2;
                         id = entry.id;
                         ftid = entry.ftid || '';
-                        // MARK: - FT's Experimental Amy Service is no longer stable, use Apple instead. 
-                        // if (ftid !== '') {
-                        //     eaudio = 'https://s3-us-west-2.amazonaws.com/ftlabs-audio-rss-bucket.prod/' + ftid + '.mp3';
-                        // }
                         headline = entry.cheadline;
                         longlead = entry.clongleadbody || '';
                         shortlead = entry.cshortleadbody || '';
@@ -1932,13 +1943,11 @@
                         industry = (topic === '') ? '' : ',' + industry;
                         tag += topic + area + industry;
                         tag = tag.replace(/,+/g,',').replace(/,$/, '');
-                        //shortlead = JSON.stringify(entry);
                         image = entry.story_pic.cover || entry.story_pic.other || entry.story_pic.Other || entry.story_pic.smallbutton || entry.story_pic.bigbutton || '';
                         type = 'story';
                         priority = entry.priority;
                         relativestory = entry.relativestory || [];
                         customLink = entry.customLink || '';
-                        //shortlead = JSON.stringify(relativestory);
                         var obj = {
                             id: id,
                             ftid: ftid,
@@ -2024,6 +2033,7 @@
                             }
                             image = interactive.story_pic.cover || interactive.story_pic.bigbutton || interactive.story_pic.other || interactive.story_pic.smallbutton || '';
                             type = 'interactive';
+                            
                             if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
                                 interactiveItem = renderAPI({
                                                         id: id,
@@ -2038,8 +2048,9 @@
                                                         customLink: customLink,
                                                         showSponsorImage: showSponsorImage
                                                     });
-                                
-                                if (/专享/.test(tag)) {
+                                if (/市场快报|科技快报|经济快报|商业快报/.test(tag)) {
+                                    aiTranslationsInner += interactiveItem;
+                                } else if (/专享/.test(tag)) {
                                     premiumInner += interactiveItem;
                                 } else {
                                     interactivesInner += interactiveItem;
@@ -2138,9 +2149,10 @@
                 storiesInner = coverHTML + newsHTML + commentsHTML + otherHTML;
                 videosInner = wrapItemHTML(videosInner, 'Videos');
                 interactivesInner = wrapItemHTML(interactivesInner, 'Interactive Features');
+                aiTranslationsInner = wrapItemHTML(aiTranslationsInner, 'AI Translations');
                 photosInner = wrapItemHTML(photosInner, 'Photo Slides');
                 premiumInner = wrapItemHTML(premiumInner, 'Premium Content');
-                $('#stories-inner').html(premiumInner + storiesInner + videosInner + interactivesInner + photosInner);
+                $('#stories-inner').html(premiumInner + storiesInner + aiTranslationsInner + videosInner + interactivesInner + photosInner);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('errorThrown - [' + errorThrown + ']');
