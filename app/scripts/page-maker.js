@@ -573,7 +573,19 @@
             'DataCollection',
             'link'
           ]
-        }
+        },
+        ActivityContainer: [
+            'HeadImage',
+            'HeroImage',
+            'title',
+            'TitleImage',
+            'TitleColor',
+            'Detail',
+            'BackgroundColor',
+            'FrontColor',
+            'ItemLayout',
+            'PointColor'
+        ]
       };
 
 
@@ -888,6 +900,8 @@
         landscapeFileName: 'adimage',
         backupImage: 'adimage',
         HeadImage: 'image',
+        HeroImage: 'image',
+        TitleImage: 'image',
         imagePC: 'image',
         imageMobile: 'image',
         imageHighlightBox: 'image',
