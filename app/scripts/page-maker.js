@@ -117,6 +117,8 @@
           manualTagPage: [
             'title',
             'tag',
+            'storyKeyWords',
+            'imageHighlightBox',
             'zone',
             'link',
             'description',
@@ -572,20 +574,23 @@
             'NextAction',
             'DataCollection',
             'link'
-          ]
-        },
+          ],
         ActivityContainer: [
-            'HeadImage',
-            'HeroImage',
+            'Content',
             'title',
             'TitleImage',
             'TitleColor',
+            'HeadImage',
+            'HeroImage',
             'Detail',
+            'note',
+            'Style',
             'BackgroundColor',
             'FrontColor',
             'ItemLayout',
             'PointColor'
-        ]
+          ]
+        }
       };
 
 
@@ -992,6 +997,8 @@
         Conditions: 'group',
         Settings: 'group',
         Action: 'group',
+        Content: 'group',
+        Style: 'group',
         SubscriberType: {
           type: 'multiselect',
           options: [
