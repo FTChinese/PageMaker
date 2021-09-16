@@ -579,16 +579,17 @@
             'Content',
             'title',
             'TitleImage',
-            'TitleColor',
             'HeadImage',
-            'HeroImage',
+            'ItemImage',
             'Detail',
             'note',
             'Style',
+            'TitleColor',
             'BackgroundColor',
-            'FrontColor',
+            'FontColor',
+            'SubtitleColor',
             'ItemLayout',
-            'PointColor'
+            'IconColor'
           ]
         }
       };
@@ -905,7 +906,7 @@
         landscapeFileName: 'adimage',
         backupImage: 'adimage',
         HeadImage: 'image',
-        HeroImage: 'image',
+        ItemImage: 'image',
         TitleImage: 'image',
         imagePC: 'image',
         imageMobile: 'image',
