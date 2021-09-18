@@ -2072,8 +2072,10 @@
                                                     });
                                 if (/市场快报|科技快报|经济快报|商业快报/.test(tag)) {
                                     aiTranslationsInner += interactiveItem;
-                                } else if (/专享/.test(tag)) {
+                                } else if (/高端专享/.test(tag)) {
                                     premiumInner += interactiveItem;
+                                } else if (/双语阅读/.test(tag)) {
+                                    aiTranslationsInner += interactiveItem;
                                 } else {
                                     interactivesInner += interactiveItem;
                                 }
