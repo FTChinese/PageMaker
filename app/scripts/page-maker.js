@@ -876,7 +876,9 @@
         promoTarget: [
           'noneSubscriber',
           'standard',
-          'premium'
+          'premium',
+          'new',
+          'churned'
         ],
         VisibleOnlyTo: [
           'all',

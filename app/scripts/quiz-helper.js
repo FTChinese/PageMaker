@@ -1,4 +1,4 @@
- /*exported expand */
+ /*exported expand, copyAlert */
 var itemDict = {};
 var currentId;
 function loadContent() {
@@ -46,6 +46,10 @@ function expand(ele) {
     ele.classList.toggle('on');
 }
 
+function copyAlert(error) {
+    alert('在复制的时候浏览器报错了，请手动复制！\n错误信息可以截屏给开发者：' + error.toString());
+}
+
 document.querySelector('.create-quiz').onclick = function() {
     try {
         var selObj = window.getSelection();
@@ -87,13 +91,30 @@ ${image}
     }
 };
 
+
 document.querySelector('.finish').onclick = function(){
     var textarea = document.querySelector('.result');
     textarea.select();
-    document.execCommand('copy');
-    if (window.opener) {
-        window.close();
+    // document.execCommand('copy');
+    // if (window.opener) {
+    //     window.close();
+    // }
+
+    /* jshint ignore:start */
+    if (navigator && navigator.clipboard) {
+    navigator.clipboard.writeText(textarea.value)
+        .then(() => {
+            if (window.opener) {
+                window.close();
+            } else {
+                alert('复制成功！');
+            }
+        })
+        .catch((error) => { copyAlert(error); });
+    } else {
+        copyAlert('navigator.clipboard不支持。可能是因为网址的https的问题，或者浏览器不支持。');
     }
+    /* jshint ignore:end */
 };
 
 loadContent();
