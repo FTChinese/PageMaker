@@ -763,7 +763,9 @@
           'hot',
           'premium',
           'audiovideo',
-          'aiaudio'
+          'aiaudio',
+          'DailyEmail',
+          'PMEmail'
         ],
         feedItems: 'number',
         feedStart: 'number',
