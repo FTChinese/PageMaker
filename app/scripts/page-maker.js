@@ -146,7 +146,9 @@
             'buttonUrl',
             'ccode',
             'discountCode',
-            'BackgroundImage'
+            'BackgroundImage',
+            'status',
+            'dates'
           ],
           subscriptionLead: [
             'title',
@@ -765,7 +767,9 @@
           'audiovideo',
           'aiaudio',
           'DailyEmail',
-          'PMEmail'
+          'DailyEmailPremium',
+          'PMEmail',
+          'PMEmailPremium'
         ],
         feedItems: 'number',
         feedStart: 'number',
