@@ -140,6 +140,8 @@
             'note'
           ],
           MainMessage: [
+            'Tag',
+            'TagLink',
             'title',
             'content',
             'buttonTitle',
@@ -147,6 +149,8 @@
             'ccode',
             'discountCode',
             'BackgroundImage',
+            'BackgroundColor',
+            'BackgroundLayout',
             'status',
             'dates'
           ],
@@ -1340,7 +1344,8 @@
         fileNames: 'textarea',
         months: [1,2,3],
         price: 'number',
-        maxWidth: 'number'
+        maxWidth: 'number',
+        BackgroundLayout: ['Default', 'SpecialReport']
     };
 
 
@@ -1403,7 +1408,8 @@
         fileNames: '这个开机广告创意之前使用过的文件名',
         Insert: '在Grid排列的Item中插入排行榜等',
         SkipButton: '跳过按钮显示的文字，如果是空，则不显示跳过按钮',
-        maxWidth: '最大宽度，如果设置为0的话，就不起作用'
+        maxWidth: '最大宽度，如果设置为0的话，就不起作用',
+        BackgroundLayout: '在PC端，Default指放在中间，Special Report指图片放在右边一半，移动端会相应调整'
       };
 
     // MARK: - Differentiate subscription information
@@ -1456,6 +1462,7 @@
         'TraditionalDomain': regSecureUrlForDomain,
         'dates': datesFormat,
         'backgroundColor': hexColor,
+        'BackgroundColor': hexColor,
         'buttonColor': hexColor,
         'buttonFontColor': hexColor,
         'click': clickRedirect,
@@ -1466,15 +1473,11 @@
     };
     var devices = [
         {'name': 'Web Page', 'width': '', 'height': ''},
-        // {'name': 'iPhone 5', 'width': 320, 'height': 580},
-        // {'name': 'iPhone 6', 'width': 375, 'height': 627},
-        // {'name': 'iPhone 6 Plus', 'width': 414, 'height': 736},
-        // {'name': 'iPad LandScape', 'width': 1024, 'height': 748},
-        // {'name': 'iPad Portrait', 'width': 768, 'height': 1024},
-        // {'name': 'Huawei Mate 8', 'width': 540, 'height': 960},
-        // {'name': 'Google Nexus 7', 'width': 600, 'height': 960},
         {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
         {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip'},
+        {'name': 'No image email for free user', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip', 'showImage': 'no'},
+        {'name': 'No image email for standard subscribers', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip', 'showImage': 'no'},
+        {'name': 'No image email for premium subscribers', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip', 'showImage': 'no'},
         {'name': 'Page For iOS App', 'width': '', 'height': '', 'view': 'email', 'to': 'iosapp'},
         {'name': 'Page For none-ios App', 'width': '', 'height': '', 'view': 'email', 'to': 'noneiosapp'},
         {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'}
@@ -3344,7 +3347,8 @@
             var viewValue = value.view || '';
             var hostValue = value.host || 'http://www7.ftchinese.com';
             var to = value.to || 'all';
-            devicesHTML += '<div class="preview-on-device" data-width="' + value.width + '" data-height="' + value.height + '" data-view="' + viewValue + '" data-host="' + hostValue + '" data-to="' + to + '">' + value.name + '</div>';
+            var showImage = value.showImage || 'yes';
+            devicesHTML += '<div class="preview-on-device" data-width="' + value.width + '" data-height="' + value.height + '" data-view="' + viewValue + '" data-host="' + hostValue + '" data-to="' + to + '" data-show-image="' + showImage + '">' + value.name + '</div>';
         });
         var previewHTML = '<div id="preview-shadow" class="o-overlay-shadow animated fadeIn"></div><div id="preview-box" class="rightanswer show o-overlay__arrow-top animated fadeInRight"><div class="preview-header">Simulate on the following devices: </div><div class="explain-body"><div class="explain-answer">' + devicesHTML + '</div></div>';
         $('#preview-overlay').html(previewHTML);
@@ -3437,6 +3441,7 @@
     $('body').on('click', '.preview-on-device', function () {
         var hostValue = $(this).attr('data-host');
         var to = $(this).attr('data-to') || '';
+        var showImage = $(this).attr('data-show-image') || '';
         var url = hostValue + '/m/corp/preview.html?pageid=' + getURLParameter('page');
         var w = $(this).attr('data-width') || $(window).width();
         var h = $(this).attr('data-height') || $(window).height();
@@ -3446,6 +3451,9 @@
         }
         if (to !== '') {
             url += '&to=' + to;
+        }
+        if (showImage !== '') {
+            url += '&showImage=' + showImage;
         }
         window.open(url, 'newwindow', 'height=' + h + ',width=' + w + ',top=0,left=0,toolbar=no,menubar=no,resizable=no,scrollbars=yes,location=no, status=no');
     });
