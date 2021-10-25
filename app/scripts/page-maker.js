@@ -149,6 +149,7 @@
             'ccode',
             'discountCode',
             'BackgroundImage',
+            'MobileBackgroundImage',
             'BackgroundColor',
             'BackgroundLayout',
             'status',
@@ -581,6 +582,15 @@
             'DataCollection',
             'link'
           ],
+          Button: [
+            'title',
+            'subscription',
+            'duration',
+            'discountCode',
+            'click',
+            'buttonColor',
+            'BackgroundColor'
+          ],
         ActivityContainer: [
             'Content',
             'title',
@@ -596,7 +606,7 @@
             'SubtitleColor',
             'ItemLayout',
             'IconColor'
-          ]
+        ]
         }
       };
 
@@ -926,6 +936,8 @@
         imageTicker: 'image',
         imageRibbon: 'image',
         image: 'image',
+        BackgroundImage: 'image',
+        MobileBackgroundImage: 'image',
         dates: 'dates',
         apiNumber: 'number',
         allowTop: [
@@ -1001,6 +1013,7 @@
           'ft_discount',
           'ft_renewal',
           'ft_win_back',
+          'intro',
           ''
         ],
         Email: 'group',
@@ -1260,9 +1273,13 @@
           'All'
         ],
         Duration: [
-          '',
-          'yearly',
-          'monthly'
+            '',
+            'yearly',
+            'monthly'
+        ],
+        duration: [
+            'yearly',
+            'monthly'
         ],
         ShowCountdown: [
           'no',
@@ -1403,13 +1420,16 @@
         listForImage: '让HTML自动排列很多图片',
         PendingOffer: 'iOS用户已经redeem了Subscription Offer，但是还没有付款',
         InfoCollection: 'basic表示只收集邮件和手机号码，detail表示还要收集更多信息, china_only：验证的时候只接受中国大陆的手机号码，13位数字，如果地址填写的不是中国大陆，允许提交，但是会弹出反馈。',
-        discountCode: '目前的约定如下：ft_full_price为全价, ft_discount为85折, ft_renewal为75折, ft_win_back为5折',
+        discountCode: '目前的约定如下：ft_full_price为全价, ft_discount为85折, ft_renewal为75折, ft_win_back为5折, intro对应的是月标准1元。未来如果产生新的价格方案，建议直接在代码中体现价格，并保证用户无法在url中截获此价格。',
         ShowBodyMail: '在邮件中显示文章全文',
         fileNames: '这个开机广告创意之前使用过的文件名',
         Insert: '在Grid排列的Item中插入排行榜等',
         SkipButton: '跳过按钮显示的文字，如果是空，则不显示跳过按钮',
         maxWidth: '最大宽度，如果设置为0的话，就不起作用',
-        BackgroundLayout: '在PC端，Default指放在中间，Special Report指图片放在右边一半，移动端会相应调整'
+        BackgroundLayout: '在PC端，Default指放在中间，Special Report指图片放在右边一半，移动端会相应调整',
+        subscription: '订阅类型，目前只有标准和高端，截止2021年10月，我们还没有售卖高端会员的月订阅，但今后可能会',
+        FixedButtons: '底部Button，默认为两个购买Button，一个标准，一个高端。如果手动拖进来Button，则会依据您拖进来的Button显示按钮。',
+        Button: '购买订阅的按钮，请尽量利用下拉菜单来选择。其他活动，可以填写自定义的click链接。'
       };
 
     // MARK: - Differentiate subscription information
@@ -1499,7 +1519,8 @@
         'homePOST': 'api',
         // 'blank': 'api/page/introductoryoffer.json',
         //'blank': 'api/page/promoBox.json',
-        'blank': 'api/page/blank.json',
+        // 'blank': 'api/page/blank.json',
+        'blank': 'api/page/campaign.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
         //'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
@@ -1815,7 +1836,8 @@
             }
         });
         dataHTML = '<div class="lists-container">' + dataHTML + '</div>';
-        metaHTML = '<table class="meta-table">' + metaHTML + '</table>';
+        const sectionGuideline = (data.type && dataRulesTitle[data.type]) ? `<tr><td colspan=2 class="first-row">${dataRulesTitle[data.type]}</td></tr>` : '';
+        metaHTML = '<table class="meta-table">' + sectionGuideline + metaHTML + '</table>';
         return metaHTML + dataHTML;
     }
 
@@ -1876,8 +1898,8 @@
         var sectionsHTML = '';
         var hasItem = false;
         $.each(jsonData.sections, function (key, value) {
-            var sectionMeta = renderMeta(value);
             var title = value.Name || value.title || value.name || value.from || value.type || 'Section';
+            var sectionMeta = renderMeta(value);
             var sectionType = value.type || '';
             var sectionLength;
             if (value.lists !== undefined && value.lists.length > 0) {
@@ -2391,7 +2413,6 @@
     }
 
     function jsonToDom(jsonUrl) {
-        //console.log (jsonUrl);
         $.ajax({
             type: 'get',
             url: jsonUrl,
@@ -3235,7 +3256,7 @@
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log ('drag has class of lists-header');
                 console.log ($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-ProductPricing')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-ProductPricing, .type-FixedButtons')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
                     $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
                 } else {
@@ -3261,8 +3282,7 @@
                 $(this).parentsUntil($('.sections'), '.lists-item').after(newListObject);
                 newListObject.addClass('animated zoomIn');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
-                console.log($(this).parentsUntil($('.sections'), '.section-container'));
-                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-ProductPricing')) {
+                if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-ProductPricing, .type-FixedButtons')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
                     newListObject.addClass('animated zoomIn');
                 } else {
@@ -3577,6 +3597,7 @@
 
     customPageJSON = getURLParameter('page');
     pageId = getURLParameter('id');
+    
     if (customPageJSON !== null && customPageJSON !== '') {
         actionType = 'edit';
     } else if (customPageJSON !== null && customPageJSON !== '') {
@@ -3585,10 +3606,10 @@
     } else {
         actionType = 'create';
     }
-
     if (window.location.hostname === 'localhost' || window.location.hostname.indexOf('192.168') === 0 || window.location.hostname.indexOf('10.113') === 0 || window.location.hostname.indexOf('127.0') === 0) {
         gApiUrls = gApiUrlsLocal;
     }
+
 
     $('#keywords-input').val(todaydate);
 
