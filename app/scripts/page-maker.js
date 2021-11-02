@@ -1891,6 +1891,9 @@
         if (jsonData.meta.HighlightFTAcademy === undefined) {
             jsonData.meta.HighlightFTAcademy = 'no';
         }
+        if (jsonData.meta.requirelogin === undefined) {
+            jsonData.meta.requirelogin = 'yes';
+        }
         const thisday = new Date();
         const todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
         //render meta data into HTML Dom
