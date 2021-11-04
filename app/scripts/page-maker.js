@@ -1495,6 +1495,7 @@
     };
     var devices = [
         {'name': 'Web Page', 'width': '', 'height': ''},
+        {'name': 'App View', 'width': '', 'height': '', 'webview': 'ftcapp'},
         {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
         {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip'},
         {'name': 'No image email for free user', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip', 'showImage': 'no'},
@@ -3373,7 +3374,8 @@
             var hostValue = value.host || 'http://www7.ftchinese.com';
             var to = value.to || 'all';
             var showImage = value.showImage || 'yes';
-            devicesHTML += '<div class="preview-on-device" data-width="' + value.width + '" data-height="' + value.height + '" data-view="' + viewValue + '" data-host="' + hostValue + '" data-to="' + to + '" data-show-image="' + showImage + '">' + value.name + '</div>';
+            var webview = value.webview || '';
+            devicesHTML += '<div class="preview-on-device" data-width="' + value.width + '" data-height="' + value.height + '" data-view="' + viewValue + '" data-host="' + hostValue + '" data-to="' + to + '" data-show-image="' + showImage + '" data-webview="' + webview + '">' + value.name + '</div>';
         });
         var previewHTML = '<div id="preview-shadow" class="o-overlay-shadow animated fadeIn"></div><div id="preview-box" class="rightanswer show o-overlay__arrow-top animated fadeInRight"><div class="preview-header">Simulate on the following devices: </div><div class="explain-body"><div class="explain-answer">' + devicesHTML + '</div></div>';
         $('#preview-overlay').html(previewHTML);
@@ -3467,6 +3469,7 @@
         var hostValue = $(this).attr('data-host');
         var to = $(this).attr('data-to') || '';
         var showImage = $(this).attr('data-show-image') || '';
+        var webview = $(this).attr('data-webview') || '';
         var url = hostValue + '/m/corp/preview.html?pageid=' + getURLParameter('page');
         var w = $(this).attr('data-width') || $(window).width();
         var h = $(this).attr('data-height') || $(window).height();
@@ -3479,6 +3482,9 @@
         }
         if (showImage !== '') {
             url += '&showImage=' + showImage;
+        }
+        if (webview !== '') {
+            url += '&webview=' + webview;
         }
         window.open(url, 'newwindow', 'height=' + h + ',width=' + w + ',top=0,left=0,toolbar=no,menubar=no,resizable=no,scrollbars=yes,location=no, status=no');
     });
