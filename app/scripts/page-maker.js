@@ -140,6 +140,7 @@
             'note'
           ],
           MainMessage: [
+            'Name',
             'Tag',
             'TagLink',
             'title',
@@ -1431,8 +1432,10 @@
         BackgroundLayout: '在PC端，Default指放在中间，Special Report指图片放在右边一半，移动端会相应调整',
         subscription: '订阅类型，目前只有标准和高端，截止2021年10月，我们还没有售卖高端会员的月订阅，但今后可能会',
         FixedButtons: '底部Button，默认为两个购买Button，一个标准，一个高端。如果手动拖进来Button，则会依据您拖进来的Button显示按钮。',
-        Button: '购买订阅的按钮，请尽量利用下拉菜单来选择。其他活动，可以填写自定义的click链接。'
-      };
+        Button: '购买订阅的按钮，请尽量利用下拉菜单来选择。其他活动，可以填写自定义的click链接。',
+        requirelogin: '在订户专享的域名打开的时候，要求必须登录',
+        marker: '从本页点击文章页的时候，带上marker这个参数，便于后续的特殊处理'
+    };
 
     // MARK: - Differentiate subscription information
     var isPremiumStories = false;
@@ -1894,6 +1897,9 @@
         }
         if (jsonData.meta.requirelogin === undefined) {
             jsonData.meta.requirelogin = 'yes';
+        }
+        if (jsonData.meta.marker === undefined) {
+            jsonData.meta.marker = '';
         }
         const thisday = new Date();
         const todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
