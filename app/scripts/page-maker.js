@@ -995,7 +995,9 @@
           'free',
           'standard',
           'premium',
-          'internal'
+          'internal',
+          'new',
+          'churned'
         ],
         subType: [
           '',
