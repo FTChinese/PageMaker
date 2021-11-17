@@ -154,6 +154,7 @@
             'BackgroundColor',
             'BackgroundLayout',
             'status',
+            'subscriptionType',
             'dates'
           ],
           subscriptionLead: [
@@ -1502,10 +1503,10 @@
         {'name': 'Web Page', 'width': '', 'height': ''},
         {'name': 'App View', 'width': '', 'height': '', 'webview': 'ftcapp'},
         {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
-        {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip'},
-        {'name': 'No image email for free user', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip', 'showImage': 'no'},
-        {'name': 'No image email for standard subscribers', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip', 'showImage': 'no'},
-        {'name': 'No image email for premium subscribers', 'width': '', 'height': '', 'view': 'email', /*'host': 'https://cn.ft.com',*/'to': 'vip', 'showImage': 'no'},
+        {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', 'to': 'vip'},
+        {'name': 'No image email for free user', 'width': '', 'height': '', 'view': 'email', 'showImage': 'no'},
+        {'name': 'No image email for standard subscribers', 'width': '', 'height': '', 'view': 'email', 'to': 'standard', 'showImage': 'no'},
+        {'name': 'No image email for premium subscribers', 'width': '', 'height': '', 'view': 'email', 'to': 'premium', 'showImage': 'no'},
         {'name': 'Page For iOS App', 'width': '', 'height': '', 'view': 'email', 'to': 'iosapp'},
         {'name': 'Page For none-ios App', 'width': '', 'height': '', 'view': 'email', 'to': 'noneiosapp'},
         {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'}
