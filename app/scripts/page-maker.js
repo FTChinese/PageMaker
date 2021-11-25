@@ -647,7 +647,8 @@
           'ebook',
           'black',
           'specialreport',
-          'partner_content'
+          'partner_content',
+          'pink'
         ],
         side: [
           'none',
@@ -2103,7 +2104,6 @@
                             }
                             image = interactive.story_pic.cover || interactive.story_pic.bigbutton || interactive.story_pic.other || interactive.story_pic.smallbutton || '';
                             type = 'interactive';
-                            
                             if ($('.content-left-inner .item[data-id=' + id + '][data-type=' + type + ']').length === 0) {
                                 interactiveItem = renderAPI({
                                                         id: id,
