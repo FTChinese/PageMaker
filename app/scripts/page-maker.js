@@ -42,7 +42,8 @@
           ],
           header: [
             'showNavigation',
-            'showLogin'
+            'showLogin',
+            'headerType'
           ],
           banner: [
             'position',
@@ -922,6 +923,11 @@
         showNavigation: [
           'yes',
           'no'
+        ],
+        headerType: [
+            '',
+            'Home',
+            'Channel'
         ],
         showLogin: [
             'yes',
