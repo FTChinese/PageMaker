@@ -43,7 +43,8 @@
           header: [
             'showNavigation',
             'showLogin',
-            'headerType'
+            'headerType',
+            'showAttribution'
           ],
           banner: [
             'position',
@@ -649,7 +650,7 @@
           'black',
           'specialreport',
           'partner_content',
-          'pink'
+          'darkgrey'
         ],
         side: [
           'none',
@@ -928,6 +929,10 @@
             '',
             'Home',
             'Channel'
+        ],
+        showAttribution: [
+            'no',
+            'yes'
         ],
         showLogin: [
             'yes',
@@ -1444,7 +1449,8 @@
         FixedButtons: '底部Button，默认为两个购买Button，一个标准，一个高端。如果手动拖进来Button，则会依据您拖进来的Button显示按钮。',
         Button: '购买订阅的按钮，请尽量利用下拉菜单来选择。其他活动，可以填写自定义的click链接。',
         requirelogin: '在订户专享的域名打开的时候，要求必须登录',
-        marker: '从本页点击文章页的时候，带上marker这个参数，便于后续的特殊处理'
+        marker: '从本页点击文章页的时候，带上marker这个参数，便于后续的特殊处理',
+        AppleReviewVersion: '仅用于iOS应用开机广告的设置：当前苹果正在审核的iOS应用版本号，在苹果审核的时候，不应该显示开机广告，审核通过之后立即将此设置为空。'
     };
 
     // MARK: - Differentiate subscription information
@@ -1474,9 +1480,12 @@
         regStrInclude: /^#[0-9a-zA-Z]{6}$/
     };
     var clickRedirect = {
-        description: '点击必须以http开头，并且不能从https跳转到http',
+        description: '点击必须以http开头，并且不能从https跳转到http；不允许暴露订户专享的域名chineseft.com',
         regStrInclude: /^http/,
-        regStrExclude: /^https.+http:/
+        regStrExclude: /^https.+http:|www\.chineseft\.com/,
+        regStrReplaceDescription: '不允许暴露订户专享的域名chineseft.com，一律强制替换为d191cipm7p004k.cloudfront.net，你也可以使用别的域名。如对此有任何疑问，请咨询技术部门。',
+        regStrReplaceFrom: /www\.chineseft\.com/,
+        regStrReplaceTo: 'd191cipm7p004k.cloudfront.net'
     };
     var fourDigits = {
         description: '必须是四位数字',
@@ -1910,6 +1919,9 @@
         }
         if (jsonData.meta.marker === undefined) {
             jsonData.meta.marker = '';
+        }
+        if (jsonData.meta.AppleReviewVersion === undefined) {
+            jsonData.meta.AppleReviewVersion = '';
         }
         const thisday = new Date();
         const todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
@@ -2584,14 +2596,32 @@
 
     function validateDataFormat(ele) {
         var value = ele.val();
+        // MARK: - Alway trim input first
+        value = value.trim();
+        ele.val(value);
         var valueType = ele.attr('data-key');
         if (validator[valueType] !== undefined) {
             var validateRegexInclude = validator[valueType].regStrInclude || /.*/;
-            //var validateDescription = validator[valueType].description;
-            var validateRegexExclude = validator[valueType].regStrExclude || /mission impossible do not do this/;
+            var validateDescription = validator[valueType].description || '';
+            var validateRegexExclude = validator[valueType].regStrExclude;
             var validateUrlForImage = validator[valueType].loadImage;
             var valideteUrlForImpression = validator[valueType].loadImpression;
+            var replaceDescription = validator[valueType].regStrReplaceDescription || '';
+            var replaceFrom = validator[valueType].regStrReplaceFrom;
+            var replaceTo = validator[valueType].regStrReplaceTo;
+
+            /*
+                    regStrReplaceDescription: '不允许暴露订户专享的域名chineseft.com，一律强制替换为ftchinese.com，你也可以使用别的域名',
+        regStrReplaceFrom: /www\.chineseft\.com/,
+        regStrReplaceTo: 'www.ftchinese.com'
+            */
             if (value !== '') {
+                if (replaceFrom && replaceTo && replaceFrom.test(value)) {
+                    var re = new RegExp(replaceFrom.source, 'gi');
+                    value = value.replace(re, replaceTo);
+                    ele.val(value);
+                    alert(replaceDescription);
+                }
                 if (validateRegexInclude.test(value) && !validateRegexExclude.test(value)) {
                     // MARK: Continue to validate if the validator requires to load url to validate the url is actually accessible!
                     if (validateUrlForImage === true) {
@@ -2614,8 +2644,12 @@
                     if (valideteUrlForImpression === true) {
 
                     }
+                    ele.parent().find('.warning-message').remove();
                     ele.removeClass('warning');
                     return;
+                }
+                if (ele.parent().find('.warning-message').length === 0) {
+                    ele.parent().append(`<div class="warning-message">${validateDescription}</div>`);
                 }
                 ele.addClass('warning');
             }
