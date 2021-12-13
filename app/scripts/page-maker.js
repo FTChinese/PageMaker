@@ -650,7 +650,9 @@
           'black',
           'specialreport',
           'partner_content',
-          'darkgrey'
+          'darkgrey',
+          'mba',
+          'english'
         ],
         side: [
           'none',
