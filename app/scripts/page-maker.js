@@ -613,8 +613,6 @@
         ]
         }
       };
-
-
     var allSectionAndLists = [];
     for (var group in toolkits) {
         if (toolkits.hasOwnProperty(group)) {
@@ -625,8 +623,6 @@
             }
         }
     }
-
-
     var dataRules = {
         lists: 'array',
         items: 'item',
@@ -2278,6 +2274,20 @@
 
         lists += renderAPI({
             id: '',
+            headline: '市场快报',
+            timeStamp: '',
+            timeStampType: '',
+            longlead: '',
+            shortlead: '',
+            image: 'https://thumbor.ftacademy.cn/unsafe/picture/4/000123914_piclink.jpg',
+            type: 'auto-interactive',
+            tag: '市场快报',
+            customLink: '',
+            showSponsorImage: 'yes'
+        });
+
+        lists += renderAPI({
+            id: '',
             headline: '编辑精选' + todaydate,
             timeStamp: '',
             timeStampType: '',
@@ -2289,6 +2299,7 @@
             customLink: '/channel/editorchoice-issue.html?issue=EditorChoice-' + todaydate,
             showSponsorImage: 'no'
         });
+
         for (var kkk = 0; kkk < 2; kkk++) {
             lists += renderAPI({
                 id: '',
