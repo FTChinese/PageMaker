@@ -2277,13 +2277,13 @@
             headline: '市场快报',
             timeStamp: '',
             timeStampType: '',
-            longlead: '',
+            longlead: '把这个拖到首页，会自动显示最新的市场快报',
             shortlead: '',
             image: 'https://thumbor.ftacademy.cn/unsafe/picture/4/000123914_piclink.jpg',
             type: 'auto-interactive',
             tag: '市场快报',
             customLink: '',
-            showSponsorImage: 'yes'
+            showSponsorImage: 'no'
         });
 
         lists += renderAPI({
