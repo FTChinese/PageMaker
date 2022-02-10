@@ -151,6 +151,7 @@
             'buttonUrl',
             'ccode',
             'discountCode',
+            'discount',
             'BackgroundImage',
             'MobileBackgroundImage',
             'BackgroundColor',
@@ -185,6 +186,14 @@
             'ProductPlatform',
             'RenewalStatus',
             'PendingOffer',
+            'dates'
+          ],
+          DeepLinkCampaign: [
+            'Name',
+            'id',
+            'url',
+            'status',
+            'note',
             'dates'
           ],
           IntroductoryOffer: [
@@ -318,6 +327,7 @@
             'name',
             'ccode',
             'discountCode',
+            'discount',
             'backgroundColor',
             'leftButtonBG',
             'leftButtonColor',
@@ -1032,6 +1042,12 @@
           'ft_intro',
           ''
         ],
+        discount: [
+            '',
+            'half',
+            '75',
+            '85'
+        ],
         Email: 'group',
         Notification: 'group',
         PromoBox: 'group',
@@ -1437,6 +1453,7 @@
         PendingOffer: 'iOS用户已经redeem了Subscription Offer，但是还没有付款',
         InfoCollection: 'basic表示只收集邮件和手机号码，detail表示还要收集更多信息, china_only：验证的时候只接受中国大陆的手机号码，13位数字，如果地址填写的不是中国大陆，允许提交，但是会弹出反馈。',
         discountCode: '目前的约定如下：ft_full_price为全价, ft_discount为85折, ft_renewal为75折, ft_win_back和ft_anniversary为5折, intro对应的是月标准1元。未来如果产生新的价格方案，建议直接在代码中体现价格，并保证用户无法在url中截获此价格。',
+        discount: '直接设定折扣价格',
         ShowBodyMail: '在邮件中显示文章全文',
         fileNames: '这个开机广告创意之前使用过的文件名',
         Insert: '在Grid排列的Item中插入排行榜等',
