@@ -560,6 +560,9 @@
             'SimplifiedDomain',
             'TraditionalDomain'
           ],
+          RemoteConfigBlockedDomains: [
+            'domain'
+          ],
           SideInfo: [
             'InfoType',
             'title',
@@ -572,6 +575,8 @@
             'title',
             'subscriptionType',
             'description',
+            'FormPurpose',
+            'ButtonTitle',
             'HideFormInfo',
             'SuccessNote',
             'Tickets'
@@ -605,22 +610,22 @@
             'buttonColor',
             'BackgroundColor'
           ],
-        ActivityContainer: [
-            'Content',
-            'title',
-            'TitleImage',
-            'HeadImage',
-            'ItemImage',
-            'Detail',
-            'note',
-            'Style',
-            'TitleColor',
-            'BackgroundColor',
-            'FontColor',
-            'SubtitleColor',
-            'ItemLayout',
-            'IconColor'
-        ]
+            ActivityContainer: [
+                'Content',
+                'title',
+                'TitleImage',
+                'HeadImage',
+                'ItemImage',
+                'Detail',
+                'note',
+                'Style',
+                'TitleColor',
+                'BackgroundColor',
+                'FontColor',
+                'SubtitleColor',
+                'ItemLayout',
+                'IconColor'
+            ]
         }
       };
     var allSectionAndLists = [];
@@ -797,10 +802,14 @@
           'DailyEmail',
           'DailyEmailPremium',
           'PMEmail',
-          'PMEmailPremium'
+          'PMEmailPremium',
+          'HotFTAcademy',
+          'HotPaidContent',
+          'HotContentByPageViews'
         ],
         feedItems: 'number',
         feedStart: 'number',
+        FormPurpose: ['Event', '2B'],
         text: 'textarea',
         guideline: 'textarea',
         feedImage: [
@@ -1283,6 +1292,7 @@
         },
         sticky: ['', 'all', 'mobile', 'pc'],
         HighlightFTAcademy: ['no', 'yes'],
+        HeaderPrefer: ['logo', 'text'],
         EngagementLevel: {
           type: 'multiselect',
           options: [
@@ -1465,7 +1475,9 @@
         Button: '购买订阅的按钮，请尽量利用下拉菜单来选择。其他活动，可以填写自定义的click链接。',
         requirelogin: '在订户专享的域名打开的时候，要求必须登录',
         marker: '从本页点击文章页的时候，带上marker这个参数，便于后续的特殊处理',
-        AppleReviewVersion: '仅用于iOS应用开机广告的设置：当前苹果正在审核的iOS应用版本号，在苹果审核的时候，不应该显示开机广告，审核通过之后立即将此设置为空。'
+        AppleReviewVersion: '仅用于iOS应用开机广告的设置：当前苹果正在审核的iOS应用版本号，在苹果审核的时候，不应该显示开机广告，审核通过之后立即将此设置为空。',
+        HeaderPrefer: '在邮件的顶部显示标题还是Logo',
+        FormPurpose: '不同的用途，需要收集的字段不同'
     };
 
     // MARK: - Differentiate subscription information
@@ -1938,6 +1950,10 @@
         if (jsonData.meta.AppleReviewVersion === undefined) {
             jsonData.meta.AppleReviewVersion = '';
         }
+        if (jsonData.meta.HeaderPrefer === undefined) {
+            jsonData.meta.HeaderPrefer = 'logo';
+        }
+        
         const thisday = new Date();
         const todaydate = thisday.getFullYear() * 10000 + (thisday.getMonth() + 1) * 100 + thisday.getDate();
         //render meta data into HTML Dom
