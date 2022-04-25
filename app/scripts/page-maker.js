@@ -579,7 +579,8 @@
             'ButtonTitle',
             'HideFormInfo',
             'SuccessNote',
-            'Tickets'
+            'Tickets',
+            'emails'
           ],
           MyProducts: [
             'title',
