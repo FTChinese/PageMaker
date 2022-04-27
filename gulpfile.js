@@ -4,7 +4,7 @@ const gulpLoadPlugins = require('gulp-load-plugins'); //自动加载配置文件
 const browserSync = require('browser-sync').create();//浏览器同步，快速响应文件更改并自动刷新页面
 const wiredep = require('wiredep').stream;  //将bower安装的库及依赖引进html中
 // const runSequence = require('run-sequence'); //任务独立，解除任务间的依赖，增强task复用
-const sass = require('node-sass');
+const sass = require('gulp-dart-sass');
 const cssnext = require('postcss-cssnext');
 const useref = require('gulp-useref');
 const merge = require('merge-stream');
@@ -16,11 +16,11 @@ gulp.task('styles', () => {
   return gulp.src('app/styles/*.scss')
     .pipe($.plumber())
     .pipe($.sourcemaps.init({loadMaps:true}))  //要加载现有的源映射,传递选项loadMaps:true
-    .pipe($.sass.sync({
+    .pipe(sass.sync({
       outputStyle: 'expanded',
       precision: 10,
-      includePaths: ['.', 'bower_components']
-    }).on('error', $.sass.logError))
+      includePaths: ['.', 'node_modules']
+    }).on('error', sass.logError))
     // .pipe($.autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}))
     // .pipe($.postcss([$.autoprefixer]))//出错
     // .pipe($.postcss([require('autoprefixer')]))  //使用了 cssnext 就不再需要使用 Autoprefixer，因为cssnext 中已经包含了对 Autoprefixer 的使用。
@@ -53,30 +53,6 @@ gulp.task('images', function () {
     }))
     .pipe(gulp.dest('dist/images'));
 });
-// // Launch static server
-// gulp.task('serve', 
-//   gulp.parallel(
-//     'styles', 
-//     // 'scripts',
-//     () => {
-//     browserSync.init({
-//       server: {
-//         baseDir: ['app', '.tmp'],
-//         index: 'page-maker.html',
-//         routes: {
-//           '/bower_components': 'bower_components'
-//         }
-//       }
-//     });
-//     // gulp.watch([ 'app/views/*.html',]).on('change', browserSync.reload);
-//     //gulp.watch([ 'app/*.html',]).on('change', browserSync.reload);
-//     //gulp.watch(['app/*.html', 'app/scripts/**/*.js', 'app/styles/**/*.scss'], browserSync.reload);
-
-//     gulp.watch('app/styles/**/*.scss', gulp.parallel('styles'));
-//     gulp.watch(['app/*.html', 'app/scripts/**/*.js', 'app/images/**/*'], browserSync.reload);
-
-//   })
-// );
 
 
 // Launch static server
@@ -89,7 +65,7 @@ gulp.task('serve',
         baseDir: ['app', '.tmp'],
         index: 'page-maker.html',
         routes: {
-          '/bower_components': 'bower_components'
+          '/node_modules': 'node_modules'
         }
       }
     });

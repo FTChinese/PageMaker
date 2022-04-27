@@ -53,11 +53,11 @@ button {
   border: 1px solid #0a5e66;
   background-color: white;
   font-size: 18px;
-  padding: 0 $defaultPadding/2;
+  padding: 0 $defaultPadding*0.5;
   height: $headerHeight * 0.8;
 }
 body {
-  padding: $defaultPadding/2 $defaultPadding/2 $headerHeight;
+  padding: $defaultPadding*0.5 $defaultPadding*0.5 $headerHeight;
   box-sizing: border-box;
 }
 .main {
@@ -83,8 +83,8 @@ body {
   background-color: $darkGreen;
 }
 .item-container {
-  padding-bottom: $defaultPadding/4;
-  margin-bottom: $defaultPadding/4;
+  padding-bottom: $defaultPadding*0.25;
+  margin-bottom: $defaultPadding*0.25;
   border-bottom: 1px solid $defaultBorderColor;
   
 }
@@ -97,7 +97,7 @@ body {
 .lead {
   font-size: 18px;
   color: $lighterGrey;
-  margin-top: $defaultPadding/2;
+  margin-top: $defaultPadding*0.5;
 }
 .body {
   font-size: 18px;

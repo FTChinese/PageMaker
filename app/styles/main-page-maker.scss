@@ -3,6 +3,8 @@
 
 
 // colors
+@use "sass:math";
+
 $defaultBG: #FFF1E0;
 $sectionsBorder: #cec6b9;
 $dragOverBorder: #777777;
@@ -984,7 +986,7 @@ display: block;
 .meta-item-description {
   td {
     color: $lightGrey;
-    padding: 0 $defaultPadding/3 0 $defaultPadding/3;
+    padding: 0 math.div($defaultPadding, 3) 0 math.div($defaultPadding, 3);
     font-size: 0.8em;
   }
 }
