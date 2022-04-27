@@ -3208,17 +3208,17 @@
             // console.log ("dragging an item: ");
             // console.log (dragSrcEl);
             if ($(this).hasClass('item') === true && dragSrcEl !== this) {
-                dragSrcEl.insertAfter($(this)).addClass('animated zoomIn');
+                dragSrcEl.insertAfter($(this)).addClass('animate__zoomIn animate__animated');
                 verifyAllItems(dragSrcEl);
             } else if ($(this).is('.lists-item>.meta-table, .lists-item>.lists-header')) {
                 $(this).parent().find('.lists-container').eq(0).prepend(dragSrcEl);
-                dragSrcEl.addClass('animated zoomIn');
+                dragSrcEl.addClass('animate__zoomIn animate__animated');
                 verifyAllItems(dragSrcEl);
             } /*else if ($(this).is('.type-block .section-header, .type-block .section-inner>meta-table')) {
              listsContainer = $(this).parentsUntil($('.section-container'), '.section-inner').find('.lists-item .lists-container');
              if (listsContainer.length>0) {
              listsContainer.eq(0).prepend(dragSrcEl);
-             dragSrcEl.addClass('animated zoomIn');
+             dragSrcEl.addClass('animate__zoomIn animate__animated');
              } else {
              alert ('Trying to drop an item to a block without list? You need to create at least one list first. Just drag a list here. ');
              }
@@ -3227,15 +3227,15 @@
             }
         } else if (dragSrcEl.hasClass('relative-item')) {
             if ($(this).hasClass('relative-item') === true && dragSrcEl !== this) {
-                dragSrcEl.insertAfter($(this)).addClass('animated zoomIn');
+                dragSrcEl.insertAfter($(this)).addClass('animate__zoomIn animate__animated');
             } else if ($(this).hasClass('relative-container-title')) {
                 $(this).parent().find('.relative-container').eq(0).prepend(dragSrcEl);
-                dragSrcEl.addClass('animated zoomIn');
+                dragSrcEl.addClass('animate__zoomIn animate__animated');
             } /*else if ($(this).is('.type-block .section-header, .type-block .section-inner>meta-table')) {
              listsContainer = $(this).parentsUntil($('.section-container'), '.section-inner').find('.lists-item .lists-container');
              if (listsContainer.length>0) {
              listsContainer.eq(0).prepend(dragSrcEl);
-             dragSrcEl.addClass('animated zoomIn');
+             dragSrcEl.addClass('animate__zoomIn animate__animated');
              } else {
              alert ('Trying to drop an item to a block without list? You need to create at least one list first. Just drag a list here. ');
              }
@@ -3245,17 +3245,17 @@
         } else if (dragSrcEl.hasClass('group-header')) {
             groupItems = dragSrcEl.parent().find('.item');
             if ($(this).hasClass('item') === true) {
-                groupItems.insertAfter($(this)).addClass('animated zoomIn');
+                groupItems.insertAfter($(this)).addClass('animate__zoomIn animate__animated');
                 verifyAllItems(groupItems);
             } else if ($(this).is('.lists-item>.meta-table, .lists-item>.lists-header')) {
                 $(this).parent().find('.lists-container').eq(0).prepend(groupItems);
-                groupItems.addClass('animated zoomIn');
+                groupItems.addClass('animate__zoomIn animate__animated');
                 verifyAllItems(groupItems);
             } /*else if ($(this).is('.type-block .section-header, .type-block .section-inner>meta-table')) {
              listsContainer = $(this).parentsUntil($('.section-container'), '.section-inner').find('.lists-item .lists-container');
              if (listsContainer.length>0) {
              listsContainer.eq(0).prepend(dragSrcEl);
-             dragSrcEl.addClass('animated zoomIn');
+             dragSrcEl.addClass('animate__zoomIn animate__animated');
              } else {
              alert ('Trying to drop an item to a block without list? You need to create at least one list first. Just drag a list here. ');
              }
@@ -3268,17 +3268,17 @@
                 dragOverIndex = $(this).attr('data-order');
                 dragOverIndex = parseInt(dragOverIndex, 10);
                 if (dragIndex < dragOverIndex) {
-                    $('.section-container').eq(dragIndex).insertAfter($(this)).addClass('animated zoomIn');
+                    $('.section-container').eq(dragIndex).insertAfter($(this)).addClass('animate__zoomIn animate__animated');
                 } else if (dragIndex > dragOverIndex) {
-                    $('.section-container').eq(dragIndex).insertBefore($(this)).addClass('animated zoomIn');
+                    $('.section-container').eq(dragIndex).insertBefore($(this)).addClass('animate__zoomIn animate__animated');
                 }
             } else if ($(this).is('.section-container .item, .lists-item>.meta-table, .lists-item>.lists-header, .section-header, .lists-item')) {
                 dragOverIndex = $(this).parentsUntil($('.sections'), '.section-container').attr('data-order');
                 dragOverIndex = parseInt(dragOverIndex, 10);
                 if (dragIndex < dragOverIndex) {
-                    $('.section-container').eq(dragIndex).insertAfter($('.section-container').eq(dragOverIndex)).addClass('animated zoomIn');
+                    $('.section-container').eq(dragIndex).insertAfter($('.section-container').eq(dragOverIndex)).addClass('animate__zoomIn animate__animated');
                 } else if (dragIndex > dragOverIndex) {
-                    $('.section-container').eq(dragIndex).insertBefore($('.section-container').eq(dragOverIndex)).addClass('animated zoomIn');
+                    $('.section-container').eq(dragIndex).insertBefore($('.section-container').eq(dragOverIndex)).addClass('animate__zoomIn animate__animated');
                 }
             } else {
                 console.log('drag section header: other situation');
@@ -3324,13 +3324,13 @@
             // drop a new section. The drop point could be the container or its inner elements
             if ($(this).hasClass('section-container')) {
                 $(this).after(newSectionObject);
-                newSectionObject.addClass('animated zoomIn');
+                newSectionObject.addClass('animate__zoomIn animate__animated');
             } else if ($(this).is('.section-container .item, .section-container .meta-table, .lists-item>.lists-header, .section-header, .lists-item')) {
                 $(this).parentsUntil($('.sections'), '.section-container').after(newSectionObject);
-                newSectionObject.addClass('animated zoomIn');
+                newSectionObject.addClass('animate__zoomIn animate__animated');
             } else if ($(this).hasClass('content-left-inner') && $('.section-container').length === 0) {
                 $(this).find('.sections').append(newSectionObject);
-                newSectionObject.addClass('animated zoomIn');
+                newSectionObject.addClass('animate__zoomIn animate__animated');
             } else {
                 console.log('create new section: other situation');
                 console.log(this.classList);
@@ -3342,25 +3342,25 @@
                 dragOverIndex = $(this).parentsUntil($('.sections'), '.lists-item').attr('data-order');
                 dragOverIndex = parseInt(dragOverIndex, 10);
                 if (dragIndex < dragOverIndex) {
-                    $('.lists-item').eq(dragIndex).insertAfter($('.lists-item').eq(dragOverIndex)).addClass('animated zoomIn');
+                    $('.lists-item').eq(dragIndex).insertAfter($('.lists-item').eq(dragOverIndex)).addClass('animate__zoomIn animate__animated');
                 } else if (dragIndex > dragOverIndex) {
-                    $('.lists-item').eq(dragIndex).insertBefore($('.lists-item').eq(dragOverIndex)).addClass('animated zoomIn');
+                    $('.lists-item').eq(dragIndex).insertBefore($('.lists-item').eq(dragOverIndex)).addClass('animate__zoomIn animate__animated');
                 }
             } else if ($(this).is('.lists-item>.meta-table, .lists-item>.lists-header')) {
                 // drop to list header or list meta table
                 dragOverIndex = $(this).parent().attr('data-order');
                 dragOverIndex = parseInt(dragOverIndex, 10);
                 if (dragIndex < dragOverIndex) {
-                    $('.lists-item').eq(dragIndex).insertAfter($('.lists-item').eq(dragOverIndex)).addClass('animated zoomIn');
+                    $('.lists-item').eq(dragIndex).insertAfter($('.lists-item').eq(dragOverIndex)).addClass('animate__zoomIn animate__animated');
                 } else if (dragIndex > dragOverIndex) {
-                    $('.lists-item').eq(dragIndex).insertBefore($('.lists-item').eq(dragOverIndex)).addClass('animated zoomIn');
+                    $('.lists-item').eq(dragIndex).insertBefore($('.lists-item').eq(dragOverIndex)).addClass('animate__zoomIn animate__animated');
                 }
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 console.log ('drag has class of lists-header');
                 console.log ($(this).parentsUntil($('.sections'), '.section-container'));
                 if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-ProductPricing, .type-FixedButtons')) {
                     $(this).parent().find('.lists-container').eq(0).prepend($('.lists-item').eq(dragIndex));
-                    $('.lists-item').eq(dragIndex).addClass('animated zoomIn');
+                    $('.lists-item').eq(dragIndex).addClass('animate__zoomIn animate__animated');
                 } else {
                     alert('A list can only be dropped to a block, timtline, Poster or promoBox section! ');
                 }
@@ -3382,11 +3382,11 @@
             if ($(this).is('.item, .lists-item>.meta-table, .lists-item>.lists-header')) {
                 // drop to an item
                 $(this).parentsUntil($('.sections'), '.lists-item').after(newListObject);
-                newListObject.addClass('animated zoomIn');
+                newListObject.addClass('animate__zoomIn animate__animated');
             } else if ($(this).is('.section-inner>.meta-table, .section-inner>.section-header')) {
                 if ($(this).parentsUntil($('.sections'), '.section-container').is('.type-block, .type-timeline, .type-Poster, .type-promoBox, .type-manualTagPage, .type-RemoteConfigParameter, .type-ProductPricing, .type-FixedButtons')) {
                     $(this).parent().find('.lists-container').eq(0).prepend(newListObject);
-                    newListObject.addClass('animated zoomIn');
+                    newListObject.addClass('animate__zoomIn animate__animated');
                 } else {
                     alert('A list can only be dropped to a block, timtline, Poster or promoBox section! ');
                 }
