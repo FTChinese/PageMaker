@@ -1482,7 +1482,7 @@
     };
 
     // MARK: - Differentiate subscription information
-    var isPremiumStories = false;
+    var storyColorClass = '';
     // MARK: - Regex for validating common input mistakes such as lack of https
     var regSecureUrl = {
         description: '网址应该采用https! ',
@@ -1680,19 +1680,22 @@
             editLink = obj.customLink.replace(/^.*\/channel\/editorchoice-issue.html\?issue=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
             previewLink = obj.customLink;
         }
+
+        if (/高端专享/.test(obj.tag) && obj.type === 'interactive') {
+            storyColorClass = ' premium-color';
+        } else if (obj.type === 'premium' || (/英语电台|速读|会员专享/.test(obj.tag) && obj.type === 'interactive')) {
+            storyColorClass = ' standard-color';
+        } else {
+            storyColorClass = '';
+        }
+
         if (obj.timeStamp !== '') {
             obj.timeStamp = unixtochinese(obj.timeStamp, obj.timeStampType);
         } else {
             obj.timeStamp = '<div class="new-item"></div>';
         }
-        if (obj.type === 'premium' || (/英语电台|速读/.test(obj.tag) && obj.type === 'interactive')) {
-            isPremiumStories = true;
-        } else {
-            isPremiumStories = false;
-        }
-        if (isPremiumStories === true){
-            premiumStoriesColor = ' premium-stories-color';
-        }
+
+        premiumStoriesColor = storyColorClass;
         if (obj.image !== '') {
             hasImageClass = ' has-image';
             imageBG = obj.image.replace('/upload/', '/');
@@ -2134,7 +2137,7 @@
                             var mainTag = '';
                             var interactiveItem;
                             id = interactive.id;
-                            timeStamp = interactive.fileupdatetime || interactive.pubdate || '';
+                            timeStamp = Math.max(interactive.fileupdatetime, interactive.pubdate);
                             timeStampType = 3;
                             headline = interactive.cheadline;
                             longlead = interactive.clongleadbody || '';
@@ -2709,7 +2712,7 @@
         ele.find('.o-input-text[name=caudio], .o-input-text[name=eaudio]').each(function(){
             var audioUrl = $(this).val();
             var audioInput = $(this);
-            console.log ('checking: ' + audioUrl);
+            // console.log ('checking: ' + audioUrl);
             if (audioUrl && audioUrl !== '') {
                 var audio = document.createElement('AUDIO');
                 audio.preload = 'metadata';

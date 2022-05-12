@@ -22,6 +22,8 @@ $darkGrey: #333333;
 $lightGrey: #505050;
 $lighterGrey: #777;
 $timeGrey: #8b572a;
+$lightBlue: #CCE6FF;
+
 // width, height
 $headerHeight: 44px;
 $itemBottom: 5px;
@@ -286,12 +288,6 @@ button {
   .meta-table, .toolkit-header, .toolkit-footer, .toolkit-banner {
     display: none;
   }
-  .section-header {
-    //margin-bottom: 0;
-  }
-  .lists-header {
-    //border-bottom: 0;
-  }
   .lists-item {
     margin-top: $itemBottom;
   }
@@ -363,7 +359,7 @@ button {
 }
 .content-left-inner {
   padding-top: 10px;
-  @for $i from 1 through 20 {
+  @for $i from 1 through 50 {
     .lists-container>.item:nth-of-type(#{$i}) .item-title:before {
       content: $i + ". ";
     }
@@ -409,8 +405,6 @@ button {
   border-width: $itemBottom 0 $itemBottom 0;
   border-style: solid;
   border-color: $defaultBG;
-  //margin-bottom: 10px;
-  //border-radius: 5px;
 }
 .section-inner {
   border: 1px solid $sectionsBorder;
@@ -420,7 +414,6 @@ button {
   background-color: $sectionsBorder;
   padding: $itemBottom $itemBottom 0 $itemBottom;
   border-bottom: $itemBottom solid $sectionsBorder;
-  //margin-bottom: 10px;
   font-weight: bold;
   font-size: 1.2em;
   cursor: move;
@@ -434,8 +427,6 @@ button {
   border-style: solid;
   border-color: $sectionsBorder;
   margin: 0 $itemBottom $itemBottom $itemBottom;
-  // border: 1px solid $sectionsBorder;
-  // margin: 0 $itemBottom $itemBottom $itemBottom;
 }
 
 .item, .toolkit {
@@ -443,7 +434,6 @@ button {
   padding:10px;
   margin:0 10px;
   border-bottom: $itemBottom solid $defaultBG;
-
   &.video, &.photo, &.interactive {
     .item-title {
       padding-left: 25px;
@@ -461,13 +451,13 @@ button {
   &.interactive .item-title {
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="grey"><path d="M0 0h24v24h-24z" fill="none"/><path d="M12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm1 15h-2v-6h2v6zm0-8h-2v-2h2v2z"/></svg>');
   }
+  &.interactive.premium-color .item-title {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23FF8833"><path d="M0 0h24v24h-24z" fill="none"/><path d="M12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm1 15h-2v-6h2v6zm0-8h-2v-2h2v2z"/></svg>');
+  }
   &.has-image {
     background-repeat: no-repeat;
     background-size: 80px auto;
     padding-left: 90px;
-    // text-overflow: ellipsis;
-    // overflow: hidden;
-    // white-space: nowrap;
   }
 }
 
@@ -971,8 +961,11 @@ display: block;
     width:100%; 
   padding: 2px 0px;
 }
-.premium-stories-color{
+.standard-color{
   background-color: $lightGreen;
+}
+.premium-color {
+  background-color: $lightBlue;
 }
 
 .validate-image {
