@@ -1525,9 +1525,9 @@
         description: '必须是整数价格',
         regStrInclude: /^[1-9][0-9]{1,3}$/
     };
-    var lowercaseLetters = {
-        description: '只允许小写字母',
-        regStrInclude: /^[a-z]+$/
+    var lettersAndNumbers = {
+        description: '只允许字母和数字',
+        regStrInclude: /^[A-z\d]+$/
     };
     var validator = {
         'impression_1': regSecureUrlForImpression,
@@ -1548,7 +1548,7 @@
         'StandardPrice': checkPrice,
         'PremiumPrice': checkPrice,
         'MonthlyPrice': checkPrice,
-        'zone': lowercaseLetters
+        'zone': lettersAndNumbers
     };
     var devices = [
         {'name': 'Web Page', 'width': '', 'height': ''},
