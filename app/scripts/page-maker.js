@@ -15,9 +15,10 @@
             'sideAlign',
             'description',
             'boxBackground',
-            'VisibleOnlyTo'
+            'VisibleOnlyTo',
+            'BackgroundColor'
           ],
-          hero: ['title', 'vid', 'image'],
+          hero: ['title', 'vid', 'image', 'HeroStyle'],
           partnerBanner: ['title', 'sponsor', 'disclaimer'],
           cover: [
             'tag',
@@ -1405,7 +1406,8 @@
         months: [1,2,3],
         price: 'number',
         maxWidth: 'number',
-        BackgroundLayout: ['Default', 'SpecialReport']
+        BackgroundLayout: ['Default', 'SpecialReport'],
+        HeroStyle: ['', 'video']
     };
 
 
@@ -1447,7 +1449,7 @@
         audiencePixelTag: '1x1的图片地址，主要用于电子邮件监控流量和广告库存',
         HighlightFTAcademy: '在本页的显著位置体现FT商学院的内容，工作日放在第二条，假日放在顶部出四条',
         storyKeyWords: '文章中的标签，topic等等',
-        zone: 'Identifies the ad unit in the associated ad tag. Codes can be up to 100 characters and are not case-sensitive. Only letters, numbers, underscores, hyphens, periods, asterisks, forward slashes, backslashes, exclamations, left angle brackets, colons, and parentheses are allowed.',
+        zone: '只允许小写字母',
         emails: '需要协同工作的人的邮件，逗号分隔',
         PageTitle: '订阅页顶部标题',
         PageDescription: '订阅页顶部描述文字',
@@ -1523,6 +1525,10 @@
         description: '必须是整数价格',
         regStrInclude: /^[1-9][0-9]{1,3}$/
     };
+    var lowercaseLetters = {
+        description: '只允许小写字母',
+        regStrInclude: /^[a-z]+$/
+    };
     var validator = {
         'impression_1': regSecureUrlForImpression,
         'impression_2': regSecureUrlForImpression,
@@ -1541,7 +1547,8 @@
         'adChannelId': fourDigits,
         'StandardPrice': checkPrice,
         'PremiumPrice': checkPrice,
-        'MonthlyPrice': checkPrice
+        'MonthlyPrice': checkPrice,
+        'zone': lowercaseLetters
     };
     var devices = [
         {'name': 'Web Page', 'width': '', 'height': ''},
