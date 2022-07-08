@@ -466,6 +466,7 @@ button {
 }
 .item-info-item {
   padding: $itemBottom 0;
+  position: relative;
   input, textarea {
     background-color: white;
     font-size: 14px;
@@ -473,6 +474,14 @@ button {
   textarea {
     height: 80px;
     line-height: $defaultLineHeight;
+  }
+  button.image-link {
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    background-color: #0a5e66;
+    color: white;
   }
   border: medium none;
 }
