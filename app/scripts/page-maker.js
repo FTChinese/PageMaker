@@ -18,7 +18,7 @@
             'VisibleOnlyTo',
             'BackgroundColor'
           ],
-          hero: ['title', 'vid', 'image', 'HeroStyle'],
+          hero: ['title', 'TitleTint', 'vid', 'image', 'mobileImage', 'LogoImage', 'HeroStyle', 'BackgroundStyle', 'TextShadow'],
           partnerBanner: ['title', 'sponsor', 'disclaimer'],
           cover: [
             'tag',
@@ -718,6 +718,10 @@
           'no',
           'yes'
         ],
+        TextShadow: [
+            '',
+            'black'
+        ],
         showTimeStamp: [
           'no',
           'new stories',
@@ -965,6 +969,7 @@
             'yes',
             'no'
         ],
+        TitleTint: ['', 'dark', 'orange'],
         maxPageNumber: 'number',
         fileName: 'adimage',
         landscapeFileName: 'adimage',
@@ -973,6 +978,8 @@
         ItemImage: 'image',
         TitleImage: 'image',
         imagePC: 'image',
+        mobileImage: 'image',
+        LogoImage: 'image',
         imageMobile: 'image',
         imageHighlightBox: 'image',
         imageTicker: 'image',
@@ -1422,7 +1429,8 @@
         price: 'number',
         maxWidth: 'number',
         BackgroundLayout: ['Default', 'SpecialReport'],
-        HeroStyle: ['', 'video']
+        HeroStyle: ['', 'video'],
+        BackgroundStyle: ['','LeftTop']
     };
 
 
@@ -1576,7 +1584,9 @@
         {'name': 'No image email for premium subscribers', 'width': '', 'height': '', 'view': 'email', 'to': 'premium', 'showImage': 'no'},
         {'name': 'Page For iOS App', 'width': '', 'height': '', 'view': 'email', 'to': 'iosapp'},
         {'name': 'Page For none-ios App', 'width': '', 'height': '', 'view': 'email', 'to': 'noneiosapp'},
-        {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'}
+        {'name': 'Poster', 'width': '', 'height': '', 'view': 'poster'},
+        {'name': 'PDF for Print', 'width': '', 'height': '', 'view': 'print'},
+        {'name': 'PDF for WeChat', 'width': '', 'height': '', 'view': 'wechat'}
     ];
     var thisday = new Date();
     var thenow = thisday.getHours() * 10000 + thisday.getMinutes() * 100 + thisday.getSeconds();
@@ -1675,7 +1685,7 @@
         if (obj.showSponsorImage === 'yes') {
             sponsorImageDisplay = ' checked';
         }
-        sponsorImage = '<div title="如果是有赞助的特别报道，优先采用专题的图片，而不是文章的图片"><input title="use sponsor image" name="preferSponsorImage" class="o-input-checkbox" value="yes" type="checkbox"' + sponsorImageDisplay + '>Prefer Sponsor Cover 1</div>';
+        sponsorImage = '<div title="如果是有赞助的特别报道，优先采用专题的图片，而不是文章的图片"><input title="use sponsor image" name="preferSponsorImage" class="o-input-checkbox" value="yes" type="checkbox"' + sponsorImageDisplay + '>Prefer Sponsor Cover</div>';
         if (typeof obj.showRelativeStoryItems !== 'undefined') {
             obj.showRelativeStoryItems = '<div class="item-info-item"><div class="item-info-title">Show Related Items: </div><input type="number" title="How Many Related Content Would You Like to Show in This Page? " name="showRelativeStoryItems" class="o-input-text" value="' + obj.showRelativeStoryItems + '"></div>';
         } else {
