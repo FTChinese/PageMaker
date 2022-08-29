@@ -1722,6 +1722,10 @@
             storyColorClass = '';
         }
 
+        if (obj.pubdate && obj.pubdate !== '') {
+            obj.pubdate = unixtochinese(obj.pubdate, obj.timeStampType);
+        }
+        
         if (obj.timeStamp !== '') {
             obj.timeStamp = unixtochinese(obj.timeStamp, obj.timeStampType);
         } else {
@@ -1758,7 +1762,9 @@
         //console.log (relativestoryHTML);
         //relativestoryHTML = '';
 
-        dataHTML = '<div draggable=true data-type="' + obj.type + '" class="item ' + obj.type + hasImageClass + premiumStoriesColor+'"' + imageBG + ' data-id="' + obj.id + '"><div class="remove-item"></div><div class="timestamp">' + obj.timeStamp + '</div><div class="item-title">' + obj.headline + '</div><div class="item-info"><div class="item-links"><a href="http://www7.ftchinese.com/' + obj.type + '/' + obj.id + '" target=_blank>Preview</a><a href="' + editLink + '" target=_blank>Edit</a></div>'+sponsorImage+'<div class="item-info-item"><input title="headline" placeholder="headline" name="headline" class="o-input-text" value="' + obj.headline + '"></div><div class="item-info-item"><input title="image" placeholder="image" name="image" class="o-input-text" value="' + obj.image + '"><button class="image-link" target="_blank">Upload</button></div><div class="item-info-item"><div class="item-info-title">Long Lead: </div><textarea title="longlead" placeholder="Long Lead" name="longlead" class="o-input-text">' + obj.longlead + '</textarea></div><div class="item-info-item"><div class="item-info-title">Short Lead: </div><textarea title="short lead" placeholder="short lead" name="shortlead" class="o-input-text">' + obj.shortlead + '</textarea></div><div class="item-info-item"><input title="tag" placeholder="tag" name="tag" class="o-input-text" value="' + obj.tag + '"></div><div class="item-info-item"><input title="custom link" placeholder="custom link" name="customLink" class="o-input-text" value="' + obj.customLink + '"></div><div class="item-info-item"><input title="Chinese Audio Url" placeholder="Chinese Audio Url" name="caudio" class="o-input-text" value="' + chineseAudioUrl + '"></div><div class="item-info-item"><input title="English Audio Url" placeholder="English Audio Url" name="eaudio" class="o-input-text" value="' + englishAudioUrl + '"></div>' + obj.showRelativeStoryItems + '<div class="item-info-item"><input name="timeStamp" type="hidden" class="o-input-text" value="' + oTimeStamp + '" readonly><input type="hidden" name="type" class="o-input-text" value="' + obj.type + '" readonly><input type="hidden" name="id" class="o-input-text" value="' + obj.id + '" readonly></div>' + relativestoryHTML + '</div></div>';
+        var timeStampForEditor = obj.pubdate || obj.timeStamp;
+
+        dataHTML = '<div draggable=true data-type="' + obj.type + '" class="item ' + obj.type + hasImageClass + premiumStoriesColor+'"' + imageBG + ' data-id="' + obj.id + '"><div class="remove-item"></div><div class="timestamp">' + timeStampForEditor + '</div><div class="item-title">' + obj.headline + '</div><div class="item-info"><div class="item-links"><a href="http://www7.ftchinese.com/' + obj.type + '/' + obj.id + '" target=_blank>Preview</a><a href="' + editLink + '" target=_blank>Edit</a></div>'+sponsorImage+'<div class="item-info-item"><input title="headline" placeholder="headline" name="headline" class="o-input-text" value="' + obj.headline + '"></div><div class="item-info-item"><input title="image" placeholder="image" name="image" class="o-input-text" value="' + obj.image + '"><button class="image-link" target="_blank">Upload</button></div><div class="item-info-item"><div class="item-info-title">Long Lead: </div><textarea title="longlead" placeholder="Long Lead" name="longlead" class="o-input-text">' + obj.longlead + '</textarea></div><div class="item-info-item"><div class="item-info-title">Short Lead: </div><textarea title="short lead" placeholder="short lead" name="shortlead" class="o-input-text">' + obj.shortlead + '</textarea></div><div class="item-info-item"><input title="tag" placeholder="tag" name="tag" class="o-input-text" value="' + obj.tag + '"></div><div class="item-info-item"><input title="custom link" placeholder="custom link" name="customLink" class="o-input-text" value="' + obj.customLink + '"></div><div class="item-info-item"><input title="Chinese Audio Url" placeholder="Chinese Audio Url" name="caudio" class="o-input-text" value="' + chineseAudioUrl + '"></div><div class="item-info-item"><input title="English Audio Url" placeholder="English Audio Url" name="eaudio" class="o-input-text" value="' + englishAudioUrl + '"></div>' + obj.showRelativeStoryItems + '<div class="item-info-item"><input name="timeStamp" type="hidden" class="o-input-text" value="' + oTimeStamp + '" readonly><input type="hidden" name="type" class="o-input-text" value="' + obj.type + '" readonly><input type="hidden" name="id" class="o-input-text" value="' + obj.id + '" readonly></div>' + relativestoryHTML + '</div></div>';
         return dataHTML;
     }
 
@@ -2202,8 +2208,12 @@
                                                         type: type,
                                                         tag: tag,
                                                         customLink: customLink,
-                                                        showSponsorImage: showSponsorImage
+                                                        showSponsorImage: showSponsorImage,
+                                                        pubdate: interactive.pubdate
                                                     });
+
+                                // console.log(interactiveItem);
+
                                 if (/市场快报|科技快报|经济快报|商业快报/.test(tag)) {
                                     aiTranslationsInner += interactiveItem;
                                 } else if (/高端专享/.test(tag)) {

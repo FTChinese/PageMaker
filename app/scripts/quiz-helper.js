@@ -73,7 +73,19 @@ function copyAlert(error) {
 function getNewsQuiz(text) {
     var item = itemDict[currentId];
     var headline = item.cheadline;
-    var link = `/${item.type}/${item.id}`;
+    var tag = item.tag || '';
+    var subtype = '';
+    if (/双语阅读/.test(tag)) {
+        subtype = 'bilingual';
+    } else if (/英语电台/.test(tag)) {
+        subtype = 'radio';
+    } else if (/速读/.test(tag)) {
+        subtype = 'speedreading';
+    } else if (/教程/.test(tag)) {
+        subtype = 'mbagym';
+    }
+    subtype = subtype === '' ? '' : `?subtype=${subtype}`;
+    var link = `/${item.type}/${item.id}${subtype}`;
     var image = '';
     if (item.story_pic) {
         var src = item.story_pic.smallbutton || item.story_pic.cover || item.story_pic.bigbutton || '';
