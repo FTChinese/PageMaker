@@ -54,7 +54,8 @@
             'url',
             'fit',
             'maxWidth',
-            'sticky'
+            'sticky',
+            'ShowForPageExpiration'
           ],
           footer: [],
           pagination: [
@@ -159,7 +160,8 @@
             'BackgroundLayout',
             'status',
             'subscriptionType',
-            'dates'
+            'dates',
+            'ShowForPageExpiration'
           ],
           subscriptionLead: [
             'title',
@@ -341,7 +343,8 @@
             'leftButtonBG',
             'leftButtonColor',
             'rightButtonBG',
-            'rightButtonColor'
+            'rightButtonColor',
+            'ShowForPageExpiration'
           ],
           ProductPricing: [
             'title',
@@ -1317,6 +1320,7 @@
         sticky: ['', 'all', 'mobile', 'pc'],
         HighlightFTAcademy: ['no', 'yes'],
         HeaderPrefer: ['logo', 'text'],
+        PageExpire: 'DateTime',
         EngagementLevel: {
           type: 'multiselect',
           options: [
@@ -1430,7 +1434,8 @@
         maxWidth: 'number',
         BackgroundLayout: ['Default', 'SpecialReport'],
         HeroStyle: ['', 'video'],
-        BackgroundStyle: ['','LeftTop']
+        BackgroundStyle: ['','LeftTop'],
+        ShowForPageExpiration: ['All', 'Running', 'Expired']
     };
 
 
@@ -1504,6 +1509,7 @@
         marker: '从本页点击文章页的时候，带上marker这个参数，便于后续的特殊处理',
         AppleReviewVersion: '仅用于iOS应用开机广告的设置：当前苹果正在审核的iOS应用版本号，在苹果审核的时候，不应该显示开机广告，审核通过之后立即将此设置为空。',
         HeaderPrefer: '在邮件的顶部显示标题还是Logo',
+        PageExpire: '页面（推广）过期的时间',
         FormPurpose: '不同的用途，需要收集的字段不同'
     };
 
@@ -1893,6 +1899,8 @@
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text zone-value" value="' + value + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
+            } else if (dataRules[key] === 'DateTime') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="datetime-local" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'textarea') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td><textarea data-key="' + key + '" class="o-textarea">' + value + '</textarea></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'string') {
@@ -1995,6 +2003,9 @@
         }
         if (jsonData.meta.HeaderPrefer === undefined) {
             jsonData.meta.HeaderPrefer = 'logo';
+        }
+        if (jsonData.meta.PageExpire === undefined) {
+            jsonData.meta.PageExpire = '';
         }
         
         const thisday = new Date();
