@@ -163,6 +163,13 @@
             'dates',
             'ShowForPageExpiration'
           ],
+          MessageMeta: [
+            'EmailTitle',
+            'SMSContext',
+            'NotificationTitle',
+            'NotificationLead',
+            'CampaignCodePrefix'
+          ],
           subscriptionLead: [
             'title',
             'lead',
@@ -1069,6 +1076,7 @@
           'ft_win_back',
           'ft_anniversary',
           'ft_intro',
+          'ft_free',
           ''
         ],
         discount: [
@@ -1510,7 +1518,12 @@
         AppleReviewVersion: '仅用于iOS应用开机广告的设置：当前苹果正在审核的iOS应用版本号，在苹果审核的时候，不应该显示开机广告，审核通过之后立即将此设置为空。',
         HeaderPrefer: '在邮件的顶部显示标题还是Logo',
         PageExpire: '页面（推广）过期的时间',
-        FormPurpose: '不同的用途，需要收集的字段不同'
+        FormPurpose: '不同的用途，需要收集的字段不同',
+        EmailTitle: '邮件的标题，会被程序抓取',
+        SMSContext: '短信内容，会被程序抓取',
+        NotificationTitle: 'iOS通知推送的标题',
+        NotificationLead: 'iOS通知推送的Lead',
+        CampaignCodePrefix: 'Campaign Code, 也就是Ccode的前面部分，后面会自动加上SMS, Noti和Email等后缀'
     };
 
     // MARK: - Differentiate subscription information
@@ -1720,7 +1733,7 @@
             previewLink = obj.customLink;
         }
 
-        if (/高端专享/.test(obj.tag) && obj.type === 'interactive') {
+        if (/高端专享/.test(obj.tag)) {
             storyColorClass = ' premium-color';
         } else if (obj.type === 'premium' || (/英语电台|速读|会员专享/.test(obj.tag) && obj.type === 'interactive')) {
             storyColorClass = ' standard-color';
