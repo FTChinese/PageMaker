@@ -161,7 +161,8 @@
             'status',
             'subscriptionType',
             'dates',
-            'ShowForPageExpiration'
+            'ShowForPageExpiration',
+            'UniqueId'
           ],
           MessageMeta: [
             'EmailTitle',
@@ -1523,7 +1524,8 @@
         SMSContext: '短信内容，会被程序抓取',
         NotificationTitle: 'iOS通知推送的标题',
         NotificationLead: 'iOS通知推送的Lead',
-        CampaignCodePrefix: 'Campaign Code, 也就是Ccode的前面部分，后面会自动加上SMS, Noti和Email等后缀'
+        CampaignCodePrefix: 'Campaign Code, 也就是Ccode的前面部分，后面会自动加上SMS, Noti和Email等后缀',
+        UniqueId: '如果Unique Id相同，则不重复显示'
     };
 
     // MARK: - Differentiate subscription information
