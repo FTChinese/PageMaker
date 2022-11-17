@@ -1525,7 +1525,7 @@
         NotificationTitle: 'iOS通知推送的标题',
         NotificationLead: 'iOS通知推送的Lead',
         CampaignCodePrefix: 'Campaign Code, 也就是Ccode的前面部分，后面会自动加上SMS, Noti和Email等后缀',
-        UniqueId: '如果Unique Id相同，则不重复显示'
+        UniqueId: '如果Unique Id不为空，且相同，则不重复显示'
     };
 
     // MARK: - Differentiate subscription information
@@ -1537,8 +1537,8 @@
         loadImage: true
     };
     var regSecureUrlForImpression = {
-        description: '监控地址应该采用https! ',
-        regStrInclude: /^https:/,
+        description: '监控地址应该采用https开头! 并且不能有其他任何符号，比如空格、花括号、$、中文字符！',
+        regStrInclude: /^https:\/\/[A-z\d\-\.;=\&\[\]\_\/]+$/,
         loadImpression: true
     };
     var regSecureUrlForDomain = {
