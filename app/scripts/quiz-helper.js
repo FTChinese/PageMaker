@@ -162,11 +162,7 @@ document.querySelector('.finish').onclick = function(){
     if (navigator && navigator.clipboard) {
     navigator.clipboard.writeText(textarea.value)
         .then(() => {
-            if (window.opener) {
-                window.close();
-            } else {
-                alert('复制成功！');
-            }
+            alert('复制成功！');
         })
         .catch((error) => { copyAlert(error); });
     } else {
