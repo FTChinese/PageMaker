@@ -18,7 +18,7 @@
             'VisibleOnlyTo',
             'BackgroundColor'
           ],
-          hero: ['title', 'TitleTint', 'vid', 'image', 'mobileImage', 'LogoImage', 'HeroStyle', 'BackgroundStyle', 'TextShadow'],
+          hero: ['title', 'MobileTitle', 'TitleTint', 'vid', 'image', 'mobileImage', 'LogoImage', 'HeroStyle', 'BackgroundStyle', 'TextShadow'],
           partnerBanner: ['title', 'sponsor', 'disclaimer'],
           cover: [
             'tag',
@@ -131,6 +131,7 @@
             'topnav',
             'subnav',
             'thirdnav',
+            'disclaimer',
             'note'
           ],
           InternalPromo: [
@@ -819,6 +820,7 @@
           'myFTNew',
           'fav',
           'ftc_columns',
+          'ftc_columns_old',
           'ft_columns',
           'hot',
           'premium',
@@ -998,6 +1000,7 @@
         image: 'image',
         BackgroundImage: 'image',
         MobileBackgroundImage: 'image',
+        sponsorLogoUrl: 'image',
         dates: 'dates',
         apiNumber: 'number',
         allowTop: [
@@ -1443,7 +1446,7 @@
         maxWidth: 'number',
         BackgroundLayout: ['Default', 'SpecialReport'],
         HeroStyle: ['', 'video'],
-        BackgroundStyle: ['','LeftTop'],
+        BackgroundStyle: ['', 'LeftTop', 'RightTop'],
         ShowForPageExpiration: ['All', 'Running', 'Expired']
     };
 
@@ -1538,7 +1541,7 @@
     };
     var regSecureUrlForImpression = {
         description: '监控地址应该采用https开头! 并且不能有其他任何符号，比如空格、花括号、$、中文字符！',
-        regStrInclude: /^https:\/\/[A-z\d\-\.;=\&\[\]\_\/]+$/,
+        regStrInclude: /^https:\/\/[A-z\d\-\.;=\&\[\]\_\/\?:]+$/,
         loadImpression: true
     };
     var regSecureUrlForDomain = {
