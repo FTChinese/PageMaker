@@ -83,7 +83,8 @@
             'closeButton',
             'ccode',
             'note',
-            'fileNames'
+            'fileNames',
+            'unique_id'
           ],
           sponsorship: [
             'title',
@@ -773,7 +774,8 @@
           'house-ad-subscription-promo-box',
           'Premium-Cover',
           'US-Election-Realtime',
-          'cytiva-social-block'
+          'cytiva-social-block',
+          'pr_newswire'
         ],
         codeFileName: [
           '',
@@ -823,6 +825,7 @@
           'ftc_columns_old',
           'ft_columns',
           'hot',
+          'standard',
           'premium',
           'audiovideo',
           'aiaudio',
@@ -940,7 +943,8 @@
         subscriptionType: [
           '',
           'standard',
-          'premium'
+          'premium',
+          'visitor'
         ],
         itemNumber: 'number',
         promoTarget: [
@@ -1007,7 +1011,8 @@
           'no',
           'yes'
         ],
-        'impression_1': 'impression',
+        'impression_1': 'impression_default',
+        'click': 'click',
         'impression_2': 'impression',
         'impression_3': 'impression',
         hideAd: [
@@ -1447,7 +1452,8 @@
         BackgroundLayout: ['Default', 'SpecialReport'],
         HeroStyle: ['', 'video'],
         BackgroundStyle: ['', 'LeftTop', 'RightTop'],
-        ShowForPageExpiration: ['All', 'Running', 'Expired']
+        ShowForPageExpiration: ['All', 'Running', 'Expired'],
+        unique_id: 'uuid'
     };
 
 
@@ -1869,6 +1875,7 @@
         // console.log ('new data: ')
         // console.log (newData);
         //const newData = data;
+        const uniqueId = generateUniqueId();
         $.each(newData, function (key, value) {
             var arrayMeta = '';
             var descriptionOriginal = dataRulesTitle[key] || '';
@@ -1879,8 +1886,6 @@
                 //descriptionMore = '<tr class="meta-item-description"><td colspan=2>' + descriptionOriginal + '</td></tr>'
                 descriptionMore = '';
             }
-            //console.log ('key: ' + key);
-
             if (dataRules[key] === 'array' || dataRules[key] === 'item') {
                 $.each(value, function (k, v) {
                     var title = v.Name || v.title || v.name || v.type || 'List';
@@ -1911,12 +1916,19 @@
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'StartDate' || dataRules[key] === 'EndDate') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '" readonly></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>' + descriptionMore;
+            } else if (dataRules[key] === 'click') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="click-track-update" target="_blank">Update</button></td></tr>' + descriptionMore;
+            } else if (dataRules[key] === 'impression_default') {
+                const impressionValue = value ? value : `https://ftmailbox.cn/ad_impression/${uniqueId}`;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + impressionValue + '"></td><td><button class="impression-track-create" target="_blank">Create</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'impression') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'zone') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text zone-value" value="' + value + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'number') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
+            } else if (dataRules[key] === 'uuid') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" readonly class="o-input-text" value=' + (value || uniqueId) + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'DateTime') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="datetime-local" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'textarea') {
@@ -2917,6 +2929,45 @@
         return dateString;
     }
 
+    function generateUniqueId() {
+        return `id-${new Date().getTime()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
+
+
+    function createImpressionTrack(ele) {
+        const containerEle = ele.closest('.meta-table');
+        if (!containerEle) {return;}
+        const uniqueIdEle = containerEle.querySelector('[data-key="unique_id"]');
+        let impressionTrackingUrl = `https://ftmailbox.cn/ad_impression/${generateUniqueId()}`;
+        if (uniqueIdEle && uniqueIdEle.value && uniqueIdEle.value !== '' ) {
+            impressionTrackingUrl = `https://ftmailbox.cn/ad_impression/${uniqueIdEle.value}`;
+        }
+        const itemContainerEle = ele.closest('.meta-item');
+        itemContainerEle.querySelector('.impression-value').value = impressionTrackingUrl;
+    }
+
+    function updateClickTrack(ele) {
+        const containerEle = ele.closest('.meta-table');
+        if (!containerEle) {return;}
+        const itemContainerEle = ele.closest('.meta-item');
+        if (!itemContainerEle) {return;}
+        const currentValue = itemContainerEle.querySelector('[data-key="click"]').value;
+        if (currentValue === '') {
+            alert('Current click url is empty! ');
+            return;
+        }
+        if (/^https:\/\/ftmailbox\.cn\/ad_click/.test(currentValue)) {
+            alert('Current click url already has tracking! ');
+            return;
+        }
+        const uniqueIdEle = containerEle.querySelector('[data-key="unique_id"]');
+        let clickTrackingUrl = `https://ftmailbox.cn/ad_click/${generateUniqueId()}`;
+        if (uniqueIdEle && uniqueIdEle.value && uniqueIdEle.value !== '' ) {
+            clickTrackingUrl = `https://ftmailbox.cn/ad_click/${uniqueIdEle.value}`;
+        }
+        itemContainerEle.querySelector('[data-key="click"]').value = `${clickTrackingUrl}/${currentValue}`;
+    }
+
     function launchImpressionTrack(ele) {
         var impressionEle = ele.parentElement.parentElement.querySelector('.impression-value');
         if (!impressionEle) {return;}
@@ -3700,8 +3751,21 @@
 
     $('body').on('click', '.clone-section', function () {
         $(this).parentsUntil($('.sections'), '.section-container').slideDown(500, function () {
-            console.log ($(this));
             $(this).clone().insertBefore($(this));
+            // MARK: - If the section has a unique id, it should be updated to new unique id
+            const uniqueId = $(this).find('[data-key="unique_id"]').val();
+            if (uniqueId) {
+                const newUniqueId = generateUniqueId();
+                const currentImpression = $(this).find('[data-key="impression_1"]').val();
+                const newImpression = currentImpression.replace(uniqueId, newUniqueId);
+                const currentClick = $(this).find('[data-key="click"]').val();
+                const newClick = currentClick.replace(uniqueId, newUniqueId);
+                const headerHTML = $(this).find('.section-header').html();
+                $(this).find('[data-key="unique_id"]').val(newUniqueId);
+                $(this).find('[data-key="impression_1"]').val(newImpression);
+                $(this).find('[data-key="click"]').val(newClick);
+                $(this).find('.section-header').html(`Copy: ${headerHTML}`);
+            }
         });
     });
 
@@ -3741,6 +3805,14 @@
 
     $('body').on('click', '.impression-track', function () {
         launchImpressionTrack(this);
+    });
+
+    $('body').on('click', '.impression-track-create', function () {
+        createImpressionTrack(this);
+    });
+
+    $('body').on('click', '.click-track-update', function () {
+        updateClickTrack(this);
     });
 
     $('body').on('keyup', '#keywords-input', function(e){
