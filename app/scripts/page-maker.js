@@ -682,6 +682,7 @@
           'lifestyle',
           'ebook',
           'black',
+          'darkblue',
           'specialreport',
           'partner_content',
           'darkgrey',
