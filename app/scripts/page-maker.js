@@ -71,6 +71,7 @@
             'iphone',
             'android',
             'ipad',
+            'web',
             'audienceCohort',
             'dates',
             'priority',
@@ -757,6 +758,10 @@
           'no',
           'yes'
         ],
+        web: [
+            'no',
+            'yes'
+        ],
         subscription: [
           'standard',
           'premium'
@@ -842,6 +847,7 @@
         feedStart: 'number',
         FormPurpose: ['Event', '2B'],
         text: 'textarea',
+        description: 'textarea',
         guideline: 'textarea',
         feedImage: [
           'optional',
@@ -1019,6 +1025,11 @@
         hideAd: [
           'no',
           'yes'
+        ],
+        MobileAdTypes: [
+            'both',
+            'mpu',
+            'infoflow'
         ],
         'storyMPU1': [
           'show',
@@ -1375,11 +1386,11 @@
         ],
         offer: [
           '',
-          'standard_win_back_offer_2020',
+          'standard_win_back_offer_2024',
           'premium_win_back_offer_2020',
-          'standard_retention_offer_2020',
+          'standard_retention_offer_2024',
           'premium_retention_offer_2020',
-          'standard_discount_offer_2020',
+          'standard_discount_offer_2024',
           'premium_discount_offer_2020'
         ],
         HideLogo: [
@@ -1494,6 +1505,7 @@
         maxPageNumber: 'The maximum page number based on your estimation. ',
         guideline: '在这里写操作指南，供别的使用者查看',
         audiencePixelTag: '1x1的图片地址，主要用于电子邮件监控流量和广告库存',
+        MobileAdTypes: '移动端的画中画和信息流广告的设置',
         HighlightFTAcademy: '在本页的显著位置体现FT商学院的内容，工作日放在第二条，假日放在顶部出四条',
         storyKeyWords: '文章中的标签，topic等等',
         zone: '只允许小写字母',
@@ -2003,6 +2015,9 @@
         }
         if (jsonData.meta.audiencePixelTag === undefined) {
             jsonData.meta.audiencePixelTag = '';
+        }
+        if (jsonData.meta.MobileAdTypes === undefined) {
+            jsonData.meta.MobileAdTypes = 'both';
         }
         if (jsonData.meta.topnav === undefined) {
             jsonData.meta.topnav = '';
