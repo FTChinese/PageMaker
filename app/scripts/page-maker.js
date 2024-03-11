@@ -68,6 +68,7 @@
             'impression_1',
             'impression_2',
             'impression_3',
+            'impression_html',
             'iphone',
             'android',
             'ipad',
@@ -464,6 +465,7 @@
             'impression_1',
             'impression_2',
             'impression_3',
+            'impression_html',
             'iphone',
             'android',
             'ipad',
@@ -1019,6 +1021,7 @@
           'yes'
         ],
         'impression_1': 'impression_default',
+        'impression_html': 'impression_convert',
         'click': 'click',
         'impression_2': 'impression',
         'impression_3': 'impression',
@@ -1649,9 +1652,9 @@
         // 'blank': 'api/page/introductoryoffer.json',
         //'blank': 'api/page/promoBox.json',
         // 'blank': 'api/page/blank.json',
-        'blank': 'api/page/campaign.json',
+        // 'blank': 'api/page/campaign.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
-        //'blank': 'api/page/creative.json',
+        'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
         //'blank': 'api/page/posters.json',
         //'blank': 'api/page/home.json',
@@ -1671,6 +1674,7 @@
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
     }
     /* jshint ignore:end */
+
 
     //将Unix时间戳转换为中文日期和星期
     function unixtochinese(thetime, datetype) {
@@ -1918,9 +1922,9 @@
                     }
                 });
             } else if (dataRules[key] === 'group') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text group-title" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text group-title" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'readonly') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'adimage') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image impression-value" value="' + value + '"></td><td><button class="action-link" target="_blank">Upload</button><button class="impression-track" target="_blank" data-source="ftc-chart" data-event-action="Show">Track</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'image') {
@@ -1934,20 +1938,22 @@
             } else if (dataRules[key] === 'impression_default') {
                 const impressionValue = value ? value : `https://ftmailbox.cn/ad_impression/${uniqueId}`;
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + impressionValue + '"></td><td><button class="impression-track-create" target="_blank">Create</button></td></tr>' + descriptionMore;
+            }  else if (dataRules[key] === 'impression_convert') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + key + '" type="text" class="o-textarea html-tracking-code" placeholder="paste html tracking code here">' + value + '</textarea></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'impression') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'zone') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text zone-value" value="' + value + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'number') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'uuid') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" readonly class="o-input-text" value=' + (value || uniqueId) + '></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" readonly class="o-input-text" value=' + (value || uniqueId) + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'DateTime') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="datetime-local" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="datetime-local" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'textarea') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td><textarea data-key="' + key + '" class="o-textarea">' + value + '</textarea></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + key + '" class="o-textarea">' + value + '</textarea></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'string') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '"'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '"></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '"'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '"></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'object') {
                 var options = '';
                 if (dataRules[key].type === 'select') {
@@ -1963,10 +1969,10 @@
                         }
                         options += '<option value="' + v2 + '"' + selected + '>' + v2 + '</option>';
                     });
-                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td colspan="2"><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
                 } else if (dataRules[key].type === 'multiselect') {
                     const options = dataRules[key].options.join(',');
-                    metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value multi-select" value="' + value + '" data-options="' + options + '"></td></tr>' + descriptionMore;
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text date-value multi-select" value="' + value + '" data-options="' + options + '"></td></tr>' + descriptionMore;
                 } else {
                     $.each(dataRules[key], function (k1, v1) {
                         var selected = '';
@@ -1975,10 +1981,10 @@
                         }
                         options += '<option value="' + v1 + '"' + selected + '>' + v1 + '</option>';
                     });
-                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td colspan="2"><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
                 }
              } else {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td><input type="text" data-key="' + key + '" class="o-input-text" value="' + value + '"></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td colspan="2"><input type="text" data-key="' + key + '" class="o-input-text" value="' + value + '"></td></tr>' + descriptionMore;
             }
         });
         dataHTML = '<div class="lists-container">' + dataHTML + '</div>';
@@ -3135,7 +3141,6 @@
 
 
 
-
 // MARK:- Multiselect Start
     var multiSelectInput;
     function launchMultiSelect(ele) {
@@ -3646,9 +3651,52 @@
     });
 
     $('body').on('click', '#preview-shadow', function () {
+
         $('#preview-overlay').empty();
+
     });
 
+    $('body').on('input', '.html-tracking-code', function () {
+        const html = this.value;
+        const div = document.createElement('DIV');
+        div.innerHTML = html;
+        let srcs = [];
+    
+        // Extract img src from regular HTML
+        div.querySelectorAll('img').forEach(img => {
+            const src = img.getAttribute('src') || ''; 
+            if (src !== '') {
+                srcs.push(src);
+            }
+        });
+    
+        // Extract and parse content of noscript tags
+        div.querySelectorAll('noscript').forEach(noscript => {
+            const noscriptDiv = document.createElement('DIV');
+            noscriptDiv.innerHTML = noscript.textContent || noscript.innerText;
+            noscriptDiv.querySelectorAll('img').forEach(img => {
+                const src = img.getAttribute('src') || ''; 
+                if (src !== '') {
+                    srcs.push(src);
+                }
+            });
+        });
+
+        srcs = srcs.map(src => src.replace(/\$\{[A-z\d\_]+\}/g, ''));
+    
+        let order = 2;
+        for (const src of srcs) {
+            const key = `impression_${order}`;
+            const container = this.closest('.meta-table');
+            if (!container) {continue;}
+            const inputEle = container.querySelector(`[data-key="${key}"]`);
+            if (!inputEle) {continue;}
+            inputEle.value = src;
+            order += 1;
+        }
+    });
+    
+    
     $('body').on('click', '.action-link', function () {
         window.gPendingInput = this.parentElement.parentElement.querySelector('.o-input-text.ad-image');
         window.imageUploader = window.open('/ads_admin/index.php?into=apple', '_blank', '');
