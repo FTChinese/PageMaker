@@ -3814,8 +3814,10 @@
     });
 
     $('body').on('click', '.clone-section', function () {
+        console.log('Cloning...');
         $(this).parentsUntil($('.sections'), '.section-container').slideDown(500, function () {
-            $(this).clone().insertBefore($(this));
+            var clonedSection = $(this).clone();
+            clonedSection.insertBefore($(this));
             // MARK: - If the section has a unique id, it should be updated to new unique id
             const uniqueId = $(this).find('[data-key="unique_id"]').val();
             if (uniqueId) {
@@ -3829,9 +3831,16 @@
                 $(this).find('[data-key="impression_1"]').val(newImpression);
                 $(this).find('[data-key="click"]').val(newClick);
                 $(this).find('.section-header').html(`Copy: ${headerHTML}`);
+                // MARK: For the clonedSection, I want to set all input and textarea to disable
+                clonedSection.find('input, textarea, select').prop('disabled', true);
+                clonedSection.find('.section-header').html(`Original: ${headerHTML}`);
             }
         });
     });
+
+
+
+    
 
     $('body').on('click', '.clone-lists', function () {
         $(this).parentsUntil($('.lists-container'), '.lists-item').slideDown(500, function () {
