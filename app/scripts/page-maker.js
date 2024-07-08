@@ -787,6 +787,11 @@
           'cytiva-social-block',
           'pr_newswire'
         ],
+        feedFilter: [
+            '',
+            'opinion',
+            'audio'
+        ],
         codeFileName: [
           '',
           'subscription-vip-redeem'
@@ -1642,7 +1647,7 @@
     var pagemakerAPIRoot = '/falcon.php/pagemaker/';
     var storyAPIRoot = '/falcon.php/homepage/getstoryapi/';
     var gApiUrls = {
-        //'home': 'api/page/home.json',
+        // 'home': 'api/page/home.json',
         'home': pagemakerAPIRoot + 'get/'+ getURLParameter('page') +'/' + todaydate + '?' + thenow,
         'homePOST': pagemakerAPIRoot + 'post/'+ getURLParameter('page') +'/' + todaydate,
         'blank': 'api/page/blank.json?2',
@@ -1656,10 +1661,10 @@
         // 'blank': 'api/page/blank.json',
         // 'blank': 'api/page/campaign.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
-        'blank': 'api/page/creative.json',
+        // 'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
         //'blank': 'api/page/posters.json',
-        //'blank': 'api/page/home.json',
+        'blank': 'api/page/home.json',
         'stories': 'api/page/stories.json'
     };
 
@@ -1864,11 +1869,22 @@
     function renderMeta(data) {
         // MARK: When we change the data property, we want the new properties to be reflected. 
         function upgradeData(data) {
+
+            // if (data.title === '评论') {
+            //     console.log('\n\n\n\n================');
+            //     console.log ('data is: ');
+            //     console.log (data);
+            //     console.log ('new data: ')
+            //     console.log (newData);
+            // }
+
             var dataType = data.type;
+
             if (dataType) {
                 var newData = {type: dataType};
                 //var newData = data;
                 var toolKitData = toolkits.section[dataType] || toolkits.list[dataType];
+
                 if (toolKitData) {
                     // MARK: Loop through toolKitData to make sure the order is correct
                     $.each(toolKitData, function (key, value) {
@@ -1882,17 +1898,18 @@
                 }
                 //console.log ('not a defined type! ');
                 return data;
+            } else if (data.feedTag) {
+                // MARK: - If a list has feedTag, it should have feedFilter as well. All lists doesn't have a type. 
+                data.feedFilter = data.feedFilter || '';
             }
             //console.log ('no type');
             return data;                
         }
+
         var metaHTML = '';
         var dataHTML = '';
         const newData = upgradeData(data);
-        // console.log ('data is: ');
-        // console.log (data);
-        // console.log ('new data: ')
-        // console.log (newData);
+
         //const newData = data;
         const uniqueId = generateUniqueId();
         $.each(newData, function (key, value) {
@@ -3458,6 +3475,7 @@
                         'feedStart': '',
                         'feedItems': '',
                         'feedTag': '',
+                        'feedFilter': '',
                         'feedType': '',
                         'feedImage': 'optional',
                         'moreLink': '',
