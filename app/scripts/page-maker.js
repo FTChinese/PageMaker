@@ -404,6 +404,7 @@
             'feedItems',
             'feedTag',
             'feedFilter',
+            'customFilter',
             'feedType',
             'feedImage',
             'ShowBodyMail',
@@ -790,7 +791,8 @@
         feedFilter: [
             '',
             'opinion',
-            'audio'
+            'audio',
+            'china'
         ],
         codeFileName: [
           '',
@@ -1901,6 +1903,7 @@
             } else if (data.feedTag) {
                 // MARK: - If a list has feedTag, it should have feedFilter as well. All lists doesn't have a type. 
                 data.feedFilter = data.feedFilter || '';
+                data.customFilter = data.customFilter || '';
             }
             //console.log ('no type');
             return data;                
@@ -3476,6 +3479,7 @@
                         'feedItems': '',
                         'feedTag': '',
                         'feedFilter': '',
+                        'customFilter': '',
                         'feedType': '',
                         'feedImage': 'optional',
                         'moreLink': '',
