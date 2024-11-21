@@ -7,655 +7,672 @@
     var domId = 'content-left-inner';
 
     var toolkits = {
-        section: {
-          block: [
-            'title',
-            'name',
-            'side',
-            'sideAlign',
-            'description',
-            'boxBackground',
-            'VisibleOnlyTo',
-            'BackgroundColor'
-          ],
-          hero: ['title', 'MobileTitle', 'TitleTint', 'vid', 'image', 'mobileImage', 'LogoImage', 'HeroStyle', 'BackgroundStyle', 'TextShadow'],
-          partnerBanner: ['title', 'sponsor', 'disclaimer'],
-          cover: [
-            'tag',
-            'title',
-            'lead',
-            'image',
-            'link',
-            'boxBackground',
-            'VisibleOnlyTo',
-            'liveStatus',
-            'status'
-          ],
-          include: [
-            'from',
-            'side',
-            'sideAlign'
-          ],
-          page: [
-            'id',
-            'blocks',
-            'maxItems'
-          ],
-          header: [
-            'showNavigation',
-            'showLogin',
-            'headerType',
-            'showAttribution'
-          ],
-          banner: [
-            'position',
-            'image',
-            'highImpactImage',
-            'url',
-            'fit',
-            'maxWidth',
-            'sticky',
-            'ShowForPageExpiration'
-          ],
-          footer: [],
-          pagination: [
-            'maxPageNumber'
-          ],
-          creative: [
-            'title',
-            'fileName',
-            'click',
-            'impression_1',
-            'impression_2',
-            'impression_3',
-            'impression_html',
-            'iphone',
-            'android',
-            'ipad',
-            'web',
-            'audienceCohort',
-            'dates',
-            'priority',
-            'weight',
-            'showSoundButton',
-            'landscapeFileName',
-            'backupImage',
-            'backgroundColor',
-            'durationInSeconds',
-            'closeButton',
-            'ccode',
-            'note',
-            'fileNames',
-            'unique_id'
-          ],
-          sponsorship: [
-            'title',
-            'assignee',
-            'description',
-            'tag',
-            'link',
-            'channel',
-            'storyKeyWords',
-            'adChannelId',
-            'zone',
-            'cntopic',
-            'dates',
-            'placeholder',
-            'status',
-            'imageHighlightBox',
-            'imageTicker',
-            'imageRibbon',
-            'storyMPU1',
-            'storyMPU2',
-            'storyMPU3',
-            'storyBanner',
-            'story590Banner',
-            'addToNavSpecialReports',
-            'hideAd',
-            'WeeklyOutput',
-            'TotalOutput',
-            'NumberOfArchive',
-            'emails',
-            'sectionPageTrack',
-            'paidPostKey',
-            'paidPostTrack',
+    section: {
+        block: [
+        'title',
+        'name',
+        'side',
+        'sideAlign',
+        'description',
+        'boxBackground',
+        'VisibleOnlyTo',
+        'BackgroundColor',
+        'ShowForPageExpiration'
+        ],
+        hero: ['title', 'MobileTitle', 'TitleTint', 'vid', 'image', 'mobileImage', 'LogoImage', 'HeroStyle', 'BackgroundStyle', 'TextShadow'],
+        partnerBanner: ['title', 'sponsor', 'disclaimer'],
+        cover: [
+        'tag',
+        'title',
+        'lead',
+        'image',
+        'link',
+        'boxBackground',
+        'VisibleOnlyTo',
+        'liveStatus',
+        'status'
+        ],
+        include: [
+        'from',
+        'side',
+        'sideAlign'
+        ],
+        page: [
+        'id',
+        'blocks',
+        'maxItems'
+        ],
+        header: [
+        'showNavigation',
+        'showLogin',
+        'headerType',
+        'showAttribution'
+        ],
+        banner: [
+        'position',
+        'image',
+        'highImpactImage',
+        'url',
+        'fit',
+        'maxWidth',
+        'sticky',
+        'ShowForPageExpiration'
+        ],
+        footer: [],
+        pagination: [
+        'maxPageNumber'
+        ],
+        creative: [
+        'title',
+        'fileName',
+        'click',
+        'impression_1',
+        'impression_2',
+        'impression_3',
+        'impression_html',
+        'iphone',
+        'android',
+        'ipad',
+        'web',
+        'audienceCohort',
+        'dates',
+        'priority',
+        'weight',
+        'showSoundButton',
+        'landscapeFileName',
+        'backupImage',
+        'backgroundColor',
+        'durationInSeconds',
+        'closeButton',
+        'ccode',
+        'note',
+        'fileNames',
+        'unique_id'
+        ],
+        subscription_discounts: [
+            'title',        // Title to display in the marketing materials
+            'start_date',           // The start date of the campaign
+            'end_date',             // The end date of the campaign
+            'target_lifecycle',      // The specific audience this campaign is targeting
+            'target_from',         
+            'discount_premium',     // Discount amount or percentage for the Premium subscription
+            'discount_premium_monthly', 
+            'discount_standard',    // Discount amount or percentage for the Standard subscription
+            'discount_standard_monthly',     // Discount amount or percentage for the Monthly subscription
+            'bundle_product',
+            'status',       // Current status of the campaign (e.g., active, expired, upcoming)
             'note'
-          ],
-          manualTagPage: [
+        ],
+        sponsorship: [
+        'title',
+        'assignee',
+        'description',
+        'tag',
+        'link',
+        'channel',
+        'storyKeyWords',
+        'adChannelId',
+        'zone',
+        'cntopic',
+        'dates',
+        'placeholder',
+        'status',
+        'imageHighlightBox',
+        'imageTicker',
+        'imageRibbon',
+        'storyMPU1',
+        'storyMPU2',
+        'storyMPU3',
+        'storyBanner',
+        'story590Banner',
+        'addToNavSpecialReports',
+        'hideAd',
+        'WeeklyOutput',
+        'TotalOutput',
+        'NumberOfArchive',
+        'emails',
+        'sectionPageTrack',
+        'paidPostKey',
+        'paidPostTrack',
+        'note'
+        ],
+        manualTagPage: [
+        'title',
+        'tag',
+        'storyKeyWords',
+        'imageHighlightBox',
+        'zone',
+        'link',
+        'description',
+        'subType',
+        'preferLead',
+        'topnav',
+        'subnav',
+        'thirdnav',
+        'disclaimer',
+        'note'
+        ],
+        InternalPromo: [
+        'title',
+        'link',
+        'dates',
+        'placeholder',
+        'status',
+        'imageHighlightBox',
+        'PromoId',
+        'note'
+        ],
+        MainMessage: [
+        'Name',
+        'Tag',
+        'TagLink',
+        'title',
+        'content',
+        'buttonTitle',
+        'buttonUrl',
+        'ccode',
+        'discountCode',
+        'discount',
+        'BackgroundImage',
+        'MobileBackgroundImage',
+        'BackgroundColor',
+        'BackgroundLayout',
+        'status',
+        'subscriptionType',
+        'dates',
+        'ShowForPageExpiration',
+        'UniqueId'
+        ],
+        MessageMeta: [
+        'EmailTitle',
+        'SMSContext',
+        'NotificationTitle',
+        'NotificationLead',
+        'CampaignCodePrefix'
+        ],
+        subscriptionLead: [
+        'title',
+        'lead',
+        'subscriptionBoxTarget'
+        ],
+        subscriptionBox: [
+        'title',
+        'ccode',
+        'subscriptionBoxTarget'
+        ],
+        SubscriptionQa: [
+        'title',
+        'subscriptionBoxTarget'
+        ],
+        promoBox: [
+        'Name',
+        'status',
+        'note',
+        'TargetAudience',
+        'promoTarget',
+        'SubscriberSource',
+        'Duration',
+        'DaysToExpiration',
+        'ProductPlatform',
+        'RenewalStatus',
+        'PendingOffer',
+        'dates'
+        ],
+        DeepLinkCampaign: [
+        'Name',
+        'id',
+        'url',
+        'status',
+        'note',
+        'dates'
+        ],
+        IntroductoryOffer: [
+        'Name',
+        'status',
+        'message',
+        'months',
+        'price',
+        'dates',
+        'ccode',
+        'note'
+        ],
+        KickoutOffer: [
+        'Name',
+        'status',
+        'message',
+        'discount',
+        'FlashDiscount',
+        'ccode'
+        ],
+        RemoteConfigParameter: [
+        'Name',
+        'status',
+        'note'
+        ],
+        EventInfoFlow: [
+        'Name',
+        'status',
+        'note',
+        'TargetAudience',
+        'subscription',
+        'dates',
+        'Action',
+        'title',
+        'lead',
+        'image',
+        'click',
+        'tag',
+        'tagLink',
+        'position'
+        ],
+        newAd: [
+        'devices',
+        'pattern',
+        'position',
+        'container'
+        ],
+        timeline: [
+        'title',
+        'name',
+        'timelineStyle',
+        'description'
+        ],
+        apiBlock: [
+        'title',
+        'link',
+        'description',
+        'allowTop',
+        'apiNumber',
+        'itemNumber'
+        ],
+        DiscountSchedule: [
+        'PageTitle',
+        'PageDescription',
+        'PageImage',
+        'StandardPrice',
+        'PremiumPrice',
+        'MonthlyPrice',
+        'StartDate',
+        'EndDate'
+        ],
+        LifeCycleManager: [
+        'name',
+        'TargetAudience',
+        'SubscriberType',
+        'RenewalStatus',
+        'PaymentMethods',
+        'DaysToExpiration',
+        'ProductPlatform',
+        'EngagementLevel',
+        'InactiveDays',
+        'PromoBox',
+        'title',
+        'promoTarget',
+        'status',
+        'imagePC',
+        'imageMobile',
+        'click',
+        'ccode',
+        'dates',
+        'weight',
+        'backgroundColor',
+        'buttonColor',
+        'buttonFontColor',
+        'Email',
+        'EmailTitle',
+        'EmailUrl',
+        'Notification',
+        'DelegateToFirebase',
+        'NotificationTitle',
+        'NotificationAction',
+        'NotificationId',
+        'note'
+        ],
+        Poster: [
+        'name',
+        'PosterLayout',
+        'PosterTheme',
+        'PosterBGImage',
+        'PosterMainImage',
+        'PosterCaption',
+        'LogoType',
+        'HideLogo',
+        'ClientLogo',
+        'ClientLogo2',
+        'ClientLogo3',
+        'EventDate',
+        'EventDatePrefix',
+        'TitleWidth',
+        'FirstTitle',
+        'FirstTitleFont',
+        'SecondTitle',
+        'SecondTitleFont',
+        'SecondTitleMore',
+        'SecondTitleMoreFont',
+        'SubTitle',
+        'SubTitleFont',
+        'SubTitleBG',
+        'CallForActionType',
+        'QRUrl',
+        'QRTitle',
+        'note'
+        ],
+        Tags: [
+        'ImportantTags',
+        'ReservedTags'
+        ],
+        FixedButtons: [
+        'name',
+        'ccode',
+        'discountCode',
+        'discount',
+        'backgroundColor',
+        'leftButtonBG',
+        'leftButtonColor',
+        'rightButtonBG',
+        'rightButtonColor',
+        'ShowForPageExpiration'
+        ],
+        ProductPricing: [
+        'title',
+        'etitle',
+        'subtitle',
+        'esubtitle',
+        'Detail',
+        'image',
+        'PrivilegeType',
+        'KeyWord',
+        'status',
+        'Pricing',
+        'Full',
+        'ForStandard',
+        'ForPremium',
+        'NextAction',
+        'DataCollection',
+        'link'
+        ],
+        MailTracking: [
+        'domain',
+        'path',
+        'title'
+        ],
+        SeamlessFrame: ['url', 'height']
+    },
+    list: {
+        list: [
+        'name',
+        'title',
+        'url',
+        'language',
+        'description',
+        'style',
+        'float',
+        'showTag',
+        'showTimeStamp',
+        'readMore',
+        'preferLead',
+        'sponsorAdId',
+        'sponsorLogoUrl',
+        'sponsorLink',
+        'sponsorNote',
+        'feedStart',
+        'feedItems',
+        'feedTag',
+        'feedFilter',
+        'customFilter',
+        'feedType',
+        'feedImage',
+        'ShowBodyMail',
+        'moreLink',
+        'Insert'
+        ],
+        listWithText: [
+        'name',
+        'title',
+        'url',
+        'text',
+        'wideImage',
+        'mobileImage',
+        'titleForMore',
+        'imageStyle'
+        ],
+        listWithCode: [
+        'codeFileName'
+        ],
+        listForImage: [
+        'name',
+        'image',
+        'url'
+        ],
+        subscriptionPromotion: [
+        'name',
+        'title',
+        'description',
+        'url',
+        'ccode',
+        'buttonTitle',
+        'subscriptionType',
+        'successNote',
+        'itemNumber',
+        'feedbackForSuccess',
+        'feedbackForFailure'
+        ],
+        SubscriptionInfoConfirm: [
+        'name',
+        'Conditions',
+        'membership',
+        'action',
+        'dates',
+        'Settings',
+        'title',
+        'description',
+        'InfoCollection',
+        'SkipButton',
+        'status'
+        ],
+        SideMPU: [
+        'name',
+        'image',
+        'url'
+        ],
+        adCreative: [
+        'title',
+        'fileName',
+        'click',
+        'impression_1',
+        'impression_2',
+        'impression_3',
+        'impression_html',
+        'iphone',
+        'android',
+        'ipad',
+        'dates',
+        'priority',
+        'weight',
+        'showSoundButton',
+        'backgroundColor',
+        'durationInSeconds',
+        'closeButton'
+        ],
+        SideWithItems: [
+        'name',
+        'title',
+        'description',
+        'url',
+        'sideOption',
+        'feedItems',
+        'feedTag',
+        'feedType',
+        'customFilter'
+        ],
+        SideRanking: [
+        'name',
+        'title',
+        'RankingBy',
+        'url',
+        'feedItems',
+        'feedTag',
+        'feedType'
+        ],
+        SideInclude: [
+        'name',
+        'title',
+        'url',
+        'fromSide'
+        ],
+        SideIframe: [
+        'name',
+        'title',
+        'url',
+        'width',
+        'height'
+        ],
+        SideNewAd: [
+        'devices',
+        'pattern',
+        'position',
+        'container'
+        ],
+        timelineEvent: [
+        'title',
+        'url',
+        'description',
+        'image'
+        ],
+        Headshot: [
+        'Name',
+        'Title',
+        'Image',
+        'BackgroundImage',
+        'Mask'
+        ],
+        PromoBoxAction: [
+        'Name',
+        'status',
+        'weight',
+        'note',
+        'Action',
+        'title',
+        'imagePC',
+        'imageMobile',
+        'click',
+        'ccode',
+        'offer',
+        'backgroundColor',
+        'buttonColor',
+        'buttonFontColor',
+        'ShowCountdown',
+        'CountdownColor'
+        ],
+        RemoteConfigBool: [
+        'Name',
+        'status',
+        'Conditions',
+        'subscriptionType',
+        'SubscriberSource',
+        'Duration',
+        'ProductPlatform',
+        'PurchaseType',
+        'dates',
+        'Settings',
+        'BoolValue'
+        ],
+        RemoteConfigText: [
+        'Name',
+        'status',
+        'Conditions',
+        'subscriptionType',
+        'SubscriberSource',
+        'Duration',
+        'ProductPlatform',
+        'PurchaseType',
+        'dates',
+        'Settings',
+        'TextValue'
+        ],
+        RemoteConfigDomains: [
+        'Name',
+        'status',
+        'Conditions',
+        'subscriptionType',
+        'SubscriberSource',
+        'Duration',
+        'ProductPlatform',
+        'PurchaseType',
+        'dates',
+        'Settings',
+        'SimplifiedDomain',
+        'TraditionalDomain'
+        ],
+        RemoteConfigBlockedDomains: [
+        'domain'
+        ],
+        SideInfo: [
+        'InfoType',
+        'title',
+        'link',
+        'HeadImage',
+        'Detail'
+        ],
+        EventApplication: [
+        'EventId',
+        'title',
+        'subscriptionType',
+        'description',
+        'FormPurpose',
+        'ButtonTitle',
+        'HideFormInfo',
+        'SuccessNote',
+        'Tickets',
+        'emails'
+        ],
+        MyProducts: [
+        'title',
+        'description',
+        'fallback'
+        ],
+        ProductPromotion: [
+        'title',
+        'Detail',
+        'dates',
+        'ccode',
+        'upgrade',
+        'status',
+        'Pricing',
+        'Full',
+        'ForStandard',
+        'ForPremium',
+        'NextAction',
+        'DataCollection',
+        'link'
+        ],
+        Button: [
+        'title',
+        'subscription',
+        'duration',
+        'discountCode',
+        'click',
+        'buttonColor',
+        'BackgroundColor'
+        ],
+        ActivityContainer: [
+            'Content',
             'title',
-            'tag',
-            'storyKeyWords',
-            'imageHighlightBox',
-            'zone',
-            'link',
-            'description',
-            'subType',
-            'preferLead',
-            'topnav',
-            'subnav',
-            'thirdnav',
-            'disclaimer',
-            'note'
-          ],
-          InternalPromo: [
-            'title',
-            'link',
-            'dates',
-            'placeholder',
-            'status',
-            'imageHighlightBox',
-            'PromoId',
-            'note'
-          ],
-          MainMessage: [
-            'Name',
-            'Tag',
-            'TagLink',
-            'title',
-            'content',
-            'buttonTitle',
-            'buttonUrl',
-            'ccode',
-            'discountCode',
-            'discount',
-            'BackgroundImage',
-            'MobileBackgroundImage',
-            'BackgroundColor',
-            'BackgroundLayout',
-            'status',
-            'subscriptionType',
-            'dates',
-            'ShowForPageExpiration',
-            'UniqueId'
-          ],
-          MessageMeta: [
-            'EmailTitle',
-            'SMSContext',
-            'NotificationTitle',
-            'NotificationLead',
-            'CampaignCodePrefix'
-          ],
-          subscriptionLead: [
-            'title',
-            'lead',
-            'subscriptionBoxTarget'
-          ],
-          subscriptionBox: [
-            'title',
-            'ccode',
-            'subscriptionBoxTarget'
-          ],
-          SubscriptionQa: [
-            'title',
-            'subscriptionBoxTarget'
-          ],
-          promoBox: [
-            'Name',
-            'status',
-            'note',
-            'TargetAudience',
-            'promoTarget',
-            'SubscriberSource',
-            'Duration',
-            'DaysToExpiration',
-            'ProductPlatform',
-            'RenewalStatus',
-            'PendingOffer',
-            'dates'
-          ],
-          DeepLinkCampaign: [
-            'Name',
-            'id',
-            'url',
-            'status',
-            'note',
-            'dates'
-          ],
-          IntroductoryOffer: [
-            'Name',
-            'status',
-            'message',
-            'months',
-            'price',
-            'dates',
-            'ccode',
-            'note'
-          ],
-          KickoutOffer: [
-            'Name',
-            'status',
-            'message',
-            'discount',
-            'FlashDiscount',
-            'ccode'
-          ],
-          RemoteConfigParameter: [
-            'Name',
-            'status',
-            'note'
-          ],
-          EventInfoFlow: [
-            'Name',
-            'status',
-            'note',
-            'TargetAudience',
-            'subscription',
-            'dates',
-            'Action',
-            'title',
-            'lead',
-            'image',
-            'click',
-            'tag',
-            'tagLink',
-            'position'
-          ],
-          newAd: [
-            'devices',
-            'pattern',
-            'position',
-            'container'
-          ],
-          timeline: [
-            'title',
-            'name',
-            'timelineStyle',
-            'description'
-          ],
-          apiBlock: [
-            'title',
-            'link',
-            'description',
-            'allowTop',
-            'apiNumber',
-            'itemNumber'
-          ],
-          DiscountSchedule: [
-            'PageTitle',
-            'PageDescription',
-            'PageImage',
-            'StandardPrice',
-            'PremiumPrice',
-            'MonthlyPrice',
-            'StartDate',
-            'EndDate'
-          ],
-          LifeCycleManager: [
-            'name',
-            'TargetAudience',
-            'SubscriberType',
-            'RenewalStatus',
-            'PaymentMethods',
-            'DaysToExpiration',
-            'ProductPlatform',
-            'EngagementLevel',
-            'InactiveDays',
-            'PromoBox',
-            'title',
-            'promoTarget',
-            'status',
-            'imagePC',
-            'imageMobile',
-            'click',
-            'ccode',
-            'dates',
-            'weight',
-            'backgroundColor',
-            'buttonColor',
-            'buttonFontColor',
-            'Email',
-            'EmailTitle',
-            'EmailUrl',
-            'Notification',
-            'DelegateToFirebase',
-            'NotificationTitle',
-            'NotificationAction',
-            'NotificationId',
-            'note'
-          ],
-          Poster: [
-            'name',
-            'PosterLayout',
-            'PosterTheme',
-            'PosterBGImage',
-            'PosterMainImage',
-            'PosterCaption',
-            'LogoType',
-            'HideLogo',
-            'ClientLogo',
-            'ClientLogo2',
-            'ClientLogo3',
-            'EventDate',
-            'EventDatePrefix',
-            'TitleWidth',
-            'FirstTitle',
-            'FirstTitleFont',
-            'SecondTitle',
-            'SecondTitleFont',
-            'SecondTitleMore',
-            'SecondTitleMoreFont',
-            'SubTitle',
-            'SubTitleFont',
-            'SubTitleBG',
-            'CallForActionType',
-            'QRUrl',
-            'QRTitle',
-            'note'
-          ],
-          Tags: [
-            'ImportantTags',
-            'ReservedTags'
-          ],
-          FixedButtons: [
-            'name',
-            'ccode',
-            'discountCode',
-            'discount',
-            'backgroundColor',
-            'leftButtonBG',
-            'leftButtonColor',
-            'rightButtonBG',
-            'rightButtonColor',
-            'ShowForPageExpiration'
-          ],
-          ProductPricing: [
-            'title',
-            'etitle',
-            'subtitle',
-            'esubtitle',
-            'Detail',
-            'image',
-            'PrivilegeType',
-            'KeyWord',
-            'status',
-            'Pricing',
-            'Full',
-            'ForStandard',
-            'ForPremium',
-            'NextAction',
-            'DataCollection',
-            'link'
-          ],
-          MailTracking: [
-            'domain',
-            'path',
-            'title'
-          ],
-          SeamlessFrame: ['url', 'height']
-        },
-        list: {
-          list: [
-            'name',
-            'title',
-            'url',
-            'language',
-            'description',
-            'style',
-            'float',
-            'showTag',
-            'showTimeStamp',
-            'readMore',
-            'preferLead',
-            'sponsorAdId',
-            'sponsorLogoUrl',
-            'sponsorLink',
-            'sponsorNote',
-            'feedStart',
-            'feedItems',
-            'feedTag',
-            'feedFilter',
-            'customFilter',
-            'feedType',
-            'feedImage',
-            'ShowBodyMail',
-            'moreLink',
-            'Insert'
-          ],
-          listWithText: [
-            'name',
-            'title',
-            'url',
-            'text',
-            'wideImage',
-            'mobileImage',
-            'titleForMore',
-            'imageStyle'
-          ],
-          listWithCode: [
-            'codeFileName'
-          ],
-          listForImage: [
-            'name',
-            'image',
-            'url'
-          ],
-          subscriptionPromotion: [
-            'name',
-            'title',
-            'description',
-            'url',
-            'ccode',
-            'buttonTitle',
-            'subscriptionType',
-            'successNote',
-            'itemNumber',
-            'feedbackForSuccess',
-            'feedbackForFailure'
-          ],
-          SubscriptionInfoConfirm: [
-            'name',
-            'Conditions',
-            'membership',
-            'action',
-            'dates',
-            'Settings',
-            'title',
-            'description',
-            'InfoCollection',
-            'SkipButton',
-            'status'
-          ],
-          SideMPU: [
-            'name',
-            'image',
-            'url'
-          ],
-          adCreative: [
-            'title',
-            'fileName',
-            'click',
-            'impression_1',
-            'impression_2',
-            'impression_3',
-            'impression_html',
-            'iphone',
-            'android',
-            'ipad',
-            'dates',
-            'priority',
-            'weight',
-            'showSoundButton',
-            'backgroundColor',
-            'durationInSeconds',
-            'closeButton'
-          ],
-          SideWithItems: [
-            'name',
-            'title',
-            'url',
-            'sideOption',
-            'feedItems',
-            'feedTag',
-            'feedType'
-          ],
-          SideRanking: [
-            'name',
-            'title',
-            'RankingBy',
-            'url',
-            'feedItems',
-            'feedTag',
-            'feedType'
-          ],
-          SideInclude: [
-            'name',
-            'title',
-            'url',
-            'fromSide'
-          ],
-          SideIframe: [
-            'name',
-            'title',
-            'url',
-            'width',
-            'height'
-          ],
-          SideNewAd: [
-            'devices',
-            'pattern',
-            'position',
-            'container'
-          ],
-          timelineEvent: [
-            'title',
-            'url',
-            'description',
-            'image'
-          ],
-          Headshot: [
-            'Name',
-            'Title',
-            'Image',
-            'BackgroundImage',
-            'Mask'
-          ],
-          PromoBoxAction: [
-            'Name',
-            'status',
-            'weight',
-            'note',
-            'Action',
-            'title',
-            'imagePC',
-            'imageMobile',
-            'click',
-            'ccode',
-            'offer',
-            'backgroundColor',
-            'buttonColor',
-            'buttonFontColor',
-            'ShowCountdown',
-            'CountdownColor'
-          ],
-          RemoteConfigBool: [
-            'Name',
-            'status',
-            'Conditions',
-            'subscriptionType',
-            'SubscriberSource',
-            'Duration',
-            'ProductPlatform',
-            'PurchaseType',
-            'dates',
-            'Settings',
-            'BoolValue'
-          ],
-          RemoteConfigText: [
-            'Name',
-            'status',
-            'Conditions',
-            'subscriptionType',
-            'SubscriberSource',
-            'Duration',
-            'ProductPlatform',
-            'PurchaseType',
-            'dates',
-            'Settings',
-            'TextValue'
-          ],
-          RemoteConfigDomains: [
-            'Name',
-            'status',
-            'Conditions',
-            'subscriptionType',
-            'SubscriberSource',
-            'Duration',
-            'ProductPlatform',
-            'PurchaseType',
-            'dates',
-            'Settings',
-            'SimplifiedDomain',
-            'TraditionalDomain'
-          ],
-          RemoteConfigBlockedDomains: [
-            'domain'
-          ],
-          SideInfo: [
-            'InfoType',
-            'title',
-            'link',
+            'TitleImage',
             'HeadImage',
-            'Detail'
-          ],
-          EventApplication: [
-            'EventId',
-            'title',
-            'subscriptionType',
-            'description',
-            'FormPurpose',
-            'ButtonTitle',
-            'HideFormInfo',
-            'SuccessNote',
-            'Tickets',
-            'emails'
-          ],
-          MyProducts: [
-            'title',
-            'description',
-            'fallback'
-          ],
-          ProductPromotion: [
-            'title',
+            'ItemImage',
             'Detail',
-            'dates',
-            'ccode',
-            'upgrade',
-            'status',
-            'Pricing',
-            'Full',
-            'ForStandard',
-            'ForPremium',
-            'NextAction',
-            'DataCollection',
-            'link'
-          ],
-          Button: [
-            'title',
-            'subscription',
-            'duration',
-            'discountCode',
-            'click',
-            'buttonColor',
-            'BackgroundColor'
-          ],
-            ActivityContainer: [
-                'Content',
-                'title',
-                'TitleImage',
-                'HeadImage',
-                'ItemImage',
-                'Detail',
-                'note',
-                'Style',
-                'TitleColor',
-                'BackgroundColor',
-                'FontColor',
-                'SubtitleColor',
-                'ItemLayout',
-                'IconColor'
-            ]
-        }
-      };
+            'note',
+            'Style',
+            'TitleColor',
+            'BackgroundColor',
+            'FontColor',
+            'SubtitleColor',
+            'ItemLayout',
+            'IconColor'
+        ]
+    }
+    };
     var allSectionAndLists = [];
     for (var group in toolkits) {
         if (toolkits.hasOwnProperty(group)) {
@@ -677,6 +694,10 @@
         liveStatus: [
           'off',
           'on'
+        ],
+        bundle_product: [
+            '',
+            'DSA'
         ],
         theme: [
           'default',
@@ -942,6 +963,15 @@
             'winback'
           ]
         },
+        target_lifecycle: {
+            type: 'multiselect',
+            options: [
+              'premium',
+              'standard',
+              'churned',
+              'new'
+            ]
+        },
         priority: [
             'standard',
             'sponsorship',
@@ -1113,6 +1143,30 @@
           ''
         ],
         discount: [
+            '',
+            'half',
+            '75',
+            '85'
+        ],
+        discount_premium: [
+            '',
+            'half',
+            '75',
+            '85'
+        ],
+        discount_premium_monthly: [
+            '',
+            'half',
+            '75',
+            '85'
+        ],
+        discount_standard: [
+            '',
+            'half',
+            '75',
+            '85'
+        ],
+        discount_standard_monthly: [
             '',
             'half',
             '75',
@@ -1362,6 +1416,8 @@
         HighlightFTAcademy: ['no', 'yes'],
         HeaderPrefer: ['logo', 'text'],
         PageExpire: 'DateTime',
+        start_date: 'date',
+        end_date: 'date',
         EngagementLevel: {
           type: 'multiselect',
           options: [
@@ -1559,7 +1615,8 @@
         NotificationTitle: 'iOS通知推送的标题',
         NotificationLead: 'iOS通知推送的Lead',
         CampaignCodePrefix: 'Campaign Code, 也就是Ccode的前面部分，后面会自动加上SMS, Noti和Email等后缀',
-        UniqueId: '如果Unique Id不为空，且相同，则不重复显示'
+        UniqueId: '如果Unique Id不为空，且相同，则不重复显示',
+        target_from: '在订阅折扣中，如果要求定向生效，可以在url中增加from参数，比如/subscription?from=peking_university_2025'
     };
 
     // MARK: - Differentiate subscription information
@@ -1972,6 +2029,8 @@
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" readonly class="o-input-text" value=' + (value || uniqueId) + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'DateTime') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="datetime-local" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
+            } else if (dataRules[key] === 'date') {
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="date" class="o-input-text" value=' + (value || '') + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'textarea') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + key + '" class="o-textarea">' + value + '</textarea></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'string') {
