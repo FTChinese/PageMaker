@@ -19,7 +19,7 @@
         'BackgroundColor',
         'ShowForPageExpiration'
         ],
-        hero: ['title', 'MobileTitle', 'TitleTint', 'vid', 'image', 'mobileImage', 'LogoImage', 'HeroStyle', 'BackgroundStyle', 'TextShadow'],
+        hero: ['tag', 'title', 'description', 'MobileTitle', 'TitleTint', 'vid', 'image', 'mobileImage', 'LogoImage', 'SponsorCredit', 'SponsorLogo', 'HeroStyle', 'BackgroundColor', 'BackgroundStyle', 'TextShadow'],
         partnerBanner: ['title', 'sponsor', 'disclaimer'],
         cover: [
         'tag',
@@ -1046,6 +1046,7 @@
         mobileImage: 'image',
         LogoImage: 'image',
         imageMobile: 'image',
+        SponsorLogo: 'image',
         imageHighlightBox: 'image',
         imageTicker: 'image',
         imageRibbon: 'image',
@@ -1530,7 +1531,7 @@
         price: 'number',
         maxWidth: 'number',
         BackgroundLayout: ['Default', 'SpecialReport'],
-        HeroStyle: ['', 'video'],
+        HeroStyle: ['', 'video', 'travel', 'classic'],
         BackgroundStyle: ['', 'LeftTop', 'RightTop'],
         ShowForPageExpiration: ['All', 'Running', 'Expired'],
         unique_id: 'uuid'
@@ -1717,14 +1718,16 @@
         'homePOST': 'api',
         // 'blank': 'api/page/introductoryoffer.json',
         //'blank': 'api/page/promoBox.json',
-        // 'blank': 'api/page/blank.json',
+        'blank': 'api/page/blank.json',
         // 'blank': 'api/page/campaign.json',
         //'blank': 'api/page/sponsorshipmanagement.json',
         // 'blank': 'api/page/creative.json',
         //'blank': 'api/page/lifecycle.json',
         //'blank': 'api/page/posters.json',
-        'blank': 'api/page/home.json',
-        'stories': 'api/page/stories.json'
+        // 'blank': 'api/page/home.json',
+        'stories': 'api/page/stories.json',
+        // 'blank': 'api/page/premium.json',
+        // 'home': 'api/page/premium.json'
     };
 
     //drag and drop
@@ -1973,6 +1976,7 @@
         //const newData = data;
         const uniqueId = generateUniqueId();
         $.each(newData, function (key, value) {
+
             var arrayMeta = '';
             var descriptionOriginal = dataRulesTitle[key] || '';
             var description = '';
@@ -1982,6 +1986,11 @@
                 //descriptionMore = '<tr class="meta-item-description"><td colspan=2>' + descriptionOriginal + '</td></tr>'
                 descriptionMore = '';
             }
+            // console.log(`key: ${key}`);
+            // console.log(dataRules[key]);
+            // console.log(v);
+            // console.log(arrayMeta);
+
             if (dataRules[key] === 'array' || dataRules[key] === 'item') {
                 $.each(value, function (k, v) {
                     var title = v.Name || v.title || v.name || v.type || 'List';
@@ -1996,7 +2005,9 @@
                         arrayMeta = renderMeta(v);
                         dataHTML += '<div class="' + key + '-item"><div class="remove-' + key + '"></div><div class="clone-' + key + '"></div><div class="' + key + '-header" draggable=true>' + title + itemLength + '</div>' + arrayMeta + '</div>';
                     } else {
+
                         arrayMeta = renderItem(v);
+   
                         dataHTML += arrayMeta;
                     }
                 });
@@ -2032,9 +2043,9 @@
             } else if (dataRules[key] === 'date') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="date" class="o-input-text" value=' + (value || '') + '></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'textarea') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + key + '" class="o-textarea">' + value + '</textarea></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + key + '" class="o-textarea">' + sanitizeValue(value, true) + '</textarea></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'string') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '"'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '"></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '"'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text" value="' + sanitizeValue(value) + '"></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'object') {
                 var options = '';
                 if (dataRules[key].type === 'select') {
@@ -2064,14 +2075,47 @@
                     });
                     metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td colspan="2"><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
                 }
-             } else {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td colspan="2"><input type="text" data-key="' + key + '" class="o-input-text" value="' + value + '"></td></tr>' + descriptionMore;
+             } else {                                
+                metaHTML += `
+                <tr class="meta-item">
+                <td class="first-row">
+                    <input class="o-input-text" value='${key}' type='text' readonly ${description}>
+                </td>
+                <td colspan='2'>
+                    <input type='text' data-key='${key}' class='o-input-text' value='${sanitizeValue(value)}'>
+                </td>
+                </tr>
+                ${descriptionMore}`;
             }
         });
         dataHTML = '<div class="lists-container">' + dataHTML + '</div>';
         const sectionGuideline = (data.type && dataRulesTitle[data.type]) ? `<tr><td colspan=2 class="first-row">${dataRulesTitle[data.type]}</td></tr>` : '';
         metaHTML = '<table class="meta-table">' + sectionGuideline + metaHTML + '</table>';
         return metaHTML + dataHTML;
+    }
+
+    /**
+     * Sanitizes a value by escaping single quotes and optionally handling newlines/whitespace.
+     *
+     * @param {string} value - The value to sanitize.
+     * @param {boolean} keepNewLine - Whether to keep newline characters (`\n`) intact.
+     * @param {boolean} collapseWhitespace - Whether to replace multiple whitespace characters with a single space.
+     * @returns {string} - The sanitized value.
+     */
+    function sanitizeValue(value, keepNewLine = false, collapseWhitespace = false) {
+        if (typeof value !== 'string') {return value;}
+
+        let sanitized = value.replace(/'/g, '&#39;');
+
+        if (!keepNewLine) {
+            sanitized = sanitized.replace(/\n/g, ' ');
+        }
+
+        if (collapseWhitespace) {
+            sanitized = sanitized.replace(/\s+/g, ' '); // Replace multiple whitespace characters with a single space
+        }
+
+        return sanitized;
     }
 
     function renderJson(jsonData) {
@@ -2468,10 +2512,6 @@
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('errorThrown - [' + errorThrown + ']');
-                // if(XMLHttpRequest.status===200){
-                //     alert('请登录backyard！');
-                //     document.location.href='/falcon.php/cmsusers/login?from=pagemaker';
-                // }
             }
         });
     }
@@ -2695,6 +2735,7 @@
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('errorThrown1 - [' + errorThrown + ']');
+                console.log(page());
                 if(XMLHttpRequest.status===200 && XMLHttpRequest.readyState===4){
                     alert('请登录backyard！');
                     document.location.href='/falcon.php/cmsusers/login?from=pagemaker'+page();
@@ -3647,12 +3688,19 @@
         }
  //       console.log(document.getElementById("content-left-inner").innerHTML);
     });
+
+    const MAX_LENGTH = 100000;
     $('body').on('click', '#button-save', function () {
+        const publish_html = renderHTML($('#content-left-inner'));
+        if (publish_html.length > MAX_LENGTH) {
+            alert(`您提交的内容太多了（${publish_html.length}字符）！超过了数据库的上限（${MAX_LENGTH}字符）！请删除掉没有用的数据再重新提交！`);
+            return;
+        }
         if (confirm('是否“保存”当前操作结果？\n\n注意：保存操作不会更新页面。')) {
             $.ajax({
                 type: 'POST',
                 url: gApiUrls.homePOST,
-                data: {action: 'save', publish_type: getURLParameter('page'), publish_html: renderHTML($('#content-left-inner'))},
+                data: {action: 'save', publish_type: getURLParameter('page'), publish_html},
                 dataType: 'text',
                 success: function (msg) {
                     if (msg === 'save') {
@@ -3670,11 +3718,16 @@
     });
 
     $('body').on('click', '#button-submit', function () {
-        if (confirm('是否“提交”当前操作结果？\n\n注意：提交操作会更新页面。')) {
+        const publish_html = renderHTML($('#content-left-inner'));
+        if (publish_html.length > MAX_LENGTH) {
+            alert(`您提交的内容太多了（${publish_html.length}字符）！超过了数据库的上限（${MAX_LENGTH}字符）！请删除掉没有用的数据再重新提交！`);
+            return;
+        }
+        if (confirm(`是否“提交”当前操作结果（${publish_html.length}/${MAX_LENGTH}字符）？\n\n注意：提交操作会更新页面。`)) {
             $.ajax({
                 type: 'POST',
                 url: gApiUrls.homePOST,
-                data: {action: 'submit', publish_type: getURLParameter('page'), publish_html: renderHTML($('#content-left-inner'))},
+                data: {action: 'submit', publish_type: getURLParameter('page'), publish_html},
                 dataType: 'text',
                 success: function (msg) {
                     if (msg === 'submit') {
@@ -4011,6 +4064,7 @@
 
     customPageJSON = getURLParameter('page');
     pageId = getURLParameter('id');
+
     
     if (customPageJSON !== null && customPageJSON !== '') {
         actionType = 'edit';
@@ -4023,6 +4077,8 @@
     if (window.location.hostname === 'localhost' || window.location.hostname.indexOf('192.168') === 0 || window.location.hostname.indexOf('10.113') === 0 || window.location.hostname.indexOf('127.0') === 0) {
         gApiUrls = gApiUrlsLocal;
     }
+
+    // console.log(`gApiUrls: ${gApiUrls}`);
 
 
     $('#keywords-input').val(todaydate);
