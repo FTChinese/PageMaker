@@ -1455,12 +1455,12 @@
         ],
         offer: [
           '',
-          'standard_win_back_offer_2024',
-          'premium_win_back_offer_2020',
-          'standard_retention_offer_2024',
-          'premium_retention_offer_2020',
-          'standard_discount_offer_2024',
-          'premium_discount_offer_2020'
+          'standard_win_back_offer_2025',
+          'premium_win_back_offer_2025',
+          'standard_retention_offer_2025',
+          'premium_retention_offer_2025',
+          'standard_discount_offer_2025',
+          'premium_discount_offer_2025'
         ],
         HideLogo: [
           'no',
