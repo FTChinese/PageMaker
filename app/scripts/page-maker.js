@@ -2016,7 +2016,7 @@
             } else if (dataRules[key] === 'readonly') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'adimage') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image impression-value" value="' + value + '"></td><td><button class="action-link" target="_blank">Upload</button><button class="impression-track" target="_blank" data-source="ftc-chart" data-event-action="Show">Track</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart" data-event-action="Show">Track</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'image') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text content-image" value="' + value + '"></td><td><button class="image-link" target="_blank">Upload</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'dates') {
@@ -2026,7 +2026,7 @@
             } else if (dataRules[key] === 'click') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="click-track-update" target="_blank">Update</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'impression_default') {
-                const impressionValue = value ? value : `https://ftmailbox.cn/ad_impression/${uniqueId}`;
+                const impressionValue = value ? value : `https://d1jtq4gqw1ilzj.cloudfront.net/ad_impression/${uniqueId}`;
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + impressionValue + '"></td><td><button class="impression-track-create" target="_blank">Create</button></td></tr>' + descriptionMore;
             }  else if (dataRules[key] === 'impression_convert') {
                 metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + key + '" type="text" class="o-textarea html-tracking-code" placeholder="paste html tracking code here">' + value + '</textarea></td></tr>' + descriptionMore;
@@ -3082,9 +3082,9 @@
         const containerEle = ele.closest('.meta-table');
         if (!containerEle) {return;}
         const uniqueIdEle = containerEle.querySelector('[data-key="unique_id"]');
-        let impressionTrackingUrl = `https://ftmailbox.cn/ad_impression/${generateUniqueId()}`;
+        let impressionTrackingUrl = `https://d1jtq4gqw1ilzj.cloudfront.net/ad_impression/${generateUniqueId()}`;
         if (uniqueIdEle && uniqueIdEle.value && uniqueIdEle.value !== '' ) {
-            impressionTrackingUrl = `https://ftmailbox.cn/ad_impression/${uniqueIdEle.value}`;
+            impressionTrackingUrl = `https://d1jtq4gqw1ilzj.cloudfront.net/ad_impression/${uniqueIdEle.value}`;
         }
         const itemContainerEle = ele.closest('.meta-item');
         itemContainerEle.querySelector('.impression-value').value = impressionTrackingUrl;
@@ -3100,14 +3100,14 @@
             alert('Current click url is empty! ');
             return;
         }
-        if (/^https:\/\/ftmailbox\.cn\/ad_click/.test(currentValue)) {
+        if (/\/ad_click/.test(currentValue)) {
             alert('Current click url already has tracking! ');
             return;
         }
         const uniqueIdEle = containerEle.querySelector('[data-key="unique_id"]');
-        let clickTrackingUrl = `https://ftmailbox.cn/ad_click/${generateUniqueId()}`;
+        let clickTrackingUrl = `https://d1jtq4gqw1ilzj.cloudfront.net/ad_click/${generateUniqueId()}`;
         if (uniqueIdEle && uniqueIdEle.value && uniqueIdEle.value !== '' ) {
-            clickTrackingUrl = `https://ftmailbox.cn/ad_click/${uniqueIdEle.value}`;
+            clickTrackingUrl = `https://d1jtq4gqw1ilzj.cloudfront.net/ad_click/${uniqueIdEle.value}`;
         }
         itemContainerEle.querySelector('[data-key="click"]').value = `${clickTrackingUrl}/${currentValue}`;
     }
