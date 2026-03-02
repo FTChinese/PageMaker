@@ -1804,7 +1804,7 @@
         }
         sponsorImage = '<div title="如果是有赞助的特别报道，优先采用专题的图片，而不是文章的图片"><input title="use sponsor image" name="preferSponsorImage" class="o-input-checkbox" value="yes" type="checkbox"' + sponsorImageDisplay + '>Prefer Sponsor Cover</div>';
         if (typeof obj.showRelativeStoryItems !== 'undefined') {
-            obj.showRelativeStoryItems = '<div class="item-info-item"><div class="item-info-title">Show Related Items: </div><input type="number" title="How Many Related Content Would You Like to Show in This Page? " name="showRelativeStoryItems" class="o-input-text" value="' + obj.showRelativeStoryItems + '"></div>';
+            obj.showRelativeStoryItems = '<div class="item-info-item"><div class="item-info-title">Show Related Items: </div><input type="number" title="How Many Related Content Would You Like to Show in This Page? " name="showRelativeStoryItems" class="o-input-text" value="' + sanitizeValue(obj.showRelativeStoryItems) + '"></div>';
         } else {
             obj.showRelativeStoryItems = '';
         }
@@ -1859,6 +1859,16 @@
         }
         var chineseAudioUrl = obj.caudio || '';
         var englishAudioUrl = obj.eaudio || '';
+        var safeType = sanitizeValue(obj.type);
+        var safeId = sanitizeValue(obj.id);
+        var safeHeadline = sanitizeValue(obj.headline);
+        var safeImage = sanitizeValue(obj.image);
+        var safeLonglead = sanitizeValue(obj.longlead, true);
+        var safeShortlead = sanitizeValue(obj.shortlead, true);
+        var safeTag = sanitizeValue(obj.tag);
+        var safeCustomLink = sanitizeValue(obj.customLink);
+        var safeChineseAudioUrl = sanitizeValue(chineseAudioUrl);
+        var safeEnglishAudioUrl = sanitizeValue(englishAudioUrl);
 
         if (typeof obj.relativestory === 'object') {
             $.each(obj.relativestory, function (key, value) {
@@ -1870,8 +1880,11 @@
                 } else if (type === '1') {
                     type = 'video';
                 }
+                var safeCheadline = sanitizeValue(cheadline);
+                var safeRelativeId = sanitizeValue(id);
+                var safeRelativeType = sanitizeValue(type);
                 //console.log (cheadline);
-                relativestoryHTML += '<div class="relative-item" draggable=true><div class="remove-relative"></div><div class="relative-title">' + cheadline + '</div><div class="relative-info"><input title="headline" name="headline" class="r-input-text" value="' + cheadline + '"></div><input type="hidden" readonly name="id" class="r-input-text" value="' + id + '"><input type="hidden" readonly name="type" class="r-input-text" value="' + type + '"></div>';
+                relativestoryHTML += '<div class="relative-item" draggable=true><div class="remove-relative"></div><div class="relative-title">' + safeCheadline + '</div><div class="relative-info"><input title="headline" name="headline" class="r-input-text" value="' + safeCheadline + '"></div><input type="hidden" readonly name="id" class="r-input-text" value="' + safeRelativeId + '"><input type="hidden" readonly name="type" class="r-input-text" value="' + safeRelativeType + '"></div>';
             });
             relativestoryHTML = '<div class="item-info-title relative-container-title">Related Content: </div><div class="relative-container">' + relativestoryHTML + '</div>';
         }
@@ -1879,8 +1892,10 @@
         //relativestoryHTML = '';
 
         var timeStampForEditor = obj.pubdate || obj.timeStamp;
+        var safeTimeStampForEditor = sanitizeValue(timeStampForEditor, true);
+        var safeEditLink = sanitizeValue(editLink);
 
-        dataHTML = '<div draggable=true data-type="' + obj.type + '" class="item ' + obj.type + hasImageClass + premiumStoriesColor+'"' + imageBG + ' data-id="' + obj.id + '"><div class="remove-item"></div><div class="timestamp">' + timeStampForEditor + '</div><div class="item-title">' + obj.headline + '</div><div class="item-info"><div class="item-links"><a href="http://www7.ftchinese.com/' + obj.type + '/' + obj.id + '" target=_blank>Preview</a><a href="' + editLink + '" target=_blank>Edit</a></div>'+sponsorImage+'<div class="item-info-item"><input title="headline" placeholder="headline" name="headline" class="o-input-text" value="' + obj.headline + '"></div><div class="item-info-item"><input title="image" placeholder="image" name="image" class="o-input-text" value="' + obj.image + '"><button class="image-link" target="_blank">Upload</button></div><div class="item-info-item"><div class="item-info-title">Long Lead: </div><textarea title="longlead" placeholder="Long Lead" name="longlead" class="o-input-text">' + obj.longlead + '</textarea></div><div class="item-info-item"><div class="item-info-title">Short Lead: </div><textarea title="short lead" placeholder="short lead" name="shortlead" class="o-input-text">' + obj.shortlead + '</textarea></div><div class="item-info-item"><input title="tag" placeholder="tag" name="tag" class="o-input-text" value="' + obj.tag + '"></div><div class="item-info-item"><input title="custom link" placeholder="custom link" name="customLink" class="o-input-text" value="' + obj.customLink + '"></div><div class="item-info-item"><input title="Chinese Audio Url" placeholder="Chinese Audio Url" name="caudio" class="o-input-text" value="' + chineseAudioUrl + '"></div><div class="item-info-item"><input title="English Audio Url" placeholder="English Audio Url" name="eaudio" class="o-input-text" value="' + englishAudioUrl + '"></div>' + obj.showRelativeStoryItems + '<div class="item-info-item"><input name="timeStamp" type="hidden" class="o-input-text" value="' + oTimeStamp + '" readonly><input type="hidden" name="type" class="o-input-text" value="' + obj.type + '" readonly><input type="hidden" name="id" class="o-input-text" value="' + obj.id + '" readonly></div>' + relativestoryHTML + '</div></div>';
+        dataHTML = '<div draggable=true data-type="' + safeType + '" class="item ' + safeType + hasImageClass + premiumStoriesColor+'"' + imageBG + ' data-id="' + safeId + '"><div class="remove-item"></div><div class="timestamp">' + safeTimeStampForEditor + '</div><div class="item-title">' + safeHeadline + '</div><div class="item-info"><div class="item-links"><a href="http://www7.ftchinese.com/' + safeType + '/' + safeId + '" target=_blank>Preview</a><a href="' + safeEditLink + '" target=_blank>Edit</a></div>'+sponsorImage+'<div class="item-info-item"><input title="headline" placeholder="headline" name="headline" class="o-input-text" value="' + safeHeadline + '"></div><div class="item-info-item"><input title="image" placeholder="image" name="image" class="o-input-text" value="' + safeImage + '"><button class="image-link" target="_blank">Upload</button></div><div class="item-info-item"><div class="item-info-title">Long Lead: </div><textarea title="longlead" placeholder="Long Lead" name="longlead" class="o-input-text">' + safeLonglead + '</textarea></div><div class="item-info-item"><div class="item-info-title">Short Lead: </div><textarea title="short lead" placeholder="short lead" name="shortlead" class="o-input-text">' + safeShortlead + '</textarea></div><div class="item-info-item"><input title="tag" placeholder="tag" name="tag" class="o-input-text" value="' + safeTag + '"></div><div class="item-info-item"><input title="custom link" placeholder="custom link" name="customLink" class="o-input-text" value="' + safeCustomLink + '"></div><div class="item-info-item"><input title="Chinese Audio Url" placeholder="Chinese Audio Url" name="caudio" class="o-input-text" value="' + safeChineseAudioUrl + '"></div><div class="item-info-item"><input title="English Audio Url" placeholder="English Audio Url" name="eaudio" class="o-input-text" value="' + safeEnglishAudioUrl + '"></div>' + obj.showRelativeStoryItems + '<div class="item-info-item"><input name="timeStamp" type="hidden" class="o-input-text" value="' + sanitizeValue(oTimeStamp) + '" readonly><input type="hidden" name="type" class="o-input-text" value="' + safeType + '" readonly><input type="hidden" name="id" class="o-input-text" value="' + safeId + '" readonly></div>' + relativestoryHTML + '</div></div>';
         return dataHTML;
     }
 
@@ -1978,11 +1993,14 @@
         $.each(newData, function (key, value) {
 
             var arrayMeta = '';
+            var safeKey = sanitizeValue(key);
+            var safeValue = sanitizeValue(value);
+            var safeValueKeepNewLine = sanitizeValue(value, true);
             var descriptionOriginal = dataRulesTitle[key] || '';
             var description = '';
             var descriptionMore = '';
             if (descriptionOriginal !== '') {
-                description = ' title="' + descriptionOriginal + '"';
+                description = ' title="' + sanitizeValue(descriptionOriginal) + '"';
                 //descriptionMore = '<tr class="meta-item-description"><td colspan=2>' + descriptionOriginal + '</td></tr>'
                 descriptionMore = '';
             }
@@ -1994,6 +2012,7 @@
             if (dataRules[key] === 'array' || dataRules[key] === 'item') {
                 $.each(value, function (k, v) {
                     var title = v.Name || v.title || v.name || v.type || 'List';
+                    var safeTitle = sanitizeValue(title, true);
                     var itemLength = 0;
                     if (v.items !== undefined && v.items.length > 0) {
                         itemLength = ' <span>(' + v.items.length + ')</span>';
@@ -2003,7 +2022,7 @@
                     //console.log (v.items.length);
                     if (dataRules[key] === 'array') {
                         arrayMeta = renderMeta(v);
-                        dataHTML += '<div class="' + key + '-item"><div class="remove-' + key + '"></div><div class="clone-' + key + '"></div><div class="' + key + '-header" draggable=true>' + title + itemLength + '</div>' + arrayMeta + '</div>';
+                        dataHTML += '<div class="' + key + '-item"><div class="remove-' + key + '"></div><div class="clone-' + key + '"></div><div class="' + key + '-header" draggable=true>' + safeTitle + itemLength + '</div>' + arrayMeta + '</div>';
                     } else {
 
                         arrayMeta = renderItem(v);
@@ -2012,40 +2031,40 @@
                     }
                 });
             } else if (dataRules[key] === 'group') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text group-title" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text group-title" value="' + safeKey + '" readonly'+description+'></td><td colspan="2"><input data-key="' + safeKey + '" type="text" class="o-input-text" value="' + safeValue + '" readonly></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'readonly') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text" value="' + value + '" readonly></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td colspan="2"><input data-key="' + safeKey + '" type="text" class="o-input-text" value="' + safeValue + '" readonly></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'adimage') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text ad-image impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart" data-event-action="Show">Track</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td><input data-key="' + safeKey + '" type="text" class="o-input-text ad-image impression-value" value="' + safeValue + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart" data-event-action="Show">Track</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'image') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text content-image" value="' + value + '"></td><td><button class="image-link" target="_blank">Upload</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td><input data-key="' + safeKey + '" type="text" class="o-input-text content-image" value="' + safeValue + '"></td><td><button class="image-link" target="_blank">Upload</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'dates') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td><input data-key="' + safeKey + '" type="text" class="o-input-text date-value" value="' + safeValue + '"></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'StartDate' || dataRules[key] === 'EndDate') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text date-value" value="' + value + '" readonly></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td><input data-key="' + safeKey + '" type="text" class="o-input-text date-value" value="' + safeValue + '" readonly></td><td><button class="date-picker" target="_blank">Calendar</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'click') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="click-track-update" target="_blank">Update</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td><input data-key="' + safeKey + '" type="text" class="o-input-text impression-value" value="' + safeValue + '"></td><td><button class="click-track-update" target="_blank">Update</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'impression_default') {
                 const impressionValue = value ? value : `https://d1jtq4gqw1ilzj.cloudfront.net/ad_impression/${uniqueId}`;
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + impressionValue + '"></td><td><button class="impression-track-create" target="_blank">Create</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td><input data-key="' + safeKey + '" type="text" class="o-input-text impression-value" value="' + sanitizeValue(impressionValue) + '"></td><td><button class="impression-track-create" target="_blank">Create</button></td></tr>' + descriptionMore;
             }  else if (dataRules[key] === 'impression_convert') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + key + '" type="text" class="o-textarea html-tracking-code" placeholder="paste html tracking code here">' + value + '</textarea></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + safeKey + '" type="text" class="o-textarea html-tracking-code" placeholder="paste html tracking code here">' + safeValueKeepNewLine + '</textarea></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'impression') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text impression-value" value="' + value + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td><input data-key="' + safeKey + '" type="text" class="o-input-text impression-value" value="' + safeValue + '"></td><td><button class="impression-track" target="_blank" data-source="ftc-chart">History</button><button class="impression-track" target="_blank" data-source="ga-real-time">Real Time</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'zone') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td><input data-key="' + key + '" type="text" class="o-input-text zone-value" value="' + value + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td><input data-key="' + safeKey + '" type="text" class="o-input-text zone-value" value="' + safeValue + '"></td><td><button class="zone-link" target="_blank" data-action="edit">Edit</button><button class="zone-link" target="_blank" data-action="preview">Preview</button></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'number') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="number" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td colspan="2"><input data-key="' + safeKey + '" type="number" class="o-input-text" value="' + sanitizeValue(value || 0) + '"></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'uuid') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" readonly class="o-input-text" value=' + (value || uniqueId) + '></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td colspan="2"><input data-key="' + safeKey + '" type="text" readonly class="o-input-text" value="' + sanitizeValue(value || uniqueId) + '"></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'DateTime') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="datetime-local" class="o-input-text" value=' + (value || 0) + '></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td colspan="2"><input data-key="' + safeKey + '" type="datetime-local" class="o-input-text" value="' + sanitizeValue(value || 0) + '"></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'date') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="date" class="o-input-text" value=' + (value || '') + '></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td colspan="2"><input data-key="' + safeKey + '" type="date" class="o-input-text" value="' + sanitizeValue(value || '') + '"></td></tr>' + descriptionMore;
             } else if (dataRules[key] === 'textarea') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + key + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + key + '" class="o-textarea">' + sanitizeValue(value, true) + '</textarea></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-textarea" value="' + safeKey + '" readonly'+description+'></td><td colspan="2"><textarea data-key="' + safeKey + '" class="o-textarea">' + safeValueKeepNewLine + '</textarea></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'string') {
-                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '"'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text" value="' + sanitizeValue(value) + '"></td></tr>' + descriptionMore;
+                metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '"'+description+'></td><td colspan="2"><input data-key="' + safeKey + '" type="text" class="o-input-text" value="' + safeValue + '"></td></tr>' + descriptionMore;
             } else if (typeof dataRules[key] === 'object') {
                 var options = '';
                 if (dataRules[key].type === 'select') {
@@ -2059,43 +2078,45 @@
                         } else if (v2 === value) {
                             selected = ' selected';
                         }
-                        options += '<option value="' + v2 + '"' + selected + '>' + v2 + '</option>';
+                        var safeV2 = sanitizeValue(v2, true);
+                        options += '<option value="' + safeV2 + '"' + selected + '>' + safeV2 + '</option>';
                     });
-                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td colspan="2"><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + safeKey + '" type="text" readonly'+description+'></td><td colspan="2"><select data-key="' + safeKey + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
                 } else if (dataRules[key].type === 'multiselect') {
-                    const options = dataRules[key].options.join(',');
-                    metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + key + '" readonly'+description+'></td><td colspan="2"><input data-key="' + key + '" type="text" class="o-input-text date-value multi-select" value="' + value + '" data-options="' + options + '"></td></tr>' + descriptionMore;
+                    const options = sanitizeValue(dataRules[key].options.join(','));
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input type="text" class="o-input-text" value="' + safeKey + '" readonly'+description+'></td><td colspan="2"><input data-key="' + safeKey + '" type="text" class="o-input-text date-value multi-select" value="' + safeValue + '" data-options="' + options + '"></td></tr>' + descriptionMore;
                 } else {
                     $.each(dataRules[key], function (k1, v1) {
                         var selected = '';
                         if (v1 === value) {
                             selected = ' selected';
                         }
-                        options += '<option value="' + v1 + '"' + selected + '>' + v1 + '</option>';
+                        var safeV1 = sanitizeValue(v1, true);
+                        options += '<option value="' + safeV1 + '"' + selected + '>' + safeV1 + '</option>';
                     });
-                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + key + '" type="text" readonly'+description+'></td><td colspan="2"><select data-key="' + key + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
+                    metaHTML += '<tr class="meta-item"><td class="first-row"><input class="o-input-text" value="' + safeKey + '" type="text" readonly'+description+'></td><td colspan="2"><select data-key="' + safeKey + '" class="o-input-text">' + options + '</select></td></tr>' + descriptionMore;
                 }
              } else {                                
                 metaHTML += `
                 <tr class="meta-item">
                 <td class="first-row">
-                    <input class="o-input-text" value='${key}' type='text' readonly ${description}>
+                    <input class="o-input-text" value='${safeKey}' type='text' readonly ${description}>
                 </td>
                 <td colspan='2'>
-                    <input type='text' data-key='${key}' class='o-input-text' value='${sanitizeValue(value)}'>
+                    <input type='text' data-key='${safeKey}' class='o-input-text' value='${safeValue}'>
                 </td>
                 </tr>
                 ${descriptionMore}`;
             }
         });
         dataHTML = '<div class="lists-container">' + dataHTML + '</div>';
-        const sectionGuideline = (data.type && dataRulesTitle[data.type]) ? `<tr><td colspan=2 class="first-row">${dataRulesTitle[data.type]}</td></tr>` : '';
+        const sectionGuideline = (data.type && dataRulesTitle[data.type]) ? `<tr><td colspan=2 class="first-row">${sanitizeValue(dataRulesTitle[data.type], true)}</td></tr>` : '';
         metaHTML = '<table class="meta-table">' + sectionGuideline + metaHTML + '</table>';
         return metaHTML + dataHTML;
     }
 
     /**
-     * Sanitizes a value by escaping single quotes and optionally handling newlines/whitespace.
+     * Sanitizes a value by escaping HTML special characters and optionally handling newlines/whitespace.
      *
      * @param {string} value - The value to sanitize.
      * @param {boolean} keepNewLine - Whether to keep newline characters (`\n`) intact.
@@ -2105,7 +2126,12 @@
     function sanitizeValue(value, keepNewLine = false, collapseWhitespace = false) {
         if (typeof value !== 'string') {return value;}
 
-        let sanitized = value.replace(/'/g, '&#39;');
+        let sanitized = value
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
 
         if (!keepNewLine) {
             sanitized = sanitized.replace(/\n/g, ' ');
