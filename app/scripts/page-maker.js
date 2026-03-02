@@ -697,6 +697,7 @@
         ],
         bundle_product: [
             '',
+            'mastercard',
             'DSA'
         ],
         theme: [
@@ -1808,25 +1809,25 @@
             obj.showRelativeStoryItems = '';
         }
         if (obj.type === 'story') {
-            editLink = 'https://backyard.ftchinese.com/falcon.php/story/edit/' + obj.id;
+            editLink = '/falcon.php/story/edit/' + obj.id;
             previewLink = 'http://www7.ftchinese.com/story/' + obj.id;
         } else if (obj.type === 'interactive') {
-            editLink = 'https://backyard.ftchinese.com/falcon.php/ia/edit/' + obj.id;
+            editLink = '/falcon.php/ia/edit/' + obj.id;
             previewLink = 'http://www7.ftchinese.com/interactive/' + obj.id;
         } else if (obj.type === 'photo') {
-            editLink = 'https://backyard.ftchinese.com/falcon.php/pics/edit_photonews/' + obj.id;
+            editLink = '/falcon.php/pics/edit_photonews/' + obj.id;
             previewLink = 'http://www7.ftchinese.com/photonews/' + obj.id;
         } else if (obj.type === 'video') {
-            editLink = 'https://backyard.ftchinese.com/create_videostory.php?id=' + obj.id;
+            editLink = '/create_videostory.php?id=' + obj.id;
             previewLink = 'http://www7.ftchinese.com/video/' + obj.id;
         } else if (obj.type === 'premium') {
-            editLink = 'https://backyard.ftchinese.com/falcon.php/story/edit/' + obj.id;
+            editLink = '/falcon.php/story/edit/' + obj.id;
             previewLink = 'http://www7.ftchinese.com/story/' + obj.id;
         } else if (/\/m\/corp\/preview.html\?pageid=(.*)$/.test(obj.customLink)) {
-            editLink = obj.customLink.replace(/^.*\/m\/corp\/preview.html\?pageid=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
+            editLink = obj.customLink.replace(/^.*\/m\/corp\/preview.html\?pageid=(.*)$/g,'/pagemaker/page-maker.html?page=$1');
             previewLink = obj.customLink;
         }else if(/\/channel\/editorchoice-issue.html\?issue=(.*)$/.test(obj.customLink)){
-            editLink = obj.customLink.replace(/^.*\/channel\/editorchoice-issue.html\?issue=(.*)$/g,'https://backyard.ftchinese.com/pagemaker/page-maker.html?page=$1');
+            editLink = obj.customLink.replace(/^.*\/channel\/editorchoice-issue.html\?issue=(.*)$/g,'/pagemaker/page-maker.html?page=$1');
             previewLink = obj.customLink;
         }
 
@@ -1852,7 +1853,6 @@
         if (obj.image !== '') {
             hasImageClass = ' has-image';
             imageBG = obj.image.replace('/upload/', '/');
-            //imageBG = image.replace('i.ftimg.net', 'i.ftmailbox.com').replace('/upload/', '/');
             imageBG = encodeURIComponent(imageBG);
             imageBG = 'https://www.ft.com/__origami/service/image/v2/images/raw/' + imageBG + '?source=ftchinese&width=80&fit=scale-down';
             imageBG = ' style="background-image: url(' + imageBG + ')"';
@@ -2980,7 +2980,6 @@
         if (/[0-9]{4}\-[0-9]+\-[0-9]+/.test(k)) {
             gApiUrls.stories = storyAPIRoot + k + '?' + thenow;
         } else if (/^[0-9]+$/.test(k)) {
-            //https://backyard.ftchinese.com/falcon.php/homepage/getstorybyday/7/dfadfa
             gApiUrls.stories = '/falcon.php/homepage/getstorybyday/' + k + '/'+ thenow;
         } else {
             gApiUrls.stories = '/falcon.php/homepage/gettagstoryapi?tag=' + k + '&' + thenow;
