@@ -1690,6 +1690,7 @@
     };
     var devices = [
         {'name': 'Web Page', 'width': '', 'height': ''},
+        {'name': 'Promotion', 'width': '', 'height': '', host: 'https://www.ftcvic.com'},
         {'name': 'App View', 'width': '', 'height': '', 'webview': 'ftcapp'},
         {'name': 'Email', 'width': '', 'height': '', 'view': 'email'},
         {'name': 'Email For Subscribers', 'width': '', 'height': '', 'view': 'email', 'to': 'vip'},
@@ -3921,7 +3922,10 @@
         var to = $(this).attr('data-to') || '';
         var showImage = $(this).attr('data-show-image') || '';
         var webview = $(this).attr('data-webview') || '';
-        var url = hostValue + '/m/corp/preview.html?pageid=' + getURLParameter('page');
+        const pageId = getURLParameter('page');
+        const pagePath = hostValue.includes('www7') ? `/m/corp/preview.html?pageid=${pageId}` : `/page/${pageId}?ccode=`;
+        var url = hostValue + pagePath;
+
         var w = $(this).attr('data-width') || $(window).width();
         var h = $(this).attr('data-height') || $(window).height();
         var viewValue = $(this).attr('data-view') || '';
